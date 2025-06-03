@@ -8,7 +8,7 @@
 
 🚀 **Supercharge Your MkDocs Documentation with AI!**   
 This project provides powerful MkDocs hooks that add AI-driven summary generation and intelligent reading statistics to your technical documentation and blogs.
-![iShot 2025 06 03 13.39.35](https://s1.imagehub.cc/images/2025/06/03/d1563500263b22cfd0ffc3679993aa83.jpg)
+![image](https://s1.imagehub.cc/images/2025/06/03/526b59b6a2e478f2ffa1629320e3e2ce.png)
 
 ## ✨ Features
 
@@ -129,7 +129,7 @@ mkdocs build
 mkdocs serve
 ```
 Terminal output:
-![image](https://s1.imagehub.cc/images/2025/06/03/a287b109428d7e4e61afe7212e045860.png)
+![image](https://s1.imagehub.cc/images/2025/06/03/97800d1c76cad2abb46ee4432fd81750.png)
 
 ## 📖 Usage Guide
 
@@ -194,7 +194,7 @@ Article content...
 ```  
 
 **Actual Effect:**
-![iShot 2025 06 03 13.22.14](https://s1.imagehub.cc/images/2025/06/03/8e4818b5b73c07d9b90a7471b1bfcbae.jpg)
+![image](https://s1.imagehub.cc/images/2025/06/03/526b59b6a2e478f2ffa1629320e3e2ce.png)
 
 ### API Cost
 About 0.03-0.05 yuan per large document
@@ -356,18 +356,21 @@ This project is licensed under the [MIT License](LICENSE).
 </p>
 
 
-**WeChat**  
-<!-- ![](https://s1.imagehub.cc/images/2024/02/02/bb9ee71b03ee7a3b87caad5cc4bcebff.jpeg) -->
-<p align="center">
-<img src="https://pic3.zhimg.com/80/v2-5ef3dde831c9d0a41fe35fabb0cb8784_1440w.webp" style="border-radius: 10px;" width="50%">
-</p>
+
 
 </center>
 
 
 ## Star History
 
-[![Star History Chart](https://api.star-history.com/svg?repos=Wcowin/mkdocs-ai-hooks&type=Date)](https://www.star-history.com/#Wcowin/mkdocs-ai-hooks&Date)
+
+<a href="https://www.star-history.com/#Wcowin/mkdocs-ai-hooks&Date">
+ <picture>
+   <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=Wcowin/mkdocs-ai-hooks&type=Date&theme=dark" />
+   <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/svg?repos=Wcowin/mkdocs-ai-hooks&type=Date" />
+   <img alt="Star History Chart" src="https://api.star-history.com/svg?repos=Wcowin/mkdocs-ai-hooks&type=Date" />
+ </picture>
+</a>
 
 
 ## Buy the Author a Coffee
