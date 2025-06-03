@@ -7,7 +7,7 @@
 </p>
 
 <p align="center">
-    <a href="/">中文</a> | <a href="README-en.md">English</a>
+    <a href="https://github.com/Wcowin/mkdocs-ai-hooks/blob/main/README.md">中文</a> | <a href="README-en.md">English</a>
 </p>
 
 🚀 **您的MkDocs文档首选智能摘要！**   
@@ -132,14 +132,13 @@ self.exclude_files = [
 ### 3. 在ai_summary.py中设置DeepSeek API(默认是OpenAI)
 ```python
 # 在ai_summary.py中修改API配置
-self.api_config = {
+'deepseek': {
     'url': 'https://api.deepseek.com/v1/chat/completions',
     'model': 'deepseek-chat',
-    'headers': {
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer *YOUR_API_KEY_HERE*'  # 替换为您的API密钥
-    }
-}
+    'api_key': os.getenv('DEEPSEEK_API_KEY', 'your-azure-api-key'),
+    'max_tokens': 150,
+    'temperature': 0.3
+},
 ```
 
 ### 4. 运行MkDocs
@@ -222,7 +221,7 @@ hide_reading_time: true  # 隐藏阅读时间
 可以说相当经济实惠了！
 
 #### 免费openai额度获取
-推荐使用：[chatanywhere](https://github.com/chatanywhere/GPT_API_free?tab=readme-ov-file#%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8 )
+推荐使用：[chatanywhere](https://github.com/chatanywhere/GPT_API_free?tab=readme-ov-file#%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8 )  
 申请好后得到sk-开头的密钥，在ai_summary.py的多AI服务配置部分替换为以下内容：
 
 ```python
