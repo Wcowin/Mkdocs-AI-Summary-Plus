@@ -15,6 +15,8 @@
 ![iShot 2025 06 03 13.39.35](https://s1.imagehub.cc/images/2025/06/03/d1563500263b22cfd0ffc3679993aa83.jpg)
 ![image](https://s1.imagehub.cc/images/2025/06/03/526b59b6a2e478f2ffa1629320e3e2ce.png)
 
+网站效果预览：https://wcowin.work/Mkdocs-Wcowin/blog/Mkdocs/mkfirst/
+
 ## ✨ 功能特性
 
 ### AI智能摘要
@@ -44,23 +46,36 @@
 在releases页面下载，解压后将以下文件放入您的MkDocs项目的docs/overrides/hooks中：
 https://github.com/Wcowin/mkdocs-ai-hooks/releases  
 
+或者下载上方hooks目录下的两个Python文件：
+- `ai_summary.py`：AI摘要生成器
+- `reading_time.py`：阅读时间统计器
+
 ```bash
 # 放置到您的项目目录
 mkdir -p docs/overrides/hooks/
 mv ai_summary.py docs/overrides/hooks/
 mv reading_time.py docs/overrides/hooks/
 ```
-
+放置的位置如下：
 ![image](https://s1.imagehub.cc/images/2025/06/03/8b1c7485da460dfd6f61c15cde89b5e5.png)
 
-### 方法2：Git Submodule
-```bash
-# 添加为子模块
-git submodule add https://github.com/Wcowin/mkdocs-ai-hooks.git hooks
-git submodule update --init --recursive
+在 `mkdocs.yml` 中theme下添加custom_dir：
+```yaml
+# 可选：Material主题配置
+theme:
+  name: material
+  custom_dir: docs/overrides #一定要有！一定要有！
+  features:
+    - content.code.copy
+    - content.code.select
+```
 
-# 复制到您的项目
-cp hooks/*.py docs/overrides/hooks/
+### 方法2：
+使用Git克隆
+```bash
+git clone  https://github.com/Wcowin/mkdocs-ai-hooks.git
+cd mkdocs-ai-hooks 
+pip install -r requirements.txt
 ```
 
 ### 依赖安装
@@ -262,7 +277,7 @@ if (datetime.now() - cache_time).days < 30:  # 改为30天
     return cache_data
 ```
 注意注意注意！！！  
-切换api服务后，要删除site/.ai_cache这个缓存文件，才可以重新生成摘要！！！
+切换api服务后，要删除site/.ai_cache这个缓存文件，才可以重新生成摘要！！！**(这个问题已经解决了，切换api服务后，会自动删除缓存文件，无需手动删除)**
 
 <!-- ## 🔧 自定义开发
 
@@ -346,6 +361,7 @@ pip install -r requirements.txt
 ### 计划功能
 - [x] 多AI服务支持（OpenAI、Claude等）
 - [x] 自动选择最佳API
+- [ ] API密钥安全处理(重要)
 - [ ] 批量处理模式
 - [ ] 统计数据导出
 - [ ] Web界面配置
