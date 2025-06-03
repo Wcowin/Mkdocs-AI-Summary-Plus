@@ -9,14 +9,14 @@ permissions:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: MkDocs-AI-Hooks  # 设置工作目录
     steps:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
-          sparse-checkout: |
-            docs
-            mkdocs.yml
-            requirements.txt
+          # 移除 sparse-checkout，因为我们需要完整的项目结构
       - uses: actions/setup-python@v4
         with:
           python-version: 3.x
@@ -24,7 +24,7 @@ jobs:
       - uses: actions/cache@v3
         with:
           key: mkdocs-material-${{ env.cache_id }}
-          path: .cache
+          path: MkDocs-AI-Hooks/.cache  # 修正缓存路径
           restore-keys: |
             mkdocs-material-
       # 安装 MkDocs 插件
