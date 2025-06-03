@@ -247,12 +247,13 @@ self.default_service = 'openai'
 ### 自定义API服务
 ```python
 # 支持其他AI服务
-self.api_config = {
-    'url': 'https://your-api-endpoint.com/v1/chat/completions',
-    'model': 'your-model',
-    'headers': {
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer YOUR_API_KEY'
+self.ai_services = {
+    'AI服务名字': {
+        'url': '',
+        'model': '',
+        'api_key': os.getenv('GOOGLE_API_KEY', 'your-claude-api-key'),
+        'max_tokens': 150, # 最大token数
+        'temperature': 0.3 
     }
 }
 ```
@@ -277,6 +278,20 @@ if (datetime.now() - cache_time).days < 30:  # 改为30天
 ```
 注意注意注意！！！  
 切换api服务后，要删除site/.ai_cache这个缓存文件，才可以重新生成摘要！！！**(这个问题已经解决了，切换api服务后，会自动删除缓存文件，无需手动删除)**
+
+
+### 是否选择本地CI部署
+
+```python
+# 🚀 CI 环境配置 - 默认本地CI环境禁用
+self.ci_config = {
+    'enabled_in_ci': os.getenv('AI_SUMMARY_CI_ENABLED', 'true').lower() == 'true',  # 默认 CI 中启用
+    'enabled_in_local': os.getenv('AI_SUMMARY_LOCAL_ENABLED', 'false').lower() == 'true',  # 
+    # 'enabled_in_local': os.getenv('AI_SUMMARY_LOCAL_ENABLED', 'true').lower() == 'true',  # 默认本地启用
+    'ci_only_cache': os.getenv('AI_SUMMARY_CI_ONLY_CACHE', 'false').lower() == 'true',  # CI 中也允许生成新摘要
+    'ci_fallback_enabled': os.getenv('AI_SUMMARY_CI_FALLBACK', 'true').lower() == 'true'
+}
+```
 
 <!-- ## 🔧 自定义开发
 
@@ -306,14 +321,15 @@ def format_summary(self, summary, ai_service):
 
 ## 🌍 多语言支持
 
-### 英文内容优化（Todo）
+### 英文摘要  
+
 ```python
-# 阅读时间计算（英文：200词/分钟）
-def calculate_english_reading_time(word_count):
-    return max(1, round(word_count / 200))
+# 语言配置/Language Configuration
+self.summary_language = 'en'  # 默认中文，可选 'zh'、'en'、'both'
 ```
 
-### 其他语言扩展（Todo）
+### 其他语言扩展（Todo）  
+
 ```python
 # 支持日文、韩文等
 JAPANESE_CHARS_PATTERN = re.compile(r'[\u3040-\u309F\u30A0-\u30FF]')
