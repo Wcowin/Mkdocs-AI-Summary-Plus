@@ -35,11 +35,10 @@
 ## 📦 安装
 
 ### 方法1：直接下载（推荐）
-```bash
-# 下载到您的docs/overrides/hooks文件下
-wget https://raw.githubusercontent.com/Wcowin/mkdocs-ai-hooks/main/ai_summary.py
-wget https://raw.githubusercontent.com/Wcowin/mkdocs-ai-hooks/main/reading_time.py
+在releases页面下载，解压后将以下文件放入您的MkDocs项目的docs/overrides/hooks中：
+https://github.com/Wcowin/mkdocs-ai-hooks/releases  
 
+```bash
 # 放置到您的项目目录
 mkdir -p docs/overrides/hooks/
 mv ai_summary.py docs/overrides/hooks/
