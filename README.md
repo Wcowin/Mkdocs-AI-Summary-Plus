@@ -44,7 +44,7 @@ mkdir -p docs/overrides/hooks/
 mv ai_summary.py docs/overrides/hooks/
 mv reading_time.py docs/overrides/hooks/
 ```
-
+![alt text](image.png)
 ### 方法2：Git Submodule
 ```bash
 # 添加为子模块
