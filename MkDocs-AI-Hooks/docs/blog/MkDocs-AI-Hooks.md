@@ -7,7 +7,7 @@
 </p>
 
 <p align="center">
-    <a href="https://github.com/Wcowin/mkdocs-ai-hooks/blob/main/README.md">中文</a> | <a href="README-en.md">English</a>
+    <a href="https://github.com/Wcowin/mkdocs-ai-hooks/blob/main/README.md">中文</a> | <a href="https://github.com/Wcowin/mkdocs-ai-hooks/blob/main/README-en.md">English</a>
 </p>
 
 🚀 **您的MkDocs文档首选智能摘要！**   
