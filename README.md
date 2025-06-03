@@ -464,7 +464,6 @@ pip install -r requirements.txt
 <img src="https://pic3.zhimg.com/80/v2-5ef3dde831c9d0a41fe35fabb0cb8784_1440w.webp" style="border-radius: 10px;" width="50%">
 </p>
 
-</center>
 
 
 ## Star History
