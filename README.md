@@ -209,7 +209,7 @@ hide_reading_time: true  # 隐藏阅读时间
 #### 免费openai额度获取
 https://github.com/chatanywhere/GPT_API_free?tab=readme-ov-file  
 
-但是我这里只推荐使用DeepSeek API，额度充足且性能优秀。
+但是我这里也推荐使用DeepSeek API，额度充足且性能优秀。
 
 ## ⚙️ 高级配置
 
@@ -330,7 +330,7 @@ mkdocs serve
 
 ### 计划功能
 - [x] 多AI服务支持（OpenAI、Claude等）
-- [ ] 异步处理支持
+- [x] 自动选择最佳API
 - [ ] 批量处理模式
 - [ ] 统计数据导出
 - [ ] Web界面配置

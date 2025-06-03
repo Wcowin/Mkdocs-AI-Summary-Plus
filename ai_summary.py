@@ -4,33 +4,77 @@ import hashlib
 import requests
 from pathlib import Path
 from datetime import datetime
+import os
+import shutil
 
 class AISummaryGenerator:
     def __init__(self):
         self.cache_dir = Path("site/.ai_cache")
         self.cache_dir.mkdir(exist_ok=True)
         
-        # 默认使用DeepSeek API配置
-        self.api_config = {
-            'url': 'https://api.deepseek.com/v1/chat/completions',
-            'model': 'deepseek-chat',
-            'headers': {
-                'Content-Type': 'application/json',
-                'Authorization': 'Bearer *YOUR_API_KEY*'
-            }
+        # 添加服务配置文件，用于跟踪当前使用的服务
+        self.service_config_file = self.cache_dir / "service_config.json"
+        
+        # 🤖 多AI服务配置
+        self.ai_services = {
+            # 'deepseek': {
+            #     'url': 'https://api.deepseek.com/v1/chat/completions',
+            #     'model': 'deepseek-chat',
+            #     'api_key': os.getenv('DEEPSEEK_API_KEY', 'your-azure-api-key'),
+            #     'max_tokens': 150,
+            #     'temperature': 0.3
+            # },
+            'openai': {
+                'url': 'https://api.chatanywhere.tech/v1/chat/completions',
+                'model': 'gpt-3.5-turbo',  # 或 'gpt-4', 'gpt-4-turbo'
+                'api_key': os.getenv('OPENAI_API_KEY', 'sk-vTIWRtY595O8K7NxhNMPohGGrEimNFspS6iLDH1yjORy7Lcj'),
+                'max_tokens': 150,
+                'temperature': 0.3
+            },
+            # 'azure_openai': {
+            #     'url': 'https://your-resource.openai.azure.com/openai/deployments/your-deployment/chat/completions?api-version=2024-02-15-preview',
+            #     'model': 'gpt-35-turbo',  # Azure部署名称
+            #     'api_key': os.getenv('AZURE_OPENAI_API_KEY', 'your-azure-api-key'),
+            #     'max_tokens': 150,
+            #     'temperature': 0.3,
+            #     'headers_extra': {'api-key': os.getenv('AZURE_OPENAI_API_KEY', 'your-azure-api-key')}
+            # },
+            # 'claude': {
+            #     'url': 'https://api.anthropic.com/v1/messages',
+            #     'model': 'claude-3-haiku-20240307',
+            #     'api_key': os.getenv('ANTHROPIC_API_KEY', 'your-claude-api-key'),
+            #     'max_tokens': 150,
+            #     'temperature': 0.3
+            # },
+            # 'gemini': {
+            #     'url': 'https://generativelanguage.googleapis.com/v1/models/gemini-pro:generateContent',
+            #     'model': 'gemini-pro',
+            #     'api_key': os.getenv('GOOGLE_API_KEY', 'your-google-api-key'),
+            #     'max_tokens': 150,
+            #     'temperature': 0.3
+            # }
         }
+        
+        # 默认使用的AI服务
+        self.default_service = 'openai'
+        
+        # 服务优先级（按顺序尝试）
+        self.service_fallback_order = [ 'openai', 'deepseek','claude']
         
         # 📂 可自定义的文件夹配置
         self.enabled_folders = [
             # 'blog/',      # blog文件夹
-            'develop/',   # develop文件夹
-            # 在这里添加您想要启用AI摘要的文件夹
+            # 'develop/',   # develop文件夹
+            # 'posts/',     # posts文件夹
+            'trip/',     # trip文件夹
+            'about/',     # about文件夹
         ]
         
         # 📋 排除的文件和文件夹
         self.exclude_patterns = [
             'waline.md', 'link.md', '404.md', 'tag.md', 'tags.md',
-            '/about/', '/search/', '/sitemap', 'index.md',  # 根目录index.md
+            '/about/', '/search/', '/sitemap', '/admin/',
+            'index.md',  # 根目录index.md
         ]
         
         # 📋 排除的特定文件
@@ -41,15 +85,111 @@ class AISummaryGenerator:
             'develop/index.md',
         ]
     
-    def configure_folders(self, folders=None, exclude_patterns=None, exclude_files=None):
+        # 检查服务变更并处理缓存
+        self._check_service_change()
+    
+    def _check_service_change(self):
+        """检查AI服务是否发生变更，如有变更则自动清理缓存"""
+        current_config = {
+            'default_service': self.default_service,
+            'available_services': list(self.ai_services.keys()),
+            'check_time': datetime.now().isoformat()
+        }
+        
+        if self.service_config_file.exists():
+            try:
+                with open(self.service_config_file, 'r', encoding='utf-8') as f:
+                    previous_config = json.load(f)
+                
+                # 检查默认服务是否变更
+                if previous_config.get('default_service') != current_config['default_service']:
+                    old_service = previous_config.get('default_service', 'unknown')
+                    new_service = current_config['default_service']
+                    
+                    print(f"🔄 检测到AI服务变更: {old_service} → {new_service}")
+                    print("🧹 自动清理AI摘要缓存...")
+                    
+                    try:
+                        # 删除整个缓存目录
+                        if self.cache_dir.exists():
+                            shutil.rmtree(self.cache_dir)
+                            print(f"✅ 已删除缓存文件夹: {self.cache_dir}")
+                        
+                        # 重新创建缓存目录
+                        self.cache_dir.mkdir(exist_ok=True)
+                        print("📁 已重新创建缓存目录")
+                        
+                    except Exception as e:
+                        print(f"❌ 清理缓存失败: {e}")
+                        # 如果删除失败，尝试清理单个文件
+                        try:
+                            self._clear_cache_files()
+                        except:
+                            print("⚠️ 缓存清理失败，新摘要可能会混用旧服务的缓存")
+                
+            except Exception as e:
+                print(f"读取服务配置失败: {e}")
+        
+        # 保存当前配置
+        try:
+            with open(self.service_config_file, 'w', encoding='utf-8') as f:
+                json.dump(current_config, f, ensure_ascii=False, indent=2)
+        except Exception as e:
+            print(f"保存服务配置失败: {e}")
+    
+    def _clear_cache_files(self):
+        """清理缓存文件（备用方法）"""
+        cleared_count = 0
+        try:
+            for cache_file in self.cache_dir.glob("*.json"):
+                if cache_file.name != "service_config.json":
+                    cache_file.unlink()
+                    cleared_count += 1
+            print(f"✅ 已清理 {cleared_count} 个缓存文件")
+        except Exception as e:
+            print(f"❌ 单文件清理失败: {e}")
+    
+    def configure_ai_service(self, service_name, config=None):
         """
-        配置启用AI摘要的文件夹
+        配置AI服务
         
         Args:
-            folders: 启用AI摘要的文件夹列表
-            exclude_patterns: 排除的模式列表  
-            exclude_files: 排除的特定文件列表
+            service_name: 服务名称 ('deepseek', 'openai', 'azure_openai', 'claude', 'gemini')
+            config: 服务配置字典
         """
+        old_service = self.default_service
+        
+        if config:
+            self.ai_services[service_name] = config
+        self.default_service = service_name
+        
+        # 如果服务发生变更，自动清理缓存
+        if old_service != service_name:
+            print(f"🔄 AI服务已切换: {old_service} → {service_name}")
+            print("🧹 自动清理所有AI摘要缓存...")
+            
+            try:
+                if self.cache_dir.exists():
+                    shutil.rmtree(self.cache_dir)
+                    print(f"✅ 已删除缓存文件夹: {self.cache_dir}")
+                
+                # 重新创建缓存目录
+                self.cache_dir.mkdir(exist_ok=True)
+                print("📁 已重新创建缓存目录")
+                
+            except Exception as e:
+                print(f"❌ 清理缓存失败: {e}")
+                # 如果删除失败，尝试清理单个文件
+                try:
+                    self._clear_cache_files()
+                except:
+                    print("⚠️ 缓存清理失败，新摘要可能会混用旧服务的缓存")
+        
+        # 更新服务配置记录
+        self._check_service_change()
+    
+    def configure_folders(self, folders=None, exclude_patterns=None, exclude_files=None):
+        """配置启用AI摘要的文件夹"""
         if folders is not None:
             self.enabled_folders = folders
         if exclude_patterns is not None:
@@ -129,9 +269,33 @@ class AISummaryGenerator:
         
         return content
     
-    def generate_ai_summary(self, content, page_title=""):
-        """使用DeepSeek生成摘要"""
-        # 优化的提示词
+    def build_headers(self, service_config):
+        """构建请求头"""
+        headers = {
+            'Content-Type': 'application/json'
+        }
+        
+        # 根据服务类型添加认证头
+        if 'azure_openai' in service_config.get('url', ''):
+            headers['api-key'] = service_config['api_key']
+        elif 'anthropic.com' in service_config.get('url', ''):
+            headers['x-api-key'] = service_config['api_key']
+            headers['anthropic-version'] = '2023-06-01'
+        elif 'googleapis.com' in service_config.get('url', ''):
+            # Google API使用URL参数
+            pass
+        else:
+            # OpenAI和DeepSeek使用Bearer token
+            headers['Authorization'] = f"Bearer {service_config['api_key']}"
+        
+        # 添加额外的头部
+        if 'headers_extra' in service_config:
+            headers.update(service_config['headers_extra'])
+        
+        return headers
+    
+    def build_payload(self, service_name, service_config, content, page_title):
+        """构建请求载荷"""
         prompt = f"""请为以下技术文章生成一个高质量的摘要，要求：
 
 1. **长度控制**：严格控制在80-120字以内
@@ -152,51 +316,134 @@ class AISummaryGenerator:
 
 请生成摘要："""
 
-        try:
-            payload = {
-                "model": self.api_config['model'],
+        if service_name == 'claude':
+            # Claude API格式
+            return {
+                "model": service_config['model'],
+                "max_tokens": service_config['max_tokens'],
+                "temperature": service_config['temperature'],
+                "messages": [
+                    {
+                        "role": "user",
+                        "content": prompt
+                    }
+                ]
+            }
+        elif service_name == 'gemini':
+            # Gemini API格式
+            return {
+                "contents": [
+                    {
+                        "parts": [
+                            {
+                                "text": prompt
+                            }
+                        ]
+                    }
+                ],
+                "generationConfig": {
+                    "temperature": service_config['temperature'],
+                    "maxOutputTokens": service_config['max_tokens']
+                }
+            }
+        else:
+            # OpenAI格式 (OpenAI, DeepSeek, Azure OpenAI)
+            return {
+                "model": service_config['model'],
                 "messages": [
                     {
                         "role": "system",
                         "content": "你是一个专业的技术文档摘要专家，擅长提取文章核心要点并生成简洁准确的摘要。"
                     },
                     {
-                        "role": "user", 
+                        "role": "user",
                         "content": prompt
                     }
                 ],
-                "max_tokens": 150,
-                "temperature": 0.3,  # 降低随机性，提高准确性
+                "max_tokens": service_config['max_tokens'],
+                "temperature": service_config['temperature'],
                 "top_p": 0.9
             }
+    
+    def extract_response_content(self, service_name, response_data):
+        """从响应中提取内容"""
+        try:
+            if service_name == 'claude':
+                return response_data['content'][0]['text']
+            elif service_name == 'gemini':
+                return response_data['candidates'][0]['content']['parts'][0]['text']
+            else:
+                # OpenAI格式
+                return response_data['choices'][0]['message']['content']
+        except (KeyError, IndexError) as e:
+            print(f"解析{service_name}响应失败: {e}")
+            return None
+    
+    def generate_ai_summary_with_service(self, content, page_title, service_name):
+        """使用指定服务生成摘要"""
+        if service_name not in self.ai_services:
+            print(f"不支持的AI服务: {service_name}")
+            return None
+        
+        service_config = self.ai_services[service_name]
+        
+        # 检查API密钥
+        if not service_config['api_key'] or service_config['api_key'].startswith('your-'):
+            print(f"{service_name} API密钥未配置")
+            return None
+        
+        try:
+            headers = self.build_headers(service_config)
+            payload = self.build_payload(service_name, service_config, content, page_title)
+            
+            # 对于Google API，添加API密钥到URL
+            url = service_config['url']
+            if service_name == 'gemini':
+                url = f"{url}?key={service_config['api_key']}"
             
             response = requests.post(
-                self.api_config['url'],
-                headers=self.api_config['headers'],
+                url,
+                headers=headers,
                 json=payload,
                 timeout=30
             )
             
             if response.status_code == 200:
                 result = response.json()
-                summary = result['choices'][0]['message']['content'].strip()
+                summary = self.extract_response_content(service_name, result)
                 
-                # 清理可能的格式问题
-                summary = re.sub(r'^["""''`]+|["""''`]+$', '', summary)
-                summary = re.sub(r'^\s*摘要[：:]\s*', '', summary)
-                summary = re.sub(r'^\s*总结[：:]\s*', '', summary)
+                if summary:
+                    # 清理可能的格式问题
+                    summary = re.sub(r'^["""''`]+|["""''`]+$', '', summary.strip())
+                    summary = re.sub(r'^\s*摘要[：:]\s*', '', summary)
+                    summary = re.sub(r'^\s*总结[：:]\s*', '', summary)
+                    return summary
                 
-                return summary
             else:
-                print(f"DeepSeek API请求失败: {response.status_code} - {response.text}")
+                print(f"{service_name} API请求失败: {response.status_code} - {response.text}")
                 return None
                 
         except requests.exceptions.RequestException as e:
-            print(f"DeepSeek API请求异常: {e}")
+            print(f"{service_name} API请求异常: {e}")
             return None
         except Exception as e:
-            print(f"AI摘要生成异常: {e}")
+            print(f"{service_name} 摘要生成异常: {e}")
             return None
+    
+    def generate_ai_summary(self, content, page_title=""):
+        """生成AI摘要（支持多服务降级）"""
+        # 按优先级尝试不同服务
+        services_to_try = [self.default_service] + [s for s in self.service_fallback_order if s != self.default_service]
+        
+        for service_name in services_to_try:
+            if service_name in self.ai_services:
+                print(f"🔄 尝试使用 {service_name} 生成摘要...")
+                summary = self.generate_ai_summary_with_service(content, page_title, service_name)
+                if summary:
+                    return summary, service_name
+        
+        print("⚠️ 所有AI服务均不可用，使用备用摘要")
+        return None, None
     
     def generate_fallback_summary(self, content, page_title=""):
         """生成备用摘要（基于规则的智能摘要）"""
@@ -280,20 +527,19 @@ class AISummaryGenerator:
         cached_summary = self.get_cached_summary(content_hash)
         if cached_summary:
             summary = cached_summary.get('summary', '')
-            ai_service = 'cached'
+            ai_service = cached_summary.get('service', 'cached')
             print(f"✅ 使用缓存摘要: {page.file.src_path}")
         else:
             # 生成新摘要
             print(f"🤖 正在生成AI摘要: {page.file.src_path}")
-            summary = self.generate_ai_summary(clean_content, page_title)
+            summary, ai_service = self.generate_ai_summary(clean_content, page_title)
             
             if not summary:
                 summary = self.generate_fallback_summary(clean_content, page_title)
                 ai_service = 'fallback'
                 print(f"📝 使用备用摘要: {page.file.src_path}")
             else:
-                ai_service = 'deepseek'
-                print(f"✅ AI摘要生成成功: {page.file.src_path}")
+                print(f"✅ AI摘要生成成功 ({ai_service}): {page.file.src_path}")
             
             # 保存到缓存
             self.save_summary_cache(content_hash, {
@@ -307,7 +553,7 @@ class AISummaryGenerator:
         return summary_html + '\n\n' + markdown
     
     def should_generate_summary(self, page, markdown):
-        """判断是否应该生成摘要 - 可自定义文件夹"""
+        """判断是否应该生成摘要"""
         # 检查页面元数据
         if hasattr(page, 'meta'):
             # 明确禁用
@@ -344,7 +590,27 @@ class AISummaryGenerator:
         service_config = {
             'deepseek': {
                 'icon': '🤖',
-                'name': 'AI智能摘要',
+                'name': 'AI智能摘要 (DeepSeek)',
+                'color': 'info'
+            },
+            'openai': {
+                'icon': '🤖',
+                'name': 'AI智能摘要 (ChatGPT)',
+                'color': 'info'
+            },
+            'azure_openai': {
+                'icon': '🤖',
+                'name': 'AI智能摘要 (Azure OpenAI)',
+                'color': 'info'
+            },
+            'claude': {
+                'icon': '🤖',
+                'name': 'AI智能摘要 (Claude)',
+                'color': 'info'
+            },
+            'gemini': {
+                'icon': '🤖',
+                'name': 'AI智能摘要 (Gemini)',
                 'color': 'info'
             },
             'fallback': {
@@ -359,7 +625,7 @@ class AISummaryGenerator:
             }
         }
         
-        config = service_config.get(ai_service, service_config['deepseek'])
+        config = service_config.get(ai_service, service_config['fallback'])
         
         return f'''!!! {config['color']} "{config['icon']} {config['name']}"
     {summary}
@@ -369,24 +635,54 @@ class AISummaryGenerator:
 # 创建全局实例
 ai_summary_generator = AISummaryGenerator()
 
-# 🔧 自定义配置函数
-def configure_ai_summary(enabled_folders=None, exclude_patterns=None, exclude_files=None):
+# 🔧 配置函数
+def configure_ai_summary(enabled_folders=None, exclude_patterns=None, exclude_files=None, 
+                        ai_service=None, service_config=None):
     """
-    配置AI摘要功能
+    配置AI摘要功能（自动清理缓存版本）
     
     Args:
-        enabled_folders: 启用AI摘要的文件夹列表，例如 ['blog/', 'docs/', 'posts/']
-        exclude_patterns: 排除的模式列表，例如 ['404.md', '/admin/']
-        exclude_files: 排除的特定文件列表，例如 ['blog/index.md']
+        enabled_folders: 启用AI摘要的文件夹列表
+        exclude_patterns: 排除的模式列表
+        exclude_files: 排除的特定文件列表
+        ai_service: 使用的AI服务 ('deepseek', 'openai', 'claude', 'gemini')
+        service_config: AI服务配置
     
     Example:
-        # 只在blog和docs文件夹启用
-        configure_ai_summary(['blog/', 'docs/'])
-        
-        # 在所有文件夹启用，但排除特定文件
-        configure_ai_summary([''], exclude_files=['index.md', 'about.md'])
+        # 切换到OpenAI（会自动清理DeepSeek的缓存）
+        configure_ai_summary(
+            enabled_folders=['blog/', 'docs/'],
+            ai_service='openai',
+            service_config={
+                'api_key': 'your-openai-api-key',
+                'model': 'gpt-4'
+            }
+        )
     """
     ai_summary_generator.configure_folders(enabled_folders, exclude_patterns, exclude_files)
+    
+    if ai_service:
+        if service_config:
+            # 合并配置
+            current_config = ai_summary_generator.ai_services.get(ai_service, {})
+            current_config.update(service_config)
+            ai_summary_generator.configure_ai_service(ai_service, current_config)
+        else:
+            ai_summary_generator.configure_ai_service(ai_service)
+
+# 新增手动清理缓存函数
+def clear_ai_cache():
+    """手动清理AI摘要缓存"""
+    try:
+        cache_dir = Path("site/.ai_cache")
+        if cache_dir.exists():
+            shutil.rmtree(cache_dir)
+            cache_dir.mkdir(exist_ok=True)
+            print("✅ 手动清理AI摘要缓存完成")
+        else:
+            print("📁 缓存目录不存在")
+    except Exception as e:
+        print(f"❌ 手动清理缓存失败: {e}")
 
 def on_page_markdown(markdown, page, config, files):
     """MkDocs hook入口点"""
