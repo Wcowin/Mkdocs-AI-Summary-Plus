@@ -1,7 +1,7 @@
 {
-  "summary": "This project enhances MkDocs documentation with AI-driven features. It offers automatic article summaries using various AI services, supports multiple languages, and includes intelligent content cleaning. Additionally, it provides reading statistics, language recognition, and content type detection. The installation process involves direct download or Git clone methods, with detailed configuration steps. The project aims to streamline documentation creation and improve user experience through AI-powered functionalities.",
+  "summary": "This project enhances MkDocs documentation with AI-driven features like automatic summary generation and reading statistics. It supports multiple AI services, bilingual summaries, and content cleaning. The system includes a fallback mechanism and efficient caching. Reading statistics offer character counting, code detection, and reading time estimation. Smart features recognize languages and content types, optimize performance, and ensure error handling. Installation methods include direct download and Git clone, with detailed configuration steps provided. The project aims to streamline documentation creation and enhance user experience.",
   "service": "openai",
   "page_title": "Home",
-  "timestamp": "2025-06-03T17:01:48.627807",
+  "timestamp": "2025-06-03T17:05:38.695733",
   "language": "en"
 }
