@@ -1,0 +1,7 @@
+{
+  "summary": "MkDocs is a documentation tool with commands for project creation, live server start, and site building. The project structure includes a configuration file (mkdocs.yml) and markdown pages in the docs/ directory. It simplifies creating and managing documentation websites efficiently.",
+  "service": "openai",
+  "page_title": "Home",
+  "timestamp": "2025-06-03T23:25:15.719568",
+  "language": "en"
+}

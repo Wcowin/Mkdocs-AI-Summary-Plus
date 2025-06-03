@@ -1,0 +1,77 @@
+name: ci 
+on:
+  push:
+    branches:
+      - master 
+      - main
+permissions:
+  contents: write
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: MkDocs-AI-Hooks
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          
+      - uses: actions/setup-python@v4
+        with:
+          python-version: 3.x
+          
+      - run: echo "cache_id=$(date --utc '+%V')" >> $GITHUB_ENV 
+      
+      - uses: actions/cache@v3
+        with:
+          key: mkdocs-material-${{ env.cache_id }}
+          path: .cache
+          restore-keys: |
+            mkdocs-material-
+            
+      # 安装项目依赖
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+          pip install mkdocs-material
+          pip install --upgrade --force-reinstall mkdocs-material
+          
+      # 安装额外的 MkDocs 插件
+      - run: pip install mkdocs-git-revision-date-localized-plugin
+      - run: pip install mkdocs-git-authors-plugin  
+      - run: pip install mkdocs-git-committers-plugin-2
+      - run: pip install markdown-callouts
+      - run: pip install mkdocs-rss-plugin
+      - run: pip install pymdown-extensions
+      
+      # 安装 AI Hooks 依赖
+      - run: pip install requests>=2.25.0 python-dateutil>=2.8.0 cachetools>=4.2.0
+      
+      # 调试信息
+      - name: Debug - Check files
+        run: |
+          echo "当前工作目录："
+          pwd
+          echo "文件列表："
+          ls -la
+          echo "检查 docs 目录："
+          ls -la docs/ || echo "docs directory not found"
+          echo "检查 mkdocs.yml："
+          head -20 mkdocs.yml || echo "mkdocs.yml not found"
+      
+      # 构建和部署
+      - name: Build and Deploy
+        env:
+          DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          AI_SUMMARY_CI_ENABLED: "true"
+          AI_SUMMARY_LOCAL_ENABLED: "false"
+          AI_SUMMARY_CI_ONLY_CACHE: "false"
+          AI_SUMMARY_CI_FALLBACK: "true"
+        run: |
+          echo "🚀 开始构建 MkDocs 网站..."
+          mkdocs build --verbose
+          echo "📦 开始部署到 GitHub Pages..."
+          mkdocs gh-deploy --force --verbose
