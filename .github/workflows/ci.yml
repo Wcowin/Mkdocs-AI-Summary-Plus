@@ -22,7 +22,8 @@ jobs:
         with:
           python-version: 3.x
           
-      - run: echo "cache_id=$(date --utc '+%V')" >> $GITHUB_ENV 
+      - name: Set cache ID
+        run: echo "cache_id=$(date --utc '+%V')" >> $GITHUB_ENV 
       
       - uses: actions/cache@v3
         with:
@@ -68,7 +69,7 @@ jobs:
       # 构建和部署
       - name: Build and Deploy
         env:
-          DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
+          # DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
           AI_SUMMARY_CI_ENABLED: "true"
           AI_SUMMARY_LOCAL_ENABLED: "false"
