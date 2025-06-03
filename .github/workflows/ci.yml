@@ -9,9 +9,6 @@ permissions:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: MkDocs-AI-Hooks
     steps:
       - uses: actions/checkout@v4
         with:
@@ -26,7 +23,7 @@ jobs:
       - uses: actions/cache@v3
         with:
           key: mkdocs-material-${{ env.cache_id }}
-          path: .cache
+          path: MkDocs-AI-Hooks/.cache
           restore-keys: |
             mkdocs-material-
             
@@ -34,6 +31,7 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
+          cd MkDocs-AI-Hooks
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
           pip install mkdocs-material
           pip install --upgrade --force-reinstall mkdocs-material
@@ -50,16 +48,14 @@ jobs:
       - run: pip install requests>=2.25.0 python-dateutil>=2.8.0 cachetools>=4.2.0
       
       # 调试信息
-      - name: Debug - Check files
+      - name: Debug - Check repository structure
         run: |
-          echo "当前工作目录："
-          pwd
-          echo "文件列表："
+          echo "仓库根目录结构："
           ls -la
-          echo "检查 docs 目录："
-          ls -la docs/ || echo "docs directory not found"
+          echo "检查 MkDocs-AI-Hooks 目录："
+          ls -la MkDocs-AI-Hooks/ || echo "MkDocs-AI-Hooks directory not found"
           echo "检查 mkdocs.yml："
-          head -20 mkdocs.yml || echo "mkdocs.yml not found"
+          cat MkDocs-AI-Hooks/mkdocs.yml || echo "mkdocs.yml not found"
       
       # 构建和部署
       - name: Build and Deploy
@@ -71,6 +67,7 @@ jobs:
           AI_SUMMARY_CI_ONLY_CACHE: "false"
           AI_SUMMARY_CI_FALLBACK: "true"
         run: |
+          cd MkDocs-AI-Hooks
           echo "🚀 开始构建 MkDocs 网站..."
           mkdocs build --verbose
           echo "📦 开始部署到 GitHub Pages..."
