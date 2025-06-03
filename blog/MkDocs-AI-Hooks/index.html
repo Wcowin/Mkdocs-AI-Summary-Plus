@@ -1,0 +1,1892 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+        <meta name="author" content="Wcowin">
+      
+      
+        <link rel="canonical" href="https://github.com/Wcowin/mkdocs-ai-hooks/blog/MkDocs-AI-Hooks/">
+      
+      
+        <link rel="prev" href="../..">
+      
+      
+        <link rel="next" href="../">
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.14">
+    
+    
+      
+        <title>MkDocs AI Hooks - MkDocs AI Hooks</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.342714a4.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#mkdocs-ai-hooks" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="MkDocs AI Hooks" class="md-header__button md-logo" aria-label="MkDocs AI Hooks" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 89 89">
+  <path d="M3.136,17.387l0,42.932l42.932,21.467l-42.932,-64.399Z" />
+  <path d="M21.91,8l42.933,64.398l-18.775,9.388l-42.932,-64.399l18.774,-9.387Z" style="fill-opacity: 0.5" />
+  <path d="M67.535,17.387l-27.262,18.156l21.878,32.818l5.384,2.691l0,-53.665Z" />
+  <path d="M67.535,17.387l0,53.666l18.774,-9.388l0,-53.665l-18.774,9.387Z" style="fill-opacity: 0.25" />
+</svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            MkDocs AI Hooks
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              MkDocs AI Hooks
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="关闭自动模式"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="关闭自动模式" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7a5 5 0 0 0-5 5 5 5 0 0 0 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1M8 13h8v-2H8zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4a5 5 0 0 0 5-5 5 5 0 0 0-5-5"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="indigo"  aria-label="切换至夜间模式"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="切换至夜间模式" for="__palette_2" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 7H7a5 5 0 0 0-5 5 5 5 0 0 0 5 5h10a5 5 0 0 0 5-5 5 5 0 0 0-5-5m0 8a3 3 0 0 1-3-3 3 3 0 0 1 3-3 3 3 0 0 1 3 3 3 3 0 0 1-3 3"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="black" data-md-color-accent="indigo"  aria-label="切换至日间模式"  type="radio" name="__palette" id="__palette_2">
+    
+      <label class="md-header__button md-icon" title="切换至日间模式" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 6H7c-3.31 0-6 2.69-6 6s2.69 6 6 6h10c3.31 0 6-2.69 6-6s-2.69-6-6-6m0 10H7c-2.21 0-4-1.79-4-4s1.79-4 4-4h10c2.21 0 4 1.79 4 4s-1.79 4-4 4M7 9c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/Wcowin/mkdocs-ai-hooks" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    mkdocs-ai-hooks
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    <li class="md-tabs__item md-tabs__item--active">
+      <a href="./" class="md-tabs__link">
+        
+  
+  
+    
+  
+  MkDocs AI Hooks
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../" class="md-tabs__link">
+          
+  
+  
+    
+  
+  blog
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="MkDocs AI Hooks" class="md-nav__button md-logo" aria-label="MkDocs AI Hooks" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 89 89">
+  <path d="M3.136,17.387l0,42.932l42.932,21.467l-42.932,-64.399Z" />
+  <path d="M21.91,8l42.933,64.398l-18.775,9.388l-42.932,-64.399l18.774,-9.387Z" style="fill-opacity: 0.5" />
+  <path d="M67.535,17.387l-27.262,18.156l21.878,32.818l5.384,2.691l0,-53.665Z" />
+  <path d="M67.535,17.387l0,53.666l18.774,-9.388l0,-53.665l-18.774,9.387Z" style="fill-opacity: 0.25" />
+</svg>
+
+    </a>
+    MkDocs AI Hooks
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/Wcowin/mkdocs-ai-hooks" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    mkdocs-ai-hooks
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Home
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    MkDocs AI Hooks
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    MkDocs AI Hooks
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      ✨ 功能特性
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="✨ 功能特性">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ai" class="md-nav__link">
+    <span class="md-ellipsis">
+      AI智能摘要
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      智能阅读统计(可选)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      智能化特性
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      📦 安装
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="📦 安装">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      方法1：直接下载（推荐）
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    <span class="md-ellipsis">
+      方法2：
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      依赖安装
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      🚀 快速开始
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🚀 快速开始">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-mkdocs" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. 配置MkDocs
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-ai_summarypyai" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. 在ai_summary.py中配置需要AI摘要的目录
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-ai_summarypydeepseek-apiopenai" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. 在ai_summary.py中设置DeepSeek API(默认是OpenAI)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-mkdocs" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. 运行MkDocs
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      📖 使用指南
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="📖 使用指南">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ai_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      AI摘要配置
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="AI摘要配置">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      文件夹级别控制
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      页面级别控制(推荐)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      阅读时间配置
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="阅读时间配置">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
+    <span class="md-ellipsis">
+      排除特定页面
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_12" class="md-nav__link">
+    <span class="md-ellipsis">
+      🎨 显示效果
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🎨 显示效果">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ai_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      AI摘要显示
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_13" class="md-nav__link">
+    <span class="md-ellipsis">
+      阅读信息显示
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#api" class="md-nav__link">
+    <span class="md-ellipsis">
+      API花费
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="API花费">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#openai" class="md-nav__link">
+    <span class="md-ellipsis">
+      免费openai额度获取
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_14" class="md-nav__link">
+    <span class="md-ellipsis">
+      ⚙️ 高级配置
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="⚙️ 高级配置">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#api_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      自定义API服务
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_15" class="md-nav__link">
+    <span class="md-ellipsis">
+      自定义提示词
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_16" class="md-nav__link">
+    <span class="md-ellipsis">
+      缓存配置
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci" class="md-nav__link">
+    <span class="md-ellipsis">
+      是否选择本地CI部署
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#star-history" class="md-nav__link">
+    <span class="md-ellipsis">
+      Star History
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_17" class="md-nav__link">
+    <span class="md-ellipsis">
+      请作者喝杯咖啡
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    blog
+    
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      ✨ 功能特性
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="✨ 功能特性">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ai" class="md-nav__link">
+    <span class="md-ellipsis">
+      AI智能摘要
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      智能阅读统计(可选)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      智能化特性
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      📦 安装
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="📦 安装">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      方法1：直接下载（推荐）
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    <span class="md-ellipsis">
+      方法2：
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      依赖安装
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      🚀 快速开始
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🚀 快速开始">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-mkdocs" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. 配置MkDocs
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-ai_summarypyai" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. 在ai_summary.py中配置需要AI摘要的目录
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-ai_summarypydeepseek-apiopenai" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. 在ai_summary.py中设置DeepSeek API(默认是OpenAI)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-mkdocs" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. 运行MkDocs
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      📖 使用指南
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="📖 使用指南">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ai_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      AI摘要配置
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="AI摘要配置">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      文件夹级别控制
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      页面级别控制(推荐)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      阅读时间配置
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="阅读时间配置">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
+    <span class="md-ellipsis">
+      排除特定页面
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_12" class="md-nav__link">
+    <span class="md-ellipsis">
+      🎨 显示效果
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🎨 显示效果">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ai_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      AI摘要显示
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_13" class="md-nav__link">
+    <span class="md-ellipsis">
+      阅读信息显示
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#api" class="md-nav__link">
+    <span class="md-ellipsis">
+      API花费
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="API花费">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#openai" class="md-nav__link">
+    <span class="md-ellipsis">
+      免费openai额度获取
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_14" class="md-nav__link">
+    <span class="md-ellipsis">
+      ⚙️ 高级配置
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="⚙️ 高级配置">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#api_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      自定义API服务
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_15" class="md-nav__link">
+    <span class="md-ellipsis">
+      自定义提示词
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_16" class="md-nav__link">
+    <span class="md-ellipsis">
+      缓存配置
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci" class="md-nav__link">
+    <span class="md-ellipsis">
+      是否选择本地CI部署
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#star-history" class="md-nav__link">
+    <span class="md-ellipsis">
+      Star History
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_17" class="md-nav__link">
+    <span class="md-ellipsis">
+      请作者喝杯咖啡
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+    
+      
+    
+    <a href="https://github.com/Wcowin/mkdocs-ai-hooks/raw/main/docs/blog/MkDocs-AI-Hooks.md" title="View source of this page" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 18c.56 0 1 .44 1 1s-.44 1-1 1-1-.44-1-1 .44-1 1-1m0-3c-2.73 0-5.06 1.66-6 4 .94 2.34 3.27 4 6 4s5.06-1.66 6-4c-.94-2.34-3.27-4-6-4m0 6.5a2.5 2.5 0 0 1-2.5-2.5 2.5 2.5 0 0 1 2.5-2.5 2.5 2.5 0 0 1 2.5 2.5 2.5 2.5 0 0 1-2.5 2.5M9.27 20H6V4h7v5h5v4.07c.7.08 1.36.25 2 .49V8l-6-6H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h4.5a8.2 8.2 0 0 1-1.23-2"/></svg>
+    </a>
+  
+
+
+<div class="admonition info">
+<p class="admonition-title">💾 AI Summary (ChatGPT)</p>
+<p>The MkDocs AI Hooks project enhances technical documentation and blogs with AI-driven summary generation and intelligent reading statistics using MkDocs hooks. Key features include AI-generated summaries, multi-language support, multiple API services, intelligent content cleaning, efficient caching, and flexible configuration. It also offers smart reading statistics, language recognition, content type detection, cache optimization, and error handling. Installation involves downloading Python files and configuring MkDocs. Users can customize AI summary and reading time configurations at folder and page levels. The project aims to support multiple AI services, improve API integration, optimize display, and introduce additional features in the future.</p>
+</div>
+<div class="admonition info">
+<p class="admonition-title">📖 阅读信息</p>
+<p>阅读时间：<strong>3</strong> 分钟 | 中文字符：<strong>1050</strong> | 有效代码行数：<strong>142</strong></p>
+</div>
+<h1 id="mkdocs-ai-hooks">MkDocs AI Hooks<a class="headerlink" href="#mkdocs-ai-hooks" title="Permanent link">&para;</a></h1>
+<p align="center">
+    <img src="https://img.shields.io/badge/MkDocs-Hooks-526CFE?style=for-the-badge&logo=MaterialForMkDocs&logoColor=white" alt="MkDocs Hooks">
+    <img src="https://img.shields.io/badge/AI_Powered-DeepSeek-FF6B35?style=for-the-badge&logo=openai&logoColor=white" alt="AI Powered">
+    <img src="https://img.shields.io/badge/Python-3.7+-3776AB?style=for-the-badge&logo=python&logoColor=white" alt="Python 3.7+">
+</p>
+
+<p align="center">
+    <a href="https://github.com/Wcowin/mkdocs-ai-hooks/blob/main/README.md">中文</a> | <a href="https://github.com/Wcowin/mkdocs-ai-hooks/blob/main/README-en.md">English</a>
+</p>
+
+<p>🚀 <strong>您的MkDocs文档首选智能摘要！</strong> <br />
+这个项目利用MkDocs hooks，为您的技术文档和博客添加AI驱动的摘要生成和智能阅读统计功能。
+<img alt="iShot 2025 06 03 13.39.35" src="https://s1.imagehub.cc/images/2025/06/03/d1563500263b22cfd0ffc3679993aa83.jpg" />
+<img alt="image" src="https://s1.imagehub.cc/images/2025/06/03/526b59b6a2e478f2ffa1629320e3e2ce.png" /></p>
+<p>网站效果预览：<a href="https://wcowin.work/Mkdocs-Wcowin/blog/Mkdocs/mkfirst/">https://wcowin.work/Mkdocs-Wcowin/blog/Mkdocs/mkfirst/</a></p>
+<h2 id="_1">✨ 功能特性<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<h3 id="ai">AI智能摘要<a class="headerlink" href="#ai" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>自动生成文章摘要</strong>：使用DeepSeek API生成高质量的80-120字摘要</li>
+<li><strong>多语言支持</strong>：支持中文、英文等多种语言</li>
+<li><strong>多API服务支持</strong>：支持OpenAI、Claude等多种AI服务</li>
+<li><strong>智能内容清理</strong>：自动过滤YAML、HTML、代码块等格式内容</li>
+<li><strong>备用摘要机制</strong>：API失败时提供基于规则的智能摘要</li>
+<li><strong>高效缓存系统</strong>：避免重复API调用，7天智能过期</li>
+<li><strong>灵活配置</strong>：支持文件夹级别和页面级别的精确控制</li>
+</ul>
+<h3 id="_2">智能阅读统计(可选)<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>精准中文字符统计</strong>：专门优化的中文内容识别</li>
+<li><strong>智能代码检测</strong>：识别多种编程语言和命令行代码</li>
+<li><strong>阅读时间估算</strong>：基于中文阅读习惯的400字/分钟计算</li>
+<li><strong>美观信息展示</strong>：使用MkDocs Material风格的信息框</li>
+</ul>
+<h3 id="_3">智能化特性<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>自动语言识别</strong>：支持30+编程语言和标记语言</li>
+<li><strong>内容类型检测</strong>：区分代码、配置、命令行等不同内容</li>
+<li><strong>缓存优化</strong>：LRU缓存提升性能</li>
+<li><strong>错误处理</strong>：完善的异常处理和日志记录</li>
+</ul>
+<h2 id="_4">📦 安装<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h2>
+<h3 id="1">方法1：直接下载（推荐）<a class="headerlink" href="#1" title="Permanent link">&para;</a></h3>
+<p>在releases页面下载，解压后将以下文件放入您的MkDocs项目的docs/overrides/hooks中：
+<a href="https://github.com/Wcowin/mkdocs-ai-hooks/releases">https://github.com/Wcowin/mkdocs-ai-hooks/releases</a>  </p>
+<p>或者下载上方hooks目录下的两个Python文件：
+- <code>ai_summary.py</code>：AI摘要生成器
+- <code>reading_time.py</code>：阅读时间统计器</p>
+<p><div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1">1</a></span>
+<span class="normal"><a href="#__codelineno-0-2">2</a></span>
+<span class="normal"><a href="#__codelineno-0-3">3</a></span>
+<span class="normal"><a href="#__codelineno-0-4">4</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1"></a><span class="c1"># 放置到您的项目目录</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2"></a>mkdir<span class="w"> </span>-p<span class="w"> </span>docs/overrides/hooks/
+<a id="__codelineno-0-3" name="__codelineno-0-3"></a>mv<span class="w"> </span>ai_summary.py<span class="w"> </span>docs/overrides/hooks/
+<a id="__codelineno-0-4" name="__codelineno-0-4"></a>mv<span class="w"> </span>reading_time.py<span class="w"> </span>docs/overrides/hooks/
+</code></pre></div></td></tr></table></div>
+放置的位置如下：
+<img alt="image" src="https://s1.imagehub.cc/images/2025/06/03/8b1c7485da460dfd6f61c15cde89b5e5.png" /></p>
+<p>在 <code>mkdocs.yml</code> 中theme下添加custom_dir：
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-1-1">1</a></span>
+<span class="normal"><a href="#__codelineno-1-2">2</a></span>
+<span class="normal"><a href="#__codelineno-1-3">3</a></span>
+<span class="normal"><a href="#__codelineno-1-4">4</a></span>
+<span class="normal"><a href="#__codelineno-1-5">5</a></span>
+<span class="normal"><a href="#__codelineno-1-6">6</a></span>
+<span class="normal"><a href="#__codelineno-1-7">7</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1"></a><span class="c1"># 可选：Material主题配置</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2"></a><span class="nt">theme</span><span class="p">:</span>
+<a id="__codelineno-1-3" name="__codelineno-1-3"></a><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">material</span>
+<a id="__codelineno-1-4" name="__codelineno-1-4"></a><span class="w">  </span><span class="nt">custom_dir</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">docs/overrides</span><span class="w"> </span><span class="c1">#一定要有！一定要有！</span>
+<a id="__codelineno-1-5" name="__codelineno-1-5"></a><span class="w">  </span><span class="nt">features</span><span class="p">:</span>
+<a id="__codelineno-1-6" name="__codelineno-1-6"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">content.code.copy</span>
+<a id="__codelineno-1-7" name="__codelineno-1-7"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">content.code.select</span>
+</code></pre></div></td></tr></table></div></p>
+<h3 id="2">方法2：<a class="headerlink" href="#2" title="Permanent link">&para;</a></h3>
+<p>使用Git克隆
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-2-1">1</a></span>
+<span class="normal"><a href="#__codelineno-2-2">2</a></span>
+<span class="normal"><a href="#__codelineno-2-3">3</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1"></a>git<span class="w"> </span>clone<span class="w">  </span>https://github.com/Wcowin/mkdocs-ai-hooks.git
+<a id="__codelineno-2-2" name="__codelineno-2-2"></a><span class="nb">cd</span><span class="w"> </span>mkdocs-ai-hooks<span class="w"> </span>
+<a id="__codelineno-2-3" name="__codelineno-2-3"></a>pip<span class="w"> </span>install<span class="w"> </span>-r<span class="w"> </span>requirements.txt
+</code></pre></div></td></tr></table></div></p>
+<h3 id="_5">依赖安装<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h3>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-3-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1"></a>pip<span class="w"> </span>install<span class="w"> </span>requirements.txt
+</code></pre></div></td></tr></table></div>
+<h2 id="_6">🚀 快速开始<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h2>
+<h3 id="1-mkdocs">1. 配置MkDocs<a class="headerlink" href="#1-mkdocs" title="Permanent link">&para;</a></h3>
+<p>先执行一次<code>mkdocs build</code>，生成缓存文件
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-4-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1"></a>mkdocs<span class="w"> </span>build<span class="w"> </span>
+</code></pre></div></td></tr></table></div>
+在 <code>mkdocs.yml</code> 中添加hooks，theme下添加custom_dir：
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-5-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-5-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-5-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-5-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-5-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-5-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-5-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-5-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-5-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-5-10">10</a></span>
+<span class="normal"><a href="#__codelineno-5-11">11</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1"></a><span class="nt">hooks</span><span class="p">:</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">docs/overrides/hooks/ai_summary.py</span><span class="w"> </span><span class="c1"># 添加AI摘要hook</span>
+<a id="__codelineno-5-3" name="__codelineno-5-3"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">docs/overrides/hooks/reading_time.py</span><span class="w"> </span><span class="c1"># 添加统计阅读时间hook</span>
+<a id="__codelineno-5-4" name="__codelineno-5-4"></a>
+<a id="__codelineno-5-5" name="__codelineno-5-5"></a><span class="c1"># 可选：Material主题配置</span>
+<a id="__codelineno-5-6" name="__codelineno-5-6"></a><span class="nt">theme</span><span class="p">:</span>
+<a id="__codelineno-5-7" name="__codelineno-5-7"></a><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">material</span>
+<a id="__codelineno-5-8" name="__codelineno-5-8"></a><span class="w">  </span><span class="nt">custom_dir</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">docs/overrides</span><span class="w"> </span><span class="c1">#一定要有！！</span>
+<a id="__codelineno-5-9" name="__codelineno-5-9"></a><span class="w">  </span><span class="nt">features</span><span class="p">:</span>
+<a id="__codelineno-5-10" name="__codelineno-5-10"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">content.code.copy</span>
+<a id="__codelineno-5-11" name="__codelineno-5-11"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">content.code.select</span>
+</code></pre></div></td></tr></table></div></p>
+<h3 id="2-ai_summarypyai">2. 在ai_summary.py中配置需要AI摘要的目录<a class="headerlink" href="#2-ai_summarypyai" title="Permanent link">&para;</a></h3>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-6-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-6-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-6-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-6-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-6-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-6-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-6-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-6-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-6-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-6-10">10</a></span>
+<span class="normal"><a href="#__codelineno-6-11">11</a></span>
+<span class="normal"><a href="#__codelineno-6-12">12</a></span>
+<span class="normal"><a href="#__codelineno-6-13">13</a></span>
+<span class="normal"><a href="#__codelineno-6-14">14</a></span>
+<span class="normal"><a href="#__codelineno-6-15">15</a></span>
+<span class="normal"><a href="#__codelineno-6-16">16</a></span>
+<span class="normal"><a href="#__codelineno-6-17">17</a></span>
+<span class="normal"><a href="#__codelineno-6-18">18</a></span>
+<span class="normal"><a href="#__codelineno-6-19">19</a></span>
+<span class="normal"><a href="#__codelineno-6-20">20</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1"></a><span class="c1"># 📂 可自定义的文件夹配置</span>
+<a id="__codelineno-6-2" name="__codelineno-6-2"></a><span class="bp">self</span><span class="o">.</span><span class="n">enabled_folders</span> <span class="o">=</span> <span class="p">[</span>
+<a id="__codelineno-6-3" name="__codelineno-6-3"></a>    <span class="s1">&#39;blog/&#39;</span><span class="p">,</span>      <span class="c1"># blog文件夹</span>
+<a id="__codelineno-6-4" name="__codelineno-6-4"></a>    <span class="s1">&#39;develop/&#39;</span><span class="p">,</span>   <span class="c1"># develop文件夹</span>
+<a id="__codelineno-6-5" name="__codelineno-6-5"></a>    <span class="c1"># 在这里添加您想要启用AI摘要的文件夹</span>
+<a id="__codelineno-6-6" name="__codelineno-6-6"></a><span class="p">]</span>
+<a id="__codelineno-6-7" name="__codelineno-6-7"></a>
+<a id="__codelineno-6-8" name="__codelineno-6-8"></a><span class="c1"># 📋 排除的文件和文件夹</span>
+<a id="__codelineno-6-9" name="__codelineno-6-9"></a><span class="bp">self</span><span class="o">.</span><span class="n">exclude_patterns</span> <span class="o">=</span> <span class="p">[</span>
+<a id="__codelineno-6-10" name="__codelineno-6-10"></a>    <span class="s1">&#39;waline.md&#39;</span><span class="p">,</span> <span class="s1">&#39;link.md&#39;</span><span class="p">,</span> <span class="s1">&#39;404.md&#39;</span><span class="p">,</span> <span class="s1">&#39;tag.md&#39;</span><span class="p">,</span> <span class="s1">&#39;tags.md&#39;</span><span class="p">,</span>
+<a id="__codelineno-6-11" name="__codelineno-6-11"></a>    <span class="s1">&#39;/about/&#39;</span><span class="p">,</span> <span class="s1">&#39;/search/&#39;</span><span class="p">,</span> <span class="s1">&#39;/sitemap&#39;</span><span class="p">,</span> <span class="s1">&#39;index.md&#39;</span><span class="p">,</span>  <span class="c1"># 根目录index.md</span>
+<a id="__codelineno-6-12" name="__codelineno-6-12"></a><span class="p">]</span>
+<a id="__codelineno-6-13" name="__codelineno-6-13"></a>
+<a id="__codelineno-6-14" name="__codelineno-6-14"></a><span class="c1"># 📋 排除的特定文件</span>
+<a id="__codelineno-6-15" name="__codelineno-6-15"></a><span class="bp">self</span><span class="o">.</span><span class="n">exclude_files</span> <span class="o">=</span> <span class="p">[</span>
+<a id="__codelineno-6-16" name="__codelineno-6-16"></a>    <span class="s1">&#39;blog/index.md&#39;</span><span class="p">,</span>
+<a id="__codelineno-6-17" name="__codelineno-6-17"></a>    <span class="s1">&#39;blog/indexblog.md&#39;</span><span class="p">,</span>
+<a id="__codelineno-6-18" name="__codelineno-6-18"></a>    <span class="s1">&#39;docs/index.md&#39;</span><span class="p">,</span>
+<a id="__codelineno-6-19" name="__codelineno-6-19"></a>    <span class="s1">&#39;develop/index.md&#39;</span><span class="p">,</span>
+<a id="__codelineno-6-20" name="__codelineno-6-20"></a><span class="p">]</span>
+</code></pre></div></td></tr></table></div>
+<h3 id="3-ai_summarypydeepseek-apiopenai">3. 在ai_summary.py中设置DeepSeek API(默认是OpenAI)<a class="headerlink" href="#3-ai_summarypydeepseek-apiopenai" title="Permanent link">&para;</a></h3>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-7-1">1</a></span>
+<span class="normal"><a href="#__codelineno-7-2">2</a></span>
+<span class="normal"><a href="#__codelineno-7-3">3</a></span>
+<span class="normal"><a href="#__codelineno-7-4">4</a></span>
+<span class="normal"><a href="#__codelineno-7-5">5</a></span>
+<span class="normal"><a href="#__codelineno-7-6">6</a></span>
+<span class="normal"><a href="#__codelineno-7-7">7</a></span>
+<span class="normal"><a href="#__codelineno-7-8">8</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1"></a><span class="c1"># 在ai_summary.py中修改API配置</span>
+<a id="__codelineno-7-2" name="__codelineno-7-2"></a><span class="s1">&#39;deepseek&#39;</span><span class="p">:</span> <span class="p">{</span>
+<a id="__codelineno-7-3" name="__codelineno-7-3"></a>    <span class="s1">&#39;url&#39;</span><span class="p">:</span> <span class="s1">&#39;https://api.deepseek.com/v1/chat/completions&#39;</span><span class="p">,</span>
+<a id="__codelineno-7-4" name="__codelineno-7-4"></a>    <span class="s1">&#39;model&#39;</span><span class="p">:</span> <span class="s1">&#39;deepseek-chat&#39;</span><span class="p">,</span>
+<a id="__codelineno-7-5" name="__codelineno-7-5"></a>    <span class="s1">&#39;api_key&#39;</span><span class="p">:</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s1">&#39;DEEPSEEK_API_KEY&#39;</span><span class="p">,</span> <span class="s1">&#39;your-azure-api-key&#39;</span><span class="p">),</span>
+<a id="__codelineno-7-6" name="__codelineno-7-6"></a>    <span class="s1">&#39;max_tokens&#39;</span><span class="p">:</span> <span class="mi">150</span><span class="p">,</span>
+<a id="__codelineno-7-7" name="__codelineno-7-7"></a>    <span class="s1">&#39;temperature&#39;</span><span class="p">:</span> <span class="mf">0.3</span>
+<a id="__codelineno-7-8" name="__codelineno-7-8"></a><span class="p">},</span>
+</code></pre></div></td></tr></table></div>
+<h3 id="4-mkdocs">4. 运行MkDocs<a class="headerlink" href="#4-mkdocs" title="Permanent link">&para;</a></h3>
+<p>第一次运行时，可能需要等待一段时间，因为系统会自动生成摘要。后续运行时，系统会使用缓存数据，加快生成速度。
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-8-1">1</a></span>
+<span class="normal"><a href="#__codelineno-8-2">2</a></span>
+<span class="normal"><a href="#__codelineno-8-3">3</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1"></a><span class="c1">#依次运行命令</span>
+<a id="__codelineno-8-2" name="__codelineno-8-2"></a>mkdocs<span class="w"> </span>build<span class="w"> </span>
+<a id="__codelineno-8-3" name="__codelineno-8-3"></a>mkdocs<span class="w"> </span>serve
+</code></pre></div></td></tr></table></div>
+终端输出如下：
+<img alt="image" src="https://s1.imagehub.cc/images/2025/06/03/a287b109428d7e4e61afe7212e045860.png" /></p>
+<h2 id="_7">📖 使用指南<a class="headerlink" href="#_7" title="Permanent link">&para;</a></h2>
+<h3 id="ai_1">AI摘要配置<a class="headerlink" href="#ai_1" title="Permanent link">&para;</a></h3>
+<h4 id="_8">文件夹级别控制<a class="headerlink" href="#_8" title="Permanent link">&para;</a></h4>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-9-1">1</a></span>
+<span class="normal"><a href="#__codelineno-9-2">2</a></span>
+<span class="normal"><a href="#__codelineno-9-3">3</a></span>
+<span class="normal"><a href="#__codelineno-9-4">4</a></span>
+<span class="normal"><a href="#__codelineno-9-5">5</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1"></a><span class="c1"># 启用特定文件夹</span>
+<a id="__codelineno-9-2" name="__codelineno-9-2"></a><span class="n">configure_ai_summary</span><span class="p">([</span><span class="s1">&#39;blog/&#39;</span><span class="p">,</span> <span class="s1">&#39;docs/&#39;</span><span class="p">,</span> <span class="s1">&#39;tutorials/&#39;</span><span class="p">])</span>
+<a id="__codelineno-9-3" name="__codelineno-9-3"></a>
+<a id="__codelineno-9-4" name="__codelineno-9-4"></a><span class="c1"># 全局启用（除排除项）</span>
+<a id="__codelineno-9-5" name="__codelineno-9-5"></a><span class="n">configure_ai_summary</span><span class="p">([</span><span class="s1">&#39;&#39;</span><span class="p">])</span>
+</code></pre></div></td></tr></table></div>
+<h4 id="_9">页面级别控制(推荐)<a class="headerlink" href="#_9" title="Permanent link">&para;</a></h4>
+<p>在Markdown文件的YAML front matter中：</p>
+<p><div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-10-1">1</a></span>
+<span class="normal"><a href="#__codelineno-10-2">2</a></span>
+<span class="normal"><a href="#__codelineno-10-3">3</a></span>
+<span class="normal"><a href="#__codelineno-10-4">4</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1"></a><span class="nn">---</span>
+<a id="__codelineno-10-2" name="__codelineno-10-2"></a><span class="nt">title</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">文章标题</span>
+<a id="__codelineno-10-3" name="__codelineno-10-3"></a><span class="nt">ai_summary</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w">   </span><span class="c1"># 启用AI摘要</span>
+<a id="__codelineno-10-4" name="__codelineno-10-4"></a><span class="nn">---</span>
+</code></pre></div></td></tr></table></div>
+<img alt="iShot 2025 06 03 13.46.03" src="https://s1.imagehub.cc/images/2025/06/03/6b40a854fe57ef33b40c580ab4a7c802.jpg" />
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-11-1">1</a></span>
+<span class="normal"><a href="#__codelineno-11-2">2</a></span>
+<span class="normal"><a href="#__codelineno-11-3">3</a></span>
+<span class="normal"><a href="#__codelineno-11-4">4</a></span>
+<span class="normal"><a href="#__codelineno-11-5">5</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1"></a><span class="nn">---</span>
+<a id="__codelineno-11-2" name="__codelineno-11-2"></a><span class="nt">title</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">文章标题</span>
+<a id="__codelineno-11-3" name="__codelineno-11-3"></a><span class="nt">ai_summary</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span><span class="w">  </span><span class="c1"># 禁用AI摘要</span>
+<a id="__codelineno-11-4" name="__codelineno-11-4"></a><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">手动摘要</span><span class="w">  </span><span class="c1"># 可选</span>
+<a id="__codelineno-11-5" name="__codelineno-11-5"></a><span class="nn">---</span>
+</code></pre></div></td></tr></table></div></p>
+<h3 id="_10">阅读时间配置<a class="headerlink" href="#_10" title="Permanent link">&para;</a></h3>
+<h4 id="_11">排除特定页面<a class="headerlink" href="#_11" title="Permanent link">&para;</a></h4>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-12-1">1</a></span>
+<span class="normal"><a href="#__codelineno-12-2">2</a></span>
+<span class="normal"><a href="#__codelineno-12-3">3</a></span>
+<span class="normal"><a href="#__codelineno-12-4">4</a></span>
+<span class="normal"><a href="#__codelineno-12-5">5</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1"></a><span class="c1"># 在页面的YAML front matter中</span>
+<a id="__codelineno-12-2" name="__codelineno-12-2"></a><span class="o">---</span>
+<a id="__codelineno-12-3" name="__codelineno-12-3"></a><span class="n">title</span><span class="p">:</span> <span class="n">页面标题</span>
+<a id="__codelineno-12-4" name="__codelineno-12-4"></a><span class="n">hide_reading_time</span><span class="p">:</span> <span class="n">true</span>  <span class="c1"># 隐藏阅读时间</span>
+<a id="__codelineno-12-5" name="__codelineno-12-5"></a><span class="o">---</span>
+</code></pre></div></td></tr></table></div>
+<h2 id="_12">🎨 显示效果<a class="headerlink" href="#_12" title="Permanent link">&para;</a></h2>
+<h3 id="ai_2">AI摘要显示<a class="headerlink" href="#ai_2" title="Permanent link">&para;</a></h3>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-13-1">1</a></span>
+<span class="normal"><a href="#__codelineno-13-2">2</a></span>
+<span class="normal"><a href="#__codelineno-13-3">3</a></span>
+<span class="normal"><a href="#__codelineno-13-4">4</a></span>
+<span class="normal"><a href="#__codelineno-13-5">5</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1"></a>!!! info &quot;🤖 AI智能摘要&quot;
+<a id="__codelineno-13-2" name="__codelineno-13-2"></a>    本文详细介绍了MkDocs hooks的开发和使用方法，涵盖AI摘要生成、阅读时间统计等功能实现。通过DeepSeek API集成和智能缓存机制，为技术文档提供自动化的内容增强服务。
+<a id="__codelineno-13-3" name="__codelineno-13-3"></a>
+<a id="__codelineno-13-4" name="__codelineno-13-4"></a><span class="gh"># 您的文章标题</span>
+<a id="__codelineno-13-5" name="__codelineno-13-5"></a>文章内容...
+</code></pre></div></td></tr></table></div>
+<h3 id="_13">阅读信息显示<a class="headerlink" href="#_13" title="Permanent link">&para;</a></h3>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-14-1">1</a></span>
+<span class="normal"><a href="#__codelineno-14-2">2</a></span>
+<span class="normal"><a href="#__codelineno-14-3">3</a></span>
+<span class="normal"><a href="#__codelineno-14-4">4</a></span>
+<span class="normal"><a href="#__codelineno-14-5">5</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1"></a>!!! info &quot;📖 阅读信息&quot;
+<a id="__codelineno-14-2" name="__codelineno-14-2"></a>    阅读时间：**3** 分钟 | 中文字符：**1247** | 有效代码行数：**45**
+<a id="__codelineno-14-3" name="__codelineno-14-3"></a>
+<a id="__codelineno-14-4" name="__codelineno-14-4"></a><span class="gh"># 您的文章标题</span>
+<a id="__codelineno-14-5" name="__codelineno-14-5"></a>文章内容...
+</code></pre></div></td></tr></table></div>
+<p><strong>实际效果：</strong>
+<img alt="iShot 2025 06 03 13.22.14" src="https://s1.imagehub.cc/images/2025/06/03/8e4818b5b73c07d9b90a7471b1bfcbae.jpg" /></p>
+<h3 id="api">API花费<a class="headerlink" href="#api" title="Permanent link">&para;</a></h3>
+<p>一次大约0.03-0.05元（中大型文档）
+可以说相当经济实惠了！</p>
+<h4 id="openai">免费openai额度获取<a class="headerlink" href="#openai" title="Permanent link">&para;</a></h4>
+<p>推荐使用：<a href="https://github.com/chatanywhere/GPT_API_free?tab=readme-ov-file#%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8">chatanywhere</a><br />
+申请好后得到sk-开头的密钥，在ai_summary.py的多AI服务配置部分替换为以下内容：</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-15-1">1</a></span>
+<span class="normal"><a href="#__codelineno-15-2">2</a></span>
+<span class="normal"><a href="#__codelineno-15-3">3</a></span>
+<span class="normal"><a href="#__codelineno-15-4">4</a></span>
+<span class="normal"><a href="#__codelineno-15-5">5</a></span>
+<span class="normal"><a href="#__codelineno-15-6">6</a></span>
+<span class="normal"><a href="#__codelineno-15-7">7</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1"></a><span class="s1">&#39;openai&#39;</span><span class="p">:</span> <span class="p">{</span>
+<a id="__codelineno-15-2" name="__codelineno-15-2"></a>    <span class="s1">&#39;url&#39;</span><span class="p">:</span> <span class="s1">&#39;https://api.chatanywhere.tech/v1/chat/completions&#39;</span><span class="p">,</span>
+<a id="__codelineno-15-3" name="__codelineno-15-3"></a>    <span class="s1">&#39;model&#39;</span><span class="p">:</span> <span class="s1">&#39;gpt-3.5-turbo&#39;</span><span class="p">,</span>  <span class="c1"># 或 &#39;gpt-4&#39;, &#39;gpt-4-turbo&#39;</span>
+<a id="__codelineno-15-4" name="__codelineno-15-4"></a>    <span class="s1">&#39;api_key&#39;</span><span class="p">:</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s1">&#39;OPENAI_API_KEY&#39;</span><span class="p">,</span> <span class="s1">&#39;your_openai_api_key&#39;</span><span class="p">),</span>
+<a id="__codelineno-15-5" name="__codelineno-15-5"></a>    <span class="s1">&#39;max_tokens&#39;</span><span class="p">:</span> <span class="mi">150</span><span class="p">,</span>
+<a id="__codelineno-15-6" name="__codelineno-15-6"></a>    <span class="s1">&#39;temperature&#39;</span><span class="p">:</span> <span class="mf">0.3</span>
+<a id="__codelineno-15-7" name="__codelineno-15-7"></a><span class="p">},</span>
+</code></pre></div></td></tr></table></div>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-16-1">1</a></span>
+<span class="normal"><a href="#__codelineno-16-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1"></a><span class="c1"># 默认使用的AI服务</span>
+<a id="__codelineno-16-2" name="__codelineno-16-2"></a><span class="bp">self</span><span class="o">.</span><span class="n">default_service</span> <span class="o">=</span> <span class="s1">&#39;openai&#39;</span>
+</code></pre></div></td></tr></table></div>
+<p>但是我这里也推荐使用<a href="https://platform.deepseek.com/usage">DeepSeek</a> API，额度充足且性能优秀。</p>
+<h2 id="_14">⚙️ 高级配置<a class="headerlink" href="#_14" title="Permanent link">&para;</a></h2>
+<h3 id="api_1">自定义API服务<a class="headerlink" href="#api_1" title="Permanent link">&para;</a></h3>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-17-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-17-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-17-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-17-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-17-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-17-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-17-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-17-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-17-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-17-10">10</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1"></a><span class="c1"># 支持其他AI服务</span>
+<a id="__codelineno-17-2" name="__codelineno-17-2"></a><span class="bp">self</span><span class="o">.</span><span class="n">ai_services</span> <span class="o">=</span> <span class="p">{</span>
+<a id="__codelineno-17-3" name="__codelineno-17-3"></a>    <span class="s1">&#39;AI服务名字&#39;</span><span class="p">:</span> <span class="p">{</span>
+<a id="__codelineno-17-4" name="__codelineno-17-4"></a>        <span class="s1">&#39;url&#39;</span><span class="p">:</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
+<a id="__codelineno-17-5" name="__codelineno-17-5"></a>        <span class="s1">&#39;model&#39;</span><span class="p">:</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
+<a id="__codelineno-17-6" name="__codelineno-17-6"></a>        <span class="s1">&#39;api_key&#39;</span><span class="p">:</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s1">&#39;GOOGLE_API_KEY&#39;</span><span class="p">,</span> <span class="s1">&#39;your-claude-api-key&#39;</span><span class="p">),</span>
+<a id="__codelineno-17-7" name="__codelineno-17-7"></a>        <span class="s1">&#39;max_tokens&#39;</span><span class="p">:</span> <span class="mi">150</span><span class="p">,</span> <span class="c1"># 最大token数</span>
+<a id="__codelineno-17-8" name="__codelineno-17-8"></a>        <span class="s1">&#39;temperature&#39;</span><span class="p">:</span> <span class="mf">0.3</span> 
+<a id="__codelineno-17-9" name="__codelineno-17-9"></a>    <span class="p">}</span>
+<a id="__codelineno-17-10" name="__codelineno-17-10"></a><span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+<h3 id="_15">自定义提示词<a class="headerlink" href="#_15" title="Permanent link">&para;</a></h3>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-18-1">1</a></span>
+<span class="normal"><a href="#__codelineno-18-2">2</a></span>
+<span class="normal"><a href="#__codelineno-18-3">3</a></span>
+<span class="normal"><a href="#__codelineno-18-4">4</a></span>
+<span class="normal"><a href="#__codelineno-18-5">5</a></span>
+<span class="normal"><a href="#__codelineno-18-6">6</a></span>
+<span class="normal"><a href="#__codelineno-18-7">7</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1"></a><span class="c1"># 修改AI摘要的提示词</span>
+<a id="__codelineno-18-2" name="__codelineno-18-2"></a><span class="k">def</span><span class="w"> </span><span class="nf">generate_ai_summary</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">content</span><span class="p">,</span> <span class="n">page_title</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">):</span>
+<a id="__codelineno-18-3" name="__codelineno-18-3"></a>    <span class="n">prompt</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;&quot;&quot;您的自定义提示词...</span>
+<a id="__codelineno-18-4" name="__codelineno-18-4"></a>
+<a id="__codelineno-18-5" name="__codelineno-18-5"></a><span class="s2">    文章标题：</span><span class="si">{</span><span class="n">page_title</span><span class="si">}</span>
+<a id="__codelineno-18-6" name="__codelineno-18-6"></a><span class="s2">    文章内容：</span><span class="si">{</span><span class="n">content</span><span class="p">[:</span><span class="mi">2500</span><span class="p">]</span><span class="si">}</span>
+<a id="__codelineno-18-7" name="__codelineno-18-7"></a><span class="s2">    &quot;&quot;&quot;</span>
+</code></pre></div></td></tr></table></div>
+<h3 id="_16">缓存配置<a class="headerlink" href="#_16" title="Permanent link">&para;</a></h3>
+<p><div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-19-1">1</a></span>
+<span class="normal"><a href="#__codelineno-19-2">2</a></span>
+<span class="normal"><a href="#__codelineno-19-3">3</a></span>
+<span class="normal"><a href="#__codelineno-19-4">4</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-19-1" name="__codelineno-19-1"></a><span class="c1"># 修改缓存过期时间（天数）</span>
+<a id="__codelineno-19-2" name="__codelineno-19-2"></a><span class="n">cache_time</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">fromisoformat</span><span class="p">(</span><span class="n">cache_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;timestamp&#39;</span><span class="p">,</span> <span class="s1">&#39;1970-01-01&#39;</span><span class="p">))</span>
+<a id="__codelineno-19-3" name="__codelineno-19-3"></a><span class="k">if</span> <span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span> <span class="o">-</span> <span class="n">cache_time</span><span class="p">)</span><span class="o">.</span><span class="n">days</span> <span class="o">&lt;</span> <span class="mi">30</span><span class="p">:</span>  <span class="c1"># 改为30天</span>
+<a id="__codelineno-19-4" name="__codelineno-19-4"></a>    <span class="k">return</span> <span class="n">cache_data</span>
+</code></pre></div></td></tr></table></div>
+注意注意注意！！！<br />
+切换api服务后，要删除site/.ai_cache这个缓存文件，才可以重新生成摘要！！！<strong>(这个问题已经解决了，切换api服务后，会自动删除缓存文件，无需手动删除)</strong></p>
+<h3 id="ci">是否选择本地CI部署<a class="headerlink" href="#ci" title="Permanent link">&para;</a></h3>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-20-1">1</a></span>
+<span class="normal"><a href="#__codelineno-20-2">2</a></span>
+<span class="normal"><a href="#__codelineno-20-3">3</a></span>
+<span class="normal"><a href="#__codelineno-20-4">4</a></span>
+<span class="normal"><a href="#__codelineno-20-5">5</a></span>
+<span class="normal"><a href="#__codelineno-20-6">6</a></span>
+<span class="normal"><a href="#__codelineno-20-7">7</a></span>
+<span class="normal"><a href="#__codelineno-20-8">8</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-20-1" name="__codelineno-20-1"></a><span class="c1"># 🚀 CI 环境配置 - 默认本地CI环境禁用</span>
+<a id="__codelineno-20-2" name="__codelineno-20-2"></a><span class="bp">self</span><span class="o">.</span><span class="n">ci_config</span> <span class="o">=</span> <span class="p">{</span>
+<a id="__codelineno-20-3" name="__codelineno-20-3"></a>    <span class="s1">&#39;enabled_in_ci&#39;</span><span class="p">:</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s1">&#39;AI_SUMMARY_CI_ENABLED&#39;</span><span class="p">,</span> <span class="s1">&#39;true&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;true&#39;</span><span class="p">,</span>  <span class="c1"># 默认 CI 中启用</span>
+<a id="__codelineno-20-4" name="__codelineno-20-4"></a>    <span class="s1">&#39;enabled_in_local&#39;</span><span class="p">:</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s1">&#39;AI_SUMMARY_LOCAL_ENABLED&#39;</span><span class="p">,</span> <span class="s1">&#39;false&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;true&#39;</span><span class="p">,</span>  <span class="c1"># </span>
+<a id="__codelineno-20-5" name="__codelineno-20-5"></a>    <span class="c1"># &#39;enabled_in_local&#39;: os.getenv(&#39;AI_SUMMARY_LOCAL_ENABLED&#39;, &#39;true&#39;).lower() == &#39;true&#39;,  # 默认本地启用</span>
+<a id="__codelineno-20-6" name="__codelineno-20-6"></a>    <span class="s1">&#39;ci_only_cache&#39;</span><span class="p">:</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s1">&#39;AI_SUMMARY_CI_ONLY_CACHE&#39;</span><span class="p">,</span> <span class="s1">&#39;false&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;true&#39;</span><span class="p">,</span>  <span class="c1"># CI 中也允许生成新摘要</span>
+<a id="__codelineno-20-7" name="__codelineno-20-7"></a>    <span class="s1">&#39;ci_fallback_enabled&#39;</span><span class="p">:</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s1">&#39;AI_SUMMARY_CI_FALLBACK&#39;</span><span class="p">,</span> <span class="s1">&#39;true&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;true&#39;</span>
+<a id="__codelineno-20-8" name="__codelineno-20-8"></a><span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+<!-- ## 🔧 自定义开发
+
+### 扩展AI服务支持
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-21-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-21-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-21-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-21-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-21-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-21-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-21-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-21-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-21-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-21-10">10</a></span>
+<span class="normal"><a href="#__codelineno-21-11">11</a></span>
+<span class="normal"><a href="#__codelineno-21-12">12</a></span>
+<span class="normal"><a href="#__codelineno-21-13">13</a></span>
+<span class="normal"><a href="#__codelineno-21-14">14</a></span>
+<span class="normal"><a href="#__codelineno-21-15">15</a></span>
+<span class="normal"><a href="#__codelineno-21-16">16</a></span>
+<span class="normal"><a href="#__codelineno-21-17">17</a></span>
+<span class="normal"><a href="#__codelineno-21-18">18</a></span>
+<span class="normal"><a href="#__codelineno-21-19">19</a></span>
+<span class="normal"><a href="#__codelineno-21-20">20</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-21-1" name="__codelineno-21-1"></a><span class="k">class</span><span class="w"> </span><span class="nc">AISummaryGenerator</span><span class="p">:</span>
+<a id="__codelineno-21-2" name="__codelineno-21-2"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">add_ai_service</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">service_name</span><span class="p">,</span> <span class="n">config</span><span class="p">):</span>
+<a id="__codelineno-21-3" name="__codelineno-21-3"></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;添加新的AI服务支持&quot;&quot;&quot;</span>
+<a id="__codelineno-21-4" name="__codelineno-21-4"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">ai_services</span><span class="p">[</span><span class="n">service_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">config</span>
+<a id="__codelineno-21-5" name="__codelineno-21-5"></a>
+<a id="__codelineno-21-6" name="__codelineno-21-6"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">generate_summary_with_service</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">content</span><span class="p">,</span> <span class="n">service_name</span><span class="p">):</span>
+<a id="__codelineno-21-7" name="__codelineno-21-7"></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;使用指定服务生成摘要&quot;&quot;&quot;</span>
+<a id="__codelineno-21-8" name="__codelineno-21-8"></a>        <span class="c1"># 您的实现</span>
+<a id="__codelineno-21-9" name="__codelineno-21-9"></a>        <span class="k">pass</span>
+<a id="__codelineno-21-10" name="__codelineno-21-10"></a><span class="err">```</span> <span class="o">--&gt;</span>
+<a id="__codelineno-21-11" name="__codelineno-21-11"></a>
+<a id="__codelineno-21-12" name="__codelineno-21-12"></a><span class="c1">### 自定义摘要格式</span>
+<a id="__codelineno-21-13" name="__codelineno-21-13"></a><span class="err">```</span><span class="n">python</span>
+<a id="__codelineno-21-14" name="__codelineno-21-14"></a><span class="k">def</span><span class="w"> </span><span class="nf">format_summary</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">summary</span><span class="p">,</span> <span class="n">ai_service</span><span class="p">):</span>
+<a id="__codelineno-21-15" name="__codelineno-21-15"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;自定义摘要显示格式&quot;&quot;&quot;</span>
+<a id="__codelineno-21-16" name="__codelineno-21-16"></a>    <span class="k">return</span> <span class="sa">f</span><span class="s1">&#39;&#39;&#39;!!! note &quot;✨ 自定义摘要&quot;</span>
+<a id="__codelineno-21-17" name="__codelineno-21-17"></a><span class="s1">    </span><span class="si">{</span><span class="n">summary</span><span class="si">}</span>
+<a id="__codelineno-21-18" name="__codelineno-21-18"></a>
+<a id="__codelineno-21-19" name="__codelineno-21-19"></a><span class="s1">    *由 </span><span class="si">{</span><span class="n">ai_service</span><span class="si">}</span><span class="s1"> 生成*</span>
+<a id="__codelineno-21-20" name="__codelineno-21-20"></a><span class="s1">&#39;&#39;&#39;</span>
+</code></pre></div></td></tr></table></div>
+
+## 🌍 多语言支持
+
+### 英文摘要  
+
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-22-1">1</a></span>
+<span class="normal"><a href="#__codelineno-22-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-22-1" name="__codelineno-22-1"></a><span class="c1"># 语言配置/Language Configuration</span>
+<a id="__codelineno-22-2" name="__codelineno-22-2"></a><span class="bp">self</span><span class="o">.</span><span class="n">summary_language</span> <span class="o">=</span> <span class="s1">&#39;en&#39;</span>  <span class="c1"># 默认中文，可选 &#39;zh&#39;、&#39;en&#39;、&#39;both&#39;</span>
+</code></pre></div></td></tr></table></div>
+
+### 其他语言扩展（Todo）  
+
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-23-1">1</a></span>
+<span class="normal"><a href="#__codelineno-23-2">2</a></span>
+<span class="normal"><a href="#__codelineno-23-3">3</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-23-1" name="__codelineno-23-1"></a><span class="c1"># 支持日文、韩文等</span>
+<a id="__codelineno-23-2" name="__codelineno-23-2"></a><span class="n">JAPANESE_CHARS_PATTERN</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;[\u3040-\u309F\u30A0-\u30FF]&#39;</span><span class="p">)</span>
+<a id="__codelineno-23-3" name="__codelineno-23-3"></a><span class="n">KOREAN_CHARS_PATTERN</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;[\uAC00-\uD7AF]&#39;</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+
+## 📊 性能优化
+
+- **LRU缓存**：函数级别缓存提升性能
+- **正则预编译**：提高文本处理速度
+- **智能过滤**：减少不必要的API调用
+- **异步支持**：可扩展为异步处理（TODO）
+
+## 🤝 贡献指南
+
+我们欢迎各种形式的贡献！
+
+1. **Fork** 这个仓库
+2. 创建您的特性分支 
+3. 提交您的更改
+4. 推送到分支
+5. 打开一个 **Pull Request**
+
+### 开发环境设置
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-24-1">1</a></span>
+<span class="normal"><a href="#__codelineno-24-2">2</a></span>
+<span class="normal"><a href="#__codelineno-24-3">3</a></span>
+<span class="normal"><a href="#__codelineno-24-4">4</a></span>
+<span class="normal"><a href="#__codelineno-24-5">5</a></span>
+<span class="normal"><a href="#__codelineno-24-6">6</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-24-1" name="__codelineno-24-1"></a><span class="c1"># 克隆仓库</span>
+<a id="__codelineno-24-2" name="__codelineno-24-2"></a>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/Wcowin/mkdocs-ai-hooks.git
+<a id="__codelineno-24-3" name="__codelineno-24-3"></a><span class="nb">cd</span><span class="w"> </span>mkdocs-ai-hooks
+<a id="__codelineno-24-4" name="__codelineno-24-4"></a>
+<a id="__codelineno-24-5" name="__codelineno-24-5"></a><span class="c1"># 安装依赖</span>
+<a id="__codelineno-24-6" name="__codelineno-24-6"></a>pip<span class="w"> </span>install<span class="w"> </span>-r<span class="w"> </span>requirements.txt
+</code></pre></div></td></tr></table></div>
+
+## 📝 更新日志
+
+### [v1.0.0] (2025-06-01)
+- ✨ 初始发布
+- 🤖 AI智能摘要功能
+- 📖 阅读时间统计功能
+- 💾 智能缓存系统
+- 🎯 灵活配置选项
+---
+### [v1.2.0]  (2025-06-03)
+
+### ✨ 新功能 (Features)
+
+#### 🤖 AI智能摘要系统
+- **多AI服务支持**: 集成 DeepSeek、OpenAI、Gemini、Claude 四大AI服务
+- **智能服务切换**: 支持服务优先级配置和自动故障转移
+- **多语言摘要**: 支持中文、英文、双语摘要生成
+- **内容智能清理**: 自动移除无关格式，提取核心文本用于AI处理
+- **备用摘要机制**: AI服务不可用时自动生成基于关键词的本地摘要
+
+#### 🌍 环境自适应配置
+- **CI/本地环境检测**: 自动识别 GitHub Actions、GitLab CI、Netlify 等15种CI环境
+- **分离式配置**: CI和本地环境可独立配置启用/禁用状态
+- **推荐配置**: 默认仅在CI环境启用，本地环境禁用，减少开发干扰
+
+#### 💾 智能缓存系统
+- **内容哈希缓存**: 基于文章内容+语言设置生成唯一缓存标识
+- **缓存过期管理**: 7天自动过期机制，确保内容时效性
+- **服务变更检测**: AI服务或语言设置变更时自动清理相关缓存
+- **缓存健壮性**: 支持目录级和文件级缓存清理策略
+
+#### 🎯 灵活配置选项
+- **文件夹精确控制**: 支持指定特定文件夹启用AI摘要
+- **排除模式**: 支持文件模式和具体文件路径排除
+- **页面级控制**: 通过 front matter 的 `ai_summary` 字段强制启用/禁用
+- **API密钥管理**: 支持环境变量和代码配置两种方式
+
+### 🔧 技术特性 (Technical Features)
+
+#### 📡 API集成
+- **统一请求构建**: 自动适配不同AI服务的API格式和认证方式
+- **错误处理**: 完善的网络异常和API错误处理机制
+- **超时控制**: 30秒请求超时，防止构建过程阻塞
+- **响应解析**: 智能提取和清理AI返回的摘要内容
+
+#### 🎨 显示优化
+- **自适应标题**: 根据AI服务和语言设置动态生成摘要标题
+- **视觉区分**: 使用不同图标和颜色区分AI摘要和备用摘要
+- **格式规范**: 自动清理摘要格式，移除多余前缀和后缀
+
+---
+
+### 计划功能
+- [x] 多AI服务支持（OpenAI、Claude等）
+- [x] 自动选择最佳API
+- [ ] API密钥安全处理(重要)
+- [ ] 批量处理模式
+- [ ] 统计数据导出
+- [ ] Web界面配置
+
+## 🐛 问题反馈
+
+如果您遇到任何问题，请在 [Issues](https://github.com/Wcowin/mkdocs-ai-hooks/issues) 中提交。
+
+提交问题时请包含：
+- MkDocs版本
+- Python版本
+- 错误信息
+- 复现步骤
+
+## 📄 许可证
+
+本项目采用 [MIT License](LICENSE) 开源协议。
+
+## 🙏 致谢
+
+- [MkDocs](https://www.mkdocs.org/) - 静态站点生成器
+- [Material for MkDocs](https://squidfunk.github.io/mkdocs-material/) - 优秀的主题
+- [DeepSeek](https://deepseek.com/) - AI API服务
+- 所有贡献者和使用者
+
+# Connect with me
+
+<center>
+
+**Telegram**
+
+<p align="center">
+  <a href="https://t.me/wecowin" target="_blank">
+    <img src="https://pica.zhimg.com/80/v2-d5876bc0c8c756ecbba8ff410ed29c14_1440w.webp" alt="个人名片" style="border-radius: 10px;" width="50%">
+  </a>
+</p>
+
+
+**Wechat**  
+<!-- ![](https://s1.imagehub.cc/images/2024/02/02/bb9ee71b03ee7a3b87caad5cc4bcebff.jpeg) -->
+<p align="center">
+<img src="https://pic3.zhimg.com/80/v2-5ef3dde831c9d0a41fe35fabb0cb8784_1440w.webp" style="border-radius: 10px;" width="50%">
+</p>
+
+</center>
+<h2 id="star-history">Star History<a class="headerlink" href="#star-history" title="Permanent link">&para;</a></h2>
+<p><a href="https://www.star-history.com/#Wcowin/mkdocs-ai-hooks&amp;Date"><img alt="Star History Chart" src="https://api.star-history.com/svg?repos=Wcowin/mkdocs-ai-hooks&amp;type=Date" /></a></p>
+<h2 id="_17">请作者喝杯咖啡<a class="headerlink" href="#_17" title="Permanent link">&para;</a></h2>
+<p align="center">
+  <a href="https://s1.imagehub.cc/images/2025/05/11/36eb33bf18f9041667267605b6b99bd0.jpeg" target="_blank">
+   <center>
+    <img src="https://s1.imagehub.cc/images/2025/05/11/36eb33bf18f9041667267605b6b99bd0.jpeg" style="width: 450px; height: auto; border-radius: 25px;" >
+    </center>  
+  </a>
+</center>
+
+<p align="center">
+    如果这个项目对您有帮助，请给它一个 ⭐ Star！
+</p>
+
+<p align="center">
+    <a href="https://github.com/Wcowin/mkdocs-ai-hooks/stargazers">
+        <img src="https://img.shields.io/github/stars/Wcowin/mkdocs-ai-hooks?style=social" alt="Stars">
+    </a>
+    <a href="https://github.com/Wcowin/mkdocs-ai-hooks/network/members">
+        <img src="https://img.shields.io/github/forks/Wcowin/mkdocs-ai-hooks?style=social" alt="Forks">
+    </a>
+</p>
+
+---
+
+*📝 本项目致力于让MkDocs文档更加智能化和用户友好。如有建议或想法，欢迎交流！*
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../.." class="md-footer__link md-footer__link--prev" aria-label="Previous: Home">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Home
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../" class="md-footer__link md-footer__link--next" aria-label="Next: Index">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                Index
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; 2025 Wcowin
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+      <div class="md-progress" data-md-component="progress" role="progressbar"></div>
+    
+    
+    
+      
+      <script id="__config" type="application/json">{"base": "../..", "features": ["announce.dismiss", "navigation.instant", "navigation.prune", "navigation.instant.progress", "navigation.tracking", "navigation.tabs", "navigation.sections", "navigation.top", "navigation.footer", "search.suggest", "search.highlight", "search.share", "navigation.expand", "navigation.indexes", "content.tabs.link", "content.tooltips", "content.code.copy", "content.code.select", "content.action.view", "content.code.annotate"], "search": "../../assets/javascripts/workers/search.d50fe291.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.13a4f30d.min.js"></script>
+      
+    
+  </body>
+</html>
