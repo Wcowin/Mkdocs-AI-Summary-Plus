@@ -196,6 +196,9 @@ hide_reading_time: true  # 隐藏阅读时间
 **实际效果：**
 ![iShot 2025 06 03 13.22.14](https://s1.imagehub.cc/images/2025/06/03/8e4818b5b73c07d9b90a7471b1bfcbae.jpg)
 
+### API花费
+一次大约0.03-0.05元（中大型文档）
+可以说相当经济实惠了！
 
 ## ⚙️ 高级配置
 
