@@ -9,7 +9,8 @@
 
 🚀 **智能化您的MkDocs文档！**   
 这个项目提供了强大的MkDocs hooks，为您的技术文档和博客添加AI驱动的摘要生成和智能阅读统计功能。
-![alt text](iShot_2025-06-03_13.39.35.jpg)
+![iShot 2025 06 03 13.39.35](https://s1.imagehub.cc/images/2025/06/03/d1563500263b22cfd0ffc3679993aa83.jpg)
+
 ## ✨ 功能特性
 
 ### AI智能摘要
@@ -44,7 +45,9 @@ mkdir -p docs/overrides/hooks/
 mv ai_summary.py docs/overrides/hooks/
 mv reading_time.py docs/overrides/hooks/
 ```
-![alt text](image.png)
+
+![image](https://s1.imagehub.cc/images/2025/06/03/8b1c7485da460dfd6f61c15cde89b5e5.png)
+
 ### 方法2：Git Submodule
 ```bash
 # 添加为子模块
@@ -144,7 +147,7 @@ title: 文章标题
 ai_summary: true   # 启用AI摘要
 ---
 ```
-![alt text](iShot_2025-06-03_13.46.03.jpg)
+![iShot 2025 06 03 13.46.03](https://s1.imagehub.cc/images/2025/06/03/6b40a854fe57ef33b40c580ab4a7c802.jpg)
 ```yaml
 ---
 title: 文章标题
@@ -185,8 +188,7 @@ hide_reading_time: true  # 隐藏阅读时间
 ```  
 
 **实际效果：**
-![alt text](iShot_2025-06-03_13.22.14.jpg)
-
+![iShot 2025 06 03 13.22.14](https://s1.imagehub.cc/images/2025/06/03/8e4818b5b73c07d9b90a7471b1bfcbae.jpg)
 
 
 ## ⚙️ 高级配置
