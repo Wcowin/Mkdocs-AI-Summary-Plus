@@ -36,7 +36,7 @@ class AISummaryGenerator:
             'openai': {
                 'url': 'https://api.chatanywhere.tech/v1/chat/completions',
                 'model': 'gpt-3.5-turbo',  # 或 'gpt-4', 'gpt-4-turbo'
-                'api_key': os.getenv('OPENAI_API_KEY', 'sk-vTIWRtY595O8K7NxhNMPohGGrEimNFspS6iLDH1yjORy7Lcj'),
+                'api_key': os.getenv('OPENAI_API_KEY', ),
                 'max_tokens': 150,
                 'temperature': 0.3
             },
