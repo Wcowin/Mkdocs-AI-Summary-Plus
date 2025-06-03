@@ -78,7 +78,7 @@ theme:
     - content.code.select
 ```
 
-### 2. 配置需要AI摘要的目录
+### 2. 在ai_summary.py中配置需要AI摘要的目录
 ```python
 # 📂 可自定义的文件夹配置
 self.enabled_folders = [
@@ -102,7 +102,7 @@ self.exclude_files = [
 ]
 ```
 
-### 3. 设置DeepSeek API
+### 3. 在ai_summary.py中设置DeepSeek API
 ```python
 # 在ai_summary.py中修改API配置
 self.api_config = {
@@ -117,6 +117,7 @@ self.api_config = {
 测试API：sk-7dbcd6e21fb3417299b50aecff76c7bf（替换`*YOUR_API_KEY_HERE*`）
 
 ### 4. 运行MkDocs
+第一次运行时，可能需要等待一段时间，因为系统会自动生成摘要。后续运行时，系统会使用缓存数据，加快生成速度。
 ```bash
 mkdocs serve
 ```
