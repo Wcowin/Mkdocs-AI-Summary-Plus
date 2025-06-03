@@ -15,8 +15,8 @@ class AISummaryGenerator:
         # 🚀 CI 环境配置 - 默认只在 CI 环境中启用
         self.ci_config = {
             'enabled_in_ci': os.getenv('AI_SUMMARY_CI_ENABLED', 'true').lower() == 'true',  # 默认 CI 中启用
-            # 'enabled_in_local': os.getenv('AI_SUMMARY_LOCAL_ENABLED', 'false').lower() == 'true',  # 默认本地禁用
-            'enabled_in_local': os.getenv('AI_SUMMARY_LOCAL_ENABLED', 'true').lower() == 'true',  # 默认本地启用
+            'enabled_in_local': os.getenv('AI_SUMMARY_LOCAL_ENABLED', 'false').lower() == 'true',  # 默认本地禁用
+            # 'enabled_in_local': os.getenv('AI_SUMMARY_LOCAL_ENABLED', 'true').lower() == 'true',  # 默认本地启用
             'ci_only_cache': os.getenv('AI_SUMMARY_CI_ONLY_CACHE', 'false').lower() == 'true',  # CI 中也允许生成新摘要
             'ci_fallback_enabled': os.getenv('AI_SUMMARY_CI_FALLBACK', 'true').lower() == 'true'
         }
@@ -36,7 +36,7 @@ class AISummaryGenerator:
             'openai': {
                 'url': 'https://api.chatanywhere.tech/v1/chat/completions',
                 'model': 'gpt-3.5-turbo',  # 或 'gpt-4', 'gpt-4-turbo'
-                'api_key': os.getenv('OPENAI_API_KEY', 'sk-vTIWRtY595O8K7NxhNMPohGGrEimNFspS6iLDH1yjORy7Lcj'),
+                'api_key': os.getenv('OPENAI_API_KEY', ),
                 'max_tokens': 150,
                 'temperature': 0.3
             },

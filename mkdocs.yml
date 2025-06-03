@@ -60,6 +60,7 @@ copyright: Copyright &copy; 2025 Wcowin # 左下角的版权声明
 nav:
   - Home: index.md
   - MkDocs AI Hooks: blog/MkDocs-AI-Hooks.md
+  - 小米: xiaomo.md
   - blog:
     - blog/index.md
 plugins:
