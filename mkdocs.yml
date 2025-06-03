@@ -60,9 +60,10 @@ copyright: Copyright &copy; 2025 Wcowin # 左下角的版权声明
 nav:
   - Home: index.md
   - MkDocs AI Hooks: blog/MkDocs-AI-Hooks.md
-  - 小米: xiaomo.md
+  - 小米: blog/xiaomo.md
   - blog:
     - blog/index.md
+    
 plugins:
   - search:
       # enabled: !ENV [CI, false]   #建议加上这句，不然会影响速度，本地搜索可以不需要，不影响部署时候有
