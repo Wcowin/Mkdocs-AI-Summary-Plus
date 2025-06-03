@@ -6,12 +6,13 @@
     <img src="https://img.shields.io/badge/Python-3.7+-3776AB?style=for-the-badge&logo=python&logoColor=white" alt="Python 3.7+">
 </p>
 
+[中文](/) | [English](README-en.md)
 
 🚀 **智能化您的MkDocs文档！**   
 这个项目提供了强大的MkDocs hooks，为您的技术文档和博客添加AI驱动的摘要生成和智能阅读统计功能。
 ![iShot 2025 06 03 13.39.35](https://s1.imagehub.cc/images/2025/06/03/d1563500263b22cfd0ffc3679993aa83.jpg)
 
-[中文](/) | [English](README-en.md)
+
 
 ## ✨ 功能特性
 
@@ -71,7 +72,7 @@ pip install requirements.txt
 ```bash
 mkdocs build 
 ```
-在 `mkdocs.yml` 中添加hooks：
+在 `mkdocs.yml` 中添加hooks，theme下添加custom_dir：
 ```yaml
 hooks:
   - docs/overrides/hooks/ai_summary.py # 添加AI摘要hook
@@ -80,6 +81,7 @@ hooks:
 # 可选：Material主题配置
 theme:
   name: material
+  custom_dir: docs/overrides #一定要有！！
   features:
     - content.code.copy
     - content.code.select

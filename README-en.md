@@ -68,7 +68,7 @@ First run `mkdocs build` once to generate cache files
 ```bash
 mkdocs build 
 ```
-Add hooks in `mkdocs.yml`:
+Add hooks in `mkdocs.yml`and add custom_dir under theme:
 ```yaml
 hooks:
   - docs/overrides/hooks/ai_summary.py # Add AI summary hook
@@ -77,6 +77,7 @@ hooks:
 # Optional: Material theme configuration
 theme:
   name: material
+  custom_dir: docs/overrides # Must have this!
   features:
     - content.code.copy
     - content.code.select
