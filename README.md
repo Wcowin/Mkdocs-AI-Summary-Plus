@@ -206,9 +206,26 @@ hide_reading_time: true  # 隐藏阅读时间
 可以说相当经济实惠了！
 
 #### 免费openai额度获取
-https://github.com/chatanywhere/GPT_API_free?tab=readme-ov-file  
+推荐使用：[chatanywhere](https://github.com/chatanywhere/GPT_API_free?tab=readme-ov-file#%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8 )
+申请好后得到sk-开头的密钥，在ai_summary.py的多AI服务配置部分替换为以下内容：
 
-但是我这里也推荐使用DeepSeek API，额度充足且性能优秀。
+```python
+'openai': {
+    'url': 'https://api.chatanywhere.tech/v1/chat/completions',
+    'model': 'gpt-3.5-turbo',  # 或 'gpt-4', 'gpt-4-turbo'
+    'api_key': os.getenv('OPENAI_API_KEY', 'your_openai_api_key'),
+    'max_tokens': 150,
+    'temperature': 0.3
+},
+```
+
+```python
+# 默认使用的AI服务
+self.default_service = 'openai'
+```
+
+
+但是我这里也推荐使用[DeepSeek](https://platform.deepseek.com/usage) API，额度充足且性能优秀。
 
 ## ⚙️ 高级配置
 
@@ -246,7 +263,7 @@ if (datetime.now() - cache_time).days < 30:  # 改为30天
 注意注意注意！！！  
 切换api服务后，要删除site/.ai_cache这个缓存文件，才可以重新生成摘要！！！
 
-## 🔧 自定义开发
+<!-- ## 🔧 自定义开发
 
 ### 扩展AI服务支持
 ```python
@@ -259,7 +276,7 @@ class AISummaryGenerator:
         """使用指定服务生成摘要"""
         # 您的实现
         pass
-```
+``` -->
 
 ### 自定义摘要格式
 ```python
@@ -274,14 +291,14 @@ def format_summary(self, summary, ai_service):
 
 ## 🌍 多语言支持
 
-### 英文内容优化
+### 英文内容优化（Todo）
 ```python
 # 阅读时间计算（英文：200词/分钟）
 def calculate_english_reading_time(word_count):
     return max(1, round(word_count / 200))
 ```
 
-### 其他语言扩展
+### 其他语言扩展（Todo）
 ```python
 # 支持日文、韩文等
 JAPANESE_CHARS_PATTERN = re.compile(r'[\u3040-\u309F\u30A0-\u30FF]')
@@ -314,8 +331,6 @@ cd mkdocs-ai-hooks
 # 安装依赖
 pip install -r requirements.txt
 
-# 运行测试
-mkdocs serve
 ```
 
 ## 📝 更新日志
@@ -383,12 +398,13 @@ mkdocs serve
 
 
 ## 请作者喝杯咖啡
-
+<p align="center">
   <a href="https://s1.imagehub.cc/images/2025/05/11/36eb33bf18f9041667267605b6b99bd0.jpeg" target="_blank">
    <center>
     <img src="https://s1.imagehub.cc/images/2025/05/11/36eb33bf18f9041667267605b6b99bd0.jpeg" style="width: 450px; height: auto; border-radius: 25px;" >
     </center>  
   </a>
+</center>
 
 <p align="center">
     如果这个项目对您有帮助，请给它一个 ⭐ Star！

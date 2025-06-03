@@ -15,7 +15,7 @@ class AISummaryGenerator:
         # 添加服务配置文件，用于跟踪当前使用的服务
         self.service_config_file = self.cache_dir / "service_config.json"
         
-        # 🤖 多AI服务配置
+        # 多AI服务配置
         self.ai_services = {
             # 'deepseek': {
             #     'url': 'https://api.deepseek.com/v1/chat/completions',
@@ -72,7 +72,7 @@ class AISummaryGenerator:
         
         # 📋 排除的文件和文件夹
         self.exclude_patterns = [
-            'waline.md', 'link.md', '404.md', 'tag.md', 'tags.md',
+            '404.md', 'tag.md', 'tags.md',
             '/about/', '/search/', '/sitemap', '/admin/',
             'index.md',  # 根目录index.md
         ]
