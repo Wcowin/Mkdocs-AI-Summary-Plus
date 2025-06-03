@@ -23,7 +23,7 @@ jobs:
       - uses: actions/cache@v3
         with:
           key: mkdocs-material-${{ env.cache_id }}
-          path: MkDocs-AI-Hooks/.cache
+          path: .cache
           restore-keys: |
             mkdocs-material-
             
@@ -31,7 +31,6 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          cd MkDocs-AI-Hooks
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
           pip install mkdocs-material
           pip install --upgrade --force-reinstall mkdocs-material
@@ -52,10 +51,8 @@ jobs:
         run: |
           echo "仓库根目录结构："
           ls -la
-          echo "检查 MkDocs-AI-Hooks 目录："
-          ls -la MkDocs-AI-Hooks/ || echo "MkDocs-AI-Hooks directory not found"
           echo "检查 mkdocs.yml："
-          cat MkDocs-AI-Hooks/mkdocs.yml || echo "mkdocs.yml not found"
+          cat mkdocs.yml || echo "mkdocs.yml not found"
       
       # 构建和部署
       - name: Build and Deploy
@@ -67,7 +64,6 @@ jobs:
           AI_SUMMARY_CI_ONLY_CACHE: "false"
           AI_SUMMARY_CI_FALLBACK: "true"
         run: |
-          cd MkDocs-AI-Hooks
           echo "🚀 开始构建 MkDocs 网站..."
           mkdocs build --verbose
           echo "📦 开始部署到 GitHub Pages..."
