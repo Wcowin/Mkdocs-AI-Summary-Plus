@@ -65,12 +65,15 @@ pip install requirements.txt
 ## 🚀 快速开始
 
 ### 1. 配置MkDocs
-在您的 `mkdocs.yml` 中添加hooks：
-
+先执行一次`mkdocs build`，生成缓存文件
+```bash
+mkdocs build 
+```
+在 `mkdocs.yml` 中添加hooks：
 ```yaml
 hooks:
-  - docs/overrides/hooks/ai_summary.py
-  - docs/overrides/hooks/reading_time.py
+  - docs/overrides/hooks/ai_summary.py # 添加AI摘要hook
+  - docs/overrides/hooks/reading_time.py # 添加统计阅读时间hook
 
 # 可选：Material主题配置
 theme:
@@ -121,8 +124,12 @@ self.api_config = {
 ### 4. 运行MkDocs
 第一次运行时，可能需要等待一段时间，因为系统会自动生成摘要。后续运行时，系统会使用缓存数据，加快生成速度。
 ```bash
+#依次运行命令
+mkdocs build 
 mkdocs serve
 ```
+终端输出如下：
+![image](https://s1.imagehub.cc/images/2025/06/03/a287b109428d7e4e61afe7212e045860.png)
 
 ## 📖 使用指南
 
