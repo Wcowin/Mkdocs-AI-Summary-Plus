@@ -6,7 +6,9 @@
     <img src="https://img.shields.io/badge/Python-3.7+-3776AB?style=for-the-badge&logo=python&logoColor=white" alt="Python 3.7+">
 </p>
 
-[中文](/) | [English](README-en.md)
+<p align="center">
+    <a href="/">中文</a> | <a href="README-en.md">English</a>
+</p>
 
 🚀 **智能化您的MkDocs文档！**   
 这个项目提供了强大的MkDocs hooks，为您的技术文档和博客添加AI驱动的摘要生成和智能阅读统计功能。
