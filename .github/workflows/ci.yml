@@ -13,7 +13,11 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
-          
+          sparse-checkout: |
+            docs
+            mkdocs.yml
+            requirements.txt
+            
       - uses: actions/setup-python@v4
         with:
           python-version: 3.x
@@ -27,15 +31,11 @@ jobs:
           restore-keys: |
             mkdocs-material-
             
-      # 安装项目依赖
-      - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-          pip install mkdocs-material
-          pip install --upgrade --force-reinstall mkdocs-material
-          
-      # 安装额外的 MkDocs 插件
+      # 安装 MkDocs 核心依赖
+      - run: pip install mkdocs-material 
+      - run: pip install --upgrade --force-reinstall mkdocs-material
+      
+      # 安装 MkDocs 插件
       - run: pip install mkdocs-git-revision-date-localized-plugin
       - run: pip install mkdocs-git-authors-plugin  
       - run: pip install mkdocs-git-committers-plugin-2
@@ -44,7 +44,16 @@ jobs:
       - run: pip install pymdown-extensions
       
       # 安装 AI Hooks 依赖
-      - run: pip install requests>=2.25.0 python-dateutil>=2.8.0 cachetools>=4.2.0
+      - run: pip install requests>=2.25.0
+      - run: pip install python-dateutil>=2.8.0
+      - run: pip install cachetools>=4.2.0
+      
+      # 安装项目特定依赖（如果存在）
+      - name: Install project dependencies
+        run: |
+          if [ -f requirements.txt ]; then 
+            pip install -r requirements.txt
+          fi
       
       # 调试信息
       - name: Debug - Check repository structure
@@ -53,6 +62,8 @@ jobs:
           ls -la
           echo "检查 mkdocs.yml："
           cat mkdocs.yml || echo "mkdocs.yml not found"
+          echo "检查 docs 目录："
+          ls -la docs/ || echo "docs directory not found"
       
       # 构建和部署
       - name: Build and Deploy
@@ -63,8 +74,4 @@ jobs:
           AI_SUMMARY_LOCAL_ENABLED: "false"
           AI_SUMMARY_CI_ONLY_CACHE: "false"
           AI_SUMMARY_CI_FALLBACK: "true"
-        run: |
-          echo "🚀 开始构建 MkDocs 网站..."
-          mkdocs build --verbose
-          echo "📦 开始部署到 GitHub Pages..."
-          mkdocs gh-deploy --force --verbose
+        run: mkdocs gh-deploy --force
