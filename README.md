@@ -11,6 +11,8 @@
 这个项目提供了强大的MkDocs hooks，为您的技术文档和博客添加AI驱动的摘要生成和智能阅读统计功能。
 ![iShot 2025 06 03 13.39.35](https://s1.imagehub.cc/images/2025/06/03/d1563500263b22cfd0ffc3679993aa83.jpg)
 
+[中文](/) | [English](README-en.md)
+
 ## ✨ 功能特性
 
 ### AI智能摘要
