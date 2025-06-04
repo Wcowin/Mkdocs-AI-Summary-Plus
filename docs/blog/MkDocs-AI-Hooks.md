@@ -561,19 +561,29 @@ pip install -r requirements.txt
 
 ---
 
-## ☕ 支持项目
+## 请作者喝杯咖啡  
 
-<div align="center">
+<p align="center">
+  <a href="https://s1.imagehub.cc/images/2025/05/11/36eb33bf18f9041667267605b6b99bd0.jpeg" target="_blank">
+   <center>
+    <img src="https://s1.imagehub.cc/images/2025/05/11/36eb33bf18f9041667267605b6b99bd0.jpeg" style="width: 450px; height: auto; border-radius: 25px;" >
+    </center>  
+  </a>
+</center>
 
-<a href="https://s1.imagehub.cc/images/2025/05/11/36eb33bf18f9041667267605b6b99bd0.jpeg" target="_blank">
-<img src="https://s1.imagehub.cc/images/2025/05/11/36eb33bf18f9041667267605b6b99bd0.jpeg" style="width: 300px; border-radius: 15px;">
-</a>
+<p align="center">
+    如果这个项目对您有帮助，请给它一个 ⭐ Star！
+</p>
 
+<p align="center">
+    <a href="https://github.com/Wcowin/mkdocs-ai-hooks/stargazers">
+        <img src="https://img.shields.io/github/stars/Wcowin/mkdocs-ai-hooks?style=social" alt="Stars">
+    </a>
+    <a href="https://github.com/Wcowin/mkdocs-ai-hooks/network/members">
+        <img src="https://img.shields.io/github/forks/Wcowin/mkdocs-ai-hooks?style=social" alt="Forks">
+    </a>
+</p>
 
-
-</div>
-
-**如果这个项目对您有帮助，请给它一个 ⭐ Star！**  
 
 ---
 
