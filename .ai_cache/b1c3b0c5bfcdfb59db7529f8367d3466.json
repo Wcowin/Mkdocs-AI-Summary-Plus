@@ -1,7 +1,0 @@
-{
-  "summary": "The MkDocs AI Summary Update Log introduces version 1.2.0 enhancements, focusing on the AI summary system. It integrates multiple AI services, supports multilingual summaries, and offers automatic content cleaning. The update includes adaptive environment configuration, robust caching mechanisms, and flexible options for precise control. Technical features cover API integration, error handling, timeout control, and display optimizations. Planned features include multi-AI service support, secure API key management, and upcoming batch processing and statistical data export functionalities.",
-  "service": "openai",
-  "page_title": "MkDocs AI 摘要更新日志",
-  "timestamp": "2025-06-04T03:21:20.845920",
-  "language": "en"
-}

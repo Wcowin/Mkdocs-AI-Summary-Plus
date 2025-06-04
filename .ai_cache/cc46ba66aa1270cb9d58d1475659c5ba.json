@@ -1,7 +1,0 @@
-{
-  "summary": "This project enhances MkDocs documentation with AI-driven features like automatic article summaries and intelligent reading statistics. It supports multiple AI services, multi-language summaries, and content cleaning. The tool also offers reading time estimation and code detection, with flexible configuration options and error handling. Installation can be done via direct download or Git clone, with detailed setup instructions provided. Users can configure AI summary directories and choose AI APIs like OpenAI or DeepSeek. The project aims to streamline documentation creation and enhance user experience.",
-  "service": "openai",
-  "page_title": "MkDocs AI Hooks",
-  "timestamp": "2025-06-03T23:21:30.142374",
-  "language": "en"
-}
