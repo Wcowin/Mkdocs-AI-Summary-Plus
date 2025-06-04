@@ -58,10 +58,10 @@ repo_name: mkdocs-ai-hooks # 右上角的名字
 copyright: Copyright &copy; 2025 Wcowin # 左下角的版权声明
 
 nav:
-  - Home: index.md
-  - MkDocs AI Hooks: blog/MkDocs-AI-Hooks.md
-  - 小米: blog/xiaomo.md
-  - blog:
+  - English: index.md
+  - 中文: blog/MkDocs-AI-Hooks.md
+  # - 小米: blog/xiaomo.md  #测试
+  - 博客:
     - blog/index.md
     
 plugins:
@@ -69,20 +69,17 @@ plugins:
       # enabled: !ENV [CI, false]   #建议加上这句，不然会影响速度，本地搜索可以不需要，不影响部署时候有
       separator: '[\s\u200b\-_,:!=\[\]()"`/]+|\.(?!\d)|&[lg]t;|(?!\b)(?=[A-Z][a-z])'
   - blog:
+      blog_dir: blog  # 确保博客目录配置正确
       post_date_format: full #时间
       draft: true
       draft_if_future_date: true #自动将具有未来日期的帖子标记为草稿
       post_readtime: true
       post_readtime_words_per_minute: 265  #计算帖子的阅读时间时读者每分钟预计阅读的字数
       post_url_format: "{date}/{slug}"
-      # categories_slugify: !!python/object/apply:pymdownx.slugs.slugify
-      #   kwds:
-      #     case: lower
-      # categories_toc: true
       pagination_per_page: 5
       pagination_url_format: "page/{page}"
       authors_file: "{blog}/.authors.yml"  #作者信息
-  - tags
+  # - tags
 
 
 markdown_extensions:

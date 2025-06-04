@@ -244,6 +244,132 @@ self.default_service = 'openai'
 
 ## ⚙️ 高级配置
 
+### GitHub Secrets配置（推荐）
+
+为了安全使用AI API服务，强烈建议通过GitHub Secrets来管理API密钥，而不是直接写在代码中。
+
+#### 1. 设置Repository Secrets
+在您的GitHub仓库中设置以下Secrets：
+
+1. 进入您的GitHub仓库
+2. 点击 **Settings** → **Secrets and variables** → **Actions**
+3. 点击 **New repository secret** 添加以下密钥：
+
+```
+DEEPSEEK_API_KEY=your_deepseek_api_key_here
+OPENAI_API_KEY=your_openai_api_key_here
+GEMINI_API_KEY=your_gemini_api_key_here
+CLAUDE_API_KEY=your_claude_api_key_here
+```
+
+#### 2. 本地开发环境配置
+对于本地开发，可以创建 `.env` 文件（记得添加到 `.gitignore`）：
+
+```bash
+# .env 文件
+DEEPSEEK_API_KEY=your_deepseek_api_key_here
+OPENAI_API_KEY=your_openai_api_key_here
+# 其他API密钥...
+```
+
+或者直接在终端中设置环境变量：
+```bash
+export DEEPSEEK_API_KEY="your_deepseek_api_key_here"
+export OPENAI_API_KEY="your_openai_api_key_here"
+```
+
+#### 3. CI/CD工作流配置
+在您的 `.github/workflows` 中确保使用环境变量：
+
+```yaml
+# .github/workflows/deploy.yml
+name: ci 
+on:
+  push:
+    branches:
+      - master 
+      - main
+permissions:
+  contents: write
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          sparse-checkout: |
+            docs
+            mkdocs.yml
+            requirements.txt
+            
+      - uses: actions/setup-python@v4
+        with:
+          python-version: 3.x
+          
+      - name: Set cache ID
+        run: echo "cache_id=$(date --utc '+%V')" >> $GITHUB_ENV 
+      
+      - uses: actions/cache@v3
+        with:
+          key: mkdocs-material-${{ github.run_id }}
+          path: .cache
+          restore-keys: |
+            mkdocs-material-
+            
+      # 安装 MkDocs 核心依赖
+      - run: pip install mkdocs-material 
+      - run: pip install --upgrade --force-reinstall mkdocs-material
+      
+      # 安装 MkDocs 插件
+      - run: pip install mkdocs-git-revision-date-localized-plugin
+      - run: pip install mkdocs-git-authors-plugin  
+      - run: pip install mkdocs-git-committers-plugin-2
+      - run: pip install markdown-callouts
+      - run: pip install mkdocs-rss-plugin
+      - run: pip install pymdown-extensions
+      
+      # 安装 AI Hooks 依赖
+      - run: pip install requests>=2.25.0
+      - run: pip install python-dateutil>=2.8.0
+      - run: pip install cachetools>=4.2.0
+      
+      # 安装项目特定依赖（如果存在）
+      - name: Install project dependencies
+        run: |
+          if [ -f requirements.txt ]; then 
+            pip install -r requirements.txt
+          fi
+      
+      # 调试信息
+      - name: Debug - Check repository structure
+        run: |
+          echo "仓库根目录结构："
+          ls -la
+          echo "检查 mkdocs.yml："
+          cat mkdocs.yml || echo "mkdocs.yml not found"
+          echo "检查 docs 目录："
+          ls -la docs/ || echo "docs directory not found"
+      
+      # 构建和部署
+      - name: Build and Deploy
+        env:
+          # DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          AI_SUMMARY_CI_ENABLED: "true"
+          AI_SUMMARY_LOCAL_ENABLED: "false"
+          AI_SUMMARY_CI_ONLY_CACHE: "false"
+          AI_SUMMARY_CI_FALLBACK: "true"
+        run: mkdocs gh-deploy --force
+```
+
+#### 4. 安全最佳实践
+- ✅ **永远不要**将API密钥直接写在代码中
+- ✅ 使用GitHub Secrets或环境变量管理敏感信息
+- ✅ 定期轮换API密钥
+- ✅ 为不同环境使用不同的API密钥
+- ✅ 监控API使用量，设置用量上限
+
 ### 自定义API服务
 ```python
 # 支持其他AI服务
@@ -419,7 +545,7 @@ pip install -r requirements.txt
 ### 计划功能
 - [x] 多AI服务支持（OpenAI、Claude等）
 - [x] 自动选择最佳API
-- [ ] API密钥安全处理(重要)
+- [x] API密钥安全处理(重要)
 - [ ] 批量处理模式
 - [ ] 统计数据导出
 - [ ] Web界面配置
