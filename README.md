@@ -596,11 +596,14 @@ pip install -r requirements.txt
 
 [![Star History Chart](https://api.star-history.com/svg?repos=Wcowin/mkdocs-ai-hooks&type=Date)](https://www.star-history.com/#Wcowin/mkdocs-ai-hooks&Date)
 
-## 请作者喝杯咖啡
 
-<center>
+## 请作者喝杯咖啡  
+
+<p align="center">
   <a href="https://s1.imagehub.cc/images/2025/05/11/36eb33bf18f9041667267605b6b99bd0.jpeg" target="_blank">
-    <img src="https://s1.imagehub.cc/images/2025/05/11/36eb33bf18f9041667267605b6b99bd0.jpeg" style="width: 450px; height: auto; border-radius: 25px;">
+   <center>
+    <img src="https://s1.imagehub.cc/images/2025/05/11/36eb33bf18f9041667267605b6b99bd0.jpeg" style="width: 450px; height: auto; border-radius: 25px;" >
+    </center>  
   </a>
 </center>
 
@@ -617,6 +620,5 @@ pip install -r requirements.txt
     </a>
 </p>
 
----
 
-*📝 本项目致力于让MkDocs文档更加智能化和用户友好。如有建议或想法，欢迎交流！*
+📝 本项目致力于让MkDocs文档更加智能化和用户友好。如有建议或想法，欢迎交流！
