@@ -1,0 +1,7 @@
+{
+  "summary": "MkDocs AI Hooks project enhances technical documentation and blogs with AI-driven summary generation and smart reading statistics using MkDocs hooks. Key features include integration with multiple AI services, automatic summary generation in multiple languages, intelligent content cleaning, and flexible configuration options. It also offers precise character statistics, code detection, estimated reading time, and adaptive environment recognition. Installation is available through direct download or Git clone methods, with detailed configuration steps for AI services and local setup. The project supports various running modes and GitHub Secrets configuration for deployment. Users can control AI summary display at the page or folder level. Monthly costs are estimated at around 1-5 yuan for regular blogs, with most AI service providers offering free quotas for new users. Advanced configurations allow customization of AI",
+  "service": "openai",
+  "page_title": "中文",
+  "timestamp": "2025-06-04T18:37:23.043926",
+  "language": "en"
+}

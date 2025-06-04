@@ -53,11 +53,11 @@
 - **美观信息展示**: 使用MkDocs Material风格的信息框
 
 ### 🚀 智能化特性
-- **环境自适应**: 自动识别CI/本地环境，智能启用/禁用
+- **环境自适应**: 自动识别CI/本地环境，本地或者部署都可选启用/禁用
 - **自动语言识别**: 支持30+编程语言和标记语言
 - **内容类型检测**: 区分代码、配置、命令行等不同内容
-- **LRU缓存优化**: 提升处理性能
-- **完善错误处理**: 异常处理和详细日志记录
+- **LRU缓存优化**: 提升处理性能（Todo）
+- **完善错误处理**: 异常处理和日志记录（Todo）
 
 ---
 
@@ -67,22 +67,21 @@
 
 **步骤1**: 下载文件
 - 从 [Releases页面](https://github.com/Wcowin/mkdocs-ai-hooks/releases) 下载最新版本
-- 或直接下载 `ai_summary.py` 和 `reading_time.py` 文件
+- 或直接下载 `ai_summary.py`文件
 
 **步骤2**: 创建目录并放置文件
 ```bash
 # 在您的MkDocs项目根目录下执行
 mkdir -p docs/overrides/hooks/
 mv ai_summary.py docs/overrides/hooks/
-mv reading_time.py docs/overrides/hooks/
 ```
 
-**步骤3**: 配置MkDocs主题
+**步骤3**: 配置MkDocs主题以及覆写路径
 ```yaml
 # 在 mkdocs.yml 中添加
 theme:
   name: material
-  custom_dir: docs/overrides  # 必需配置！
+  custom_dir: docs/overrides  # 必需配置！！！
   features:
     - content.code.copy
     - content.code.select
@@ -106,17 +105,53 @@ pip install -r requirements.txt
 
 ### 1. 基础配置
 
-**配置hooks**
+**步骤1**: 配置hooks
+ai_summary.py务必放到docs/overrides/hooks目录下，然后：
 ```yaml
 # 在 mkdocs.yml 中添加
 hooks:
   - docs/overrides/hooks/ai_summary.py      # AI摘要hook
-  - docs/overrides/hooks/reading_time.py    # 阅读时间统计hook
+```
+**步骤2**: 本地配置
+根目录下创建 `.env` 文件存放密钥（记得添加到 `.gitignore`）：
+```bash
+# .env 文件内容
+DEEPSEEK_API_KEY=your_deepseek_api_key_here
+OPENAI_API_KEY=your_openai_api_key_here
 ```
 
-**初始化构建**
 ```bash
-mkdocs build  # 生成缓存文件
+#.gitignore 文件内容
+# 环境变量文件（敏感信息）
+.env
+.env.local
+.env.*.local
+*.key
+
+# MkDocs 构建输出目录
+site/
+
+# AI 摘要缓存目录（项目根目录）- 需要被提交
+!.ai_cache/
+```
+
+到这里检查下目录树状图:
+```
+$ tree -a
+文件名
+├── .github
+│   ├── .DS_Store
+│   └── workflows
+│       └── ci.yml
+├── docs
+│   └── index.md
+|   └── overrides
+│       └── hooks
+│           └── ai_summary.py
+├── .env
+├──.gitignore
+├── README.md
+└── mkdocs.yml
 ```
 
 ### 2. 配置AI服务
@@ -131,39 +166,162 @@ mkdocs build  # 生成缓存文件
 - [DeepSeek](https://platform.deepseek.com/usage) - 注册获取API密钥
 - [ChatAnywhere](https://github.com/chatanywhere/GPT_API_free) - 免费OpenAI额度
 
-### 3. 设置摘要范围
+**获取的密钥存放于上一步创建的`.env` 文件中！！！**
+
+### 3. 设置参数
 
 在 `ai_summary.py` 中配置需要AI摘要的目录：
 ```python
 # 📂 启用AI摘要的文件夹
 self.enabled_folders = [
     'blog/',      # 博客文章
-    'docs/',      # 文档页面
-    'tutorials/', # 教程内容
     # 添加更多文件夹...
 ]
 ```
 
-### 4. 运行和测试
+### 4. 本地运行和测试
 
 ```bash
 mkdocs serve  # 本地预览
 ```
+### 5. 部署配置
 
+```yaml
+#ci.yml
+name: ci 
+on:
+  push:
+    branches:
+      - master 
+      - main
+  # 禁止从 fork 仓库访问 secrets
+  pull_request:
+    types: [closed]
+    branches: [main, master]
+permissions:
+  contents: write
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          sparse-checkout: |
+            docs
+            includes
+            requirements.txt
+            .ai_cache
+      - uses: actions/setup-python@v4
+        with:
+          python-version: 3.x
+      - name: Set cache ID
+        run: echo "cache_id=$(date --utc '+%V')" >> $GITHUB_ENV 
+      - uses: actions/cache@v3
+        with:
+          key: mkdocs-material-${{ github.run_number }}
+          path: .cache
+          restore-keys: |
+            mkdocs-material-
+      - run: pip install mkdocs-git-revision-date-localized-plugin
+      - run: pip install mkdocs-git-authors-plugin
+      - run: pip install mkdocs-git-committers-plugin-2
+      - run: pip install markdown-callouts
+      - run: pip install mkdocs-rss-plugin
+      - run: pip install requests>=2.25.0
+      - run: pip install python-dateutil>=2.8.0
+      - run: pip install cachetools>=4.2.0
+      - run: pip install python-dotenv>=0.19.0
+      - run: pip install pymdown-extensions
+      - run: pip install mkdocs-material 
+      - run: pip install --upgrade --force-reinstall mkdocs-material
+      - name: Deploy with AI Summary
+        env:
+          # AI摘要开关控制
+          AI_SUMMARY_CI_ENABLED: 'true'           # CI部署环境启用AI摘要 (true=在CI中为文章生成AI摘要)
+          AI_SUMMARY_CI_ONLY_CACHE: 'true'       # CI部署不生成新摘要 (true=使用本地部署过的摘要缓存，不再重复调用API)
+          AI_SUMMARY_CI_FALLBACK: 'true'          # CI部署启用备用摘要 (true=API失败时生成离线基础摘要)
+          # AI_SUMMARY_LOCAL_ENABLED: 'false'       # 本地部署环境禁用AI摘要 (true=本地开发时也生成摘要)（不需要管这条）
+          # AI_SUMMARY_CACHE_ENABLED: 'true'        # 本地启用缓存功能 (true=缓存摘要避免重复生成)（不需要管这条）
+          # API密钥配置
+          DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        run: mkdocs gh-deploy --force
+      
+      # 自动提交新生成的AI缓存文件
+      - name: Auto-commit AI cache (if any new files)
+        run: |
+          if [ -d ".ai_cache" ] && [ "$(ls -A .ai_cache 2>/dev/null)" ]; then
+            git config --local user.email "action@github.com"
+            git config --local user.name "GitHub Action"
+            git add .ai_cache/
+            if ! git diff --cached --quiet; then
+              git commit -m "🤖 Auto-update AI summary cache [skip ci]"
+              git push
+              echo "✅ 自动提交了新的 AI 缓存文件"
+            else
+              echo "ℹ️ 没有新的缓存文件需要提交"
+            fi
+          else
+            echo "ℹ️ 没有找到缓存目录或缓存为空"
+          fi
+```
+
+```python
+# ai_summary.py 中配置
+# AI摘要本地环境配置
+self.ci_config = {
+    # CI部署环境开关 (不用管，只在ci.yml中设置有效)
+    'enabled_in_ci': os.getenv('AI_SUMMARY_CI_ENABLED', 'true').lower() == 'true',
+    
+    # 本地部署环境开关 (true=本地开发时启用AI摘要)
+    'enabled_in_local': os.getenv('AI_SUMMARY_LOCAL_ENABLED', 'true').lower() == 'true',
+    
+    # CI部署仅缓存模式(不用管，只在ci.yml中设置有效)
+    'ci_only_cache': os.getenv('AI_SUMMARY_CI_ONLY_CACHE', 'false').lower() == 'true',
+    
+    # 本地部署缓存功能开关 (true=启用缓存避免重复生成, false=总是生成新摘要)
+    'cache_enabled': os.getenv('AI_SUMMARY_CACHE_ENABLED', 'true').lower() == 'true',
+    
+    # CI部署备用摘要开关 (不用管，只在ci.yml中设置有效)
+    'ci_fallback_enabled': os.getenv('AI_SUMMARY_CI_FALLBACK', 'true').lower() == 'true',
+}
+```  
+
+**几种运行模式**：
+1. **完全禁用**: 本地和CI部署都不运行摘要生成
+2. **仅CI部署启用**: 本地禁用，CI部署生成新摘要
+3. **缓存模式**：本地已经生成过摘要，CI部署使用缓存（**推荐。上方配置项中已默认CI部署的缓存模式，可自行搭配选择**）
+4. **完全启用**: 本地和CI部署都运行(API消耗会更多)
+
+### 6. GitHub Secrets配置
+
+**步骤1**: 设置Repository Secrets
+1. 进入GitHub仓库 → **Settings** → **Secrets and variables** → **Actions**
+2. 点击 **New repository secret** 添加：
+```
+DEEPSEEK_API_KEY=your_deepseek_api_key_here
+OPENAI_API_KEY=your_openai_api_key_here
+```
+![image](https://s1.imagehub.cc/images/2025/06/04/b5fd63d839bb6443c8560a5f690d2c41.png)
 ---
+
+然后部署到GitHub Pages或其他平台即可。
+
+**有报错可以去问ChatGPT或者在Issues中提问。**
 
 ## 📖 使用指南
 
 ### AI摘要控制
 
 #### 方法1: 页面级控制（推荐）
-在Markdown文件的YAML frontmatter中：
+在Markdown文件最上面的yaml meta中：
 
 **启用AI摘要**：
 ```yaml
 ---
 title: 文章标题
-ai_summary: true   # 强制启用AI摘要
+ai_summary: true   # 启用AI摘要
 ---
 ```
 
@@ -179,43 +337,36 @@ description: 自定义摘要内容  # 可选手动摘要
 #### 方法2: 文件夹级控制
 ```python
 # 在 ai_summary.py 中配置
-self.enabled_folders = ['blog/', 'docs/']  # 指定文件夹
+# 📂 可自定义的文件夹配置
+self.enabled_folders = [
+    'blog/',      # blog文件夹
+    'index.md',     
+    # 'develop/',   # develop文件夹
+    # 'posts/',     # posts文件夹
+    # 'trip/',     # trip文件夹
+    # 'about/',     # about文件夹
+]
+
+# 📋 Excluded files and folders
+self.exclude_patterns = [
+    '404.md', 'tag.md', 'tags.md',
+]
+
+# 📋 Excluded specific files
+self.exclude_files = [
+    'blog/index.md',
+]
 ```
 
-### 阅读时间控制
-
-**隐藏阅读时间**：
-```yaml
----
-title: 页面标题
-hide_reading_time: true  # 隐藏阅读时间统计
----
-```
 
 ---
 
 ## 🎨 显示效果
 
-### AI摘要显示
-```markdown
-!!! info "🤖 AI智能摘要"
-    本文详细介绍了MkDocs hooks的开发和使用方法，涵盖AI摘要生成、阅读时间统计等功能实现。通过DeepSeek API集成和智能缓存机制，为技术文档提供自动化的内容增强服务。
-
-# 您的文章标题
-文章内容...
-```
-
-### 阅读信息显示
-```markdown
-!!! info "📖 阅读信息"
-    阅读时间：**3** 分钟 | 中文字符：**1247** | 有效代码行数：**45**
-
-# 您的文章标题
-文章内容...
-```
-
+### AI摘要显示  
 **实际效果预览**：
-![效果展示](https://s1.imagehub.cc/images/2025/06/03/8e4818b5b73c07d9b90a7471b1bfcbae.jpg)
+![image](https://s1.imagehub.cc/images/2025/06/04/152205c10ef1bfd7658b383a3e5e6e9f.png)
+
 
 ### 💰 成本说明
 - **单次费用**: 约0.03-0.05元（中大型文档）
@@ -238,7 +389,15 @@ self.ai_services = {
         'temperature': 0.3
     }
 }
+
+# 默认使用的AI服务
+self.default_service = 'your_service'
+
+# 服务优先级（按顺序尝试）
+self.service_fallback_order = ['openai', 'deepseek', 'claude', 'gemini'] # 按顺序尝试
 ```
+
+
 
 ### 自定义提示词
 ```python
@@ -263,170 +422,8 @@ if (datetime.now() - cache_time).days < 30:  # 改为30天
     return cache_data
 ```
 
-### 环境配置选项（还在测试）
-
-```python
-# 🚀 CI 环境配置 - 默认只在 CI 环境中启用
-self.ci_config = {
-    # CI环境启用控制：从环境变量AI_SUMMARY_CI_ENABLED读取，默认为'true'
-    # 控制是否在CI/CD环境（如GitHub Actions、GitLab CI等）中启用AI摘要功能
-    'enabled_in_ci': os.getenv('AI_SUMMARY_CI_ENABLED', 'true').lower() == 'true',  # 默认 CI 中启用
-    
-    # 本地环境启用控制：从环境变量AI_SUMMARY_LOCAL_ENABLED读取，默认为'false'
-    # 控制是否在本地开发环境中启用AI摘要功能，默认禁用以避免开发时产生API费用
-    'enabled_in_local': os.getenv('AI_SUMMARY_LOCAL_ENABLED', 'false').lower() == 'true',  # 默认本地禁用
-    
-    # 下面这行是被注释的备选配置，如果启用则本地环境默认开启AI摘要
-    # 'enabled_in_local': os.getenv('AI_SUMMARY_LOCAL_ENABLED', 'true').lower() == 'true',  # 默认本地启用
-    
-    # CI缓存策略：从环境变量AI_SUMMARY_CI_ONLY_CACHE读取，默认为'false'
-    # false = CI环境中允许调用AI API生成新摘要
-    # true = CI环境中仅使用已有缓存，不调用AI API（节省API费用和构建时间）
-    'ci_only_cache': os.getenv('AI_SUMMARY_CI_ONLY_CACHE', 'false').lower() == 'true',  # CI 中也允许生成新摘要
-    
-    # CI备用摘要控制：从环境变量AI_SUMMARY_CI_FALLBACK读取，默认为'true'
-    # true = 当AI服务不可用时，启用基于关键词的本地备用摘要生成
-    # false = 禁用备用摘要，AI失败时不显示任何摘要
-    'ci_fallback_enabled': os.getenv('AI_SUMMARY_CI_FALLBACK', 'true').lower() == 'true'
-}
-```
-
-目前是推荐只改变上面这两项：
-```python
-    # 本地环境启用控制：从环境变量AI_SUMMARY_LOCAL_ENABLED读取，默认为'false'
-    # 控制是否在本地开发环境中启用AI摘要功能，默认禁用以避免开发时产生API费用
-    'enabled_in_local': os.getenv('AI_SUMMARY_LOCAL_ENABLED', 'false').lower() == 'true',  # 默认本地禁用
-    
-    # 下面这行是被注释的备选配置，如果启用则本地环境默认开启AI摘要
-    # 'enabled_in_local': os.getenv('AI_SUMMARY_LOCAL_ENABLED', 'true').lower() == 'true',  # 默认本地启用
-```
-
-
-**四种运行模式**：
-1. **完全禁用**: 本地和CI部署都不运行摘要生成
-2. **仅CI启用**: 本地禁用，CI部署生成新摘要
-3. **缓存模式**：本地已经生成过摘要，CI部署使用缓存（还在测试,后续版本推出）（推荐）
-4. **完全启用**: 本地和CI部署都正常运行
-
 ---
 
-## 🔐 安全配置
-
-### GitHub Secrets配置（强烈推荐）
-
-**步骤1**: 设置Repository Secrets
-1. 进入GitHub仓库 → **Settings** → **Secrets and variables** → **Actions**
-2. 点击 **New repository secret** 添加：
-```
-DEEPSEEK_API_KEY=your_deepseek_api_key_here
-OPENAI_API_KEY=your_openai_api_key_here
-GEMINI_API_KEY=your_gemini_api_key_here
-CLAUDE_API_KEY=your_claude_api_key_here
-```
-
-**步骤2**: 本地开发配置
-创建 `.env` 文件（记得添加到 `.gitignore`）：
-```bash
-# .env 文件内容
-DEEPSEEK_API_KEY=your_deepseek_api_key_here
-OPENAI_API_KEY=your_openai_api_key_here
-
-# 可选环境配置
-AI_SUMMARY_LOCAL_ENABLED=false    # 本地禁用，避免产生费用
-AI_SUMMARY_CI_ENABLED=true        # CI环境启用
-```
-
-**步骤3**: CI/CD工作流配置
-```yaml
-name: ci 
-on:
-  push:
-    branches:
-      - master 
-      - main
-permissions:
-  contents: write
-jobs:
-  deploy:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-          sparse-checkout: |
-            docs
-            mkdocs.yml
-            requirements.txt
-            site/.ai_cache
-            
-      - uses: actions/setup-python@v4
-        with:
-          python-version: 3.x
-          
-      - name: Set cache ID
-        run: echo "cache_id=$(date --utc '+%V')" >> $GITHUB_ENV 
-      
-      - uses: actions/cache@v3
-        with:
-          key: mkdocs-material-${{ github.run_id }}
-          path: .cache
-          restore-keys: |
-            mkdocs-material-
-            
-      # 安装 MkDocs 核心依赖
-      - run: pip install mkdocs-material 
-      - run: pip install --upgrade --force-reinstall mkdocs-material
-      
-      # 安装 MkDocs 插件
-      - run: pip install mkdocs-git-revision-date-localized-plugin
-      - run: pip install mkdocs-git-authors-plugin  
-      - run: pip install mkdocs-git-committers-plugin-2
-      - run: pip install markdown-callouts
-      - run: pip install mkdocs-rss-plugin
-      - run: pip install pymdown-extensions
-      
-      # 安装 AI Hooks 依赖
-      - run: pip install requests>=2.25.0
-      - run: pip install python-dateutil>=2.8.0
-      - run: pip install cachetools>=4.2.0
-      - run: pip install python-dotenv>=0.19.0  # 添加这行
-      # 安装项目特定依赖（如果存在）
-      - name: Install project dependencies
-        run: |
-          if [ -f requirements.txt ]; then 
-            pip install -r requirements.txt
-          fi
-      
-      # 调试信息
-      - name: Debug - Check repository structure
-        run: |
-          echo "仓库根目录结构："
-          ls -la
-          echo "检查 mkdocs.yml："
-          cat mkdocs.yml || echo "mkdocs.yml not found"
-          echo "检查 docs 目录："
-          ls -la docs/ || echo "docs directory not found"
-      
-      # 构建和部署
-      - name: Build and Deploy
-        env:
-          # DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
-          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
-          AI_SUMMARY_CI_ENABLED: "true"
-          AI_SUMMARY_LOCAL_ENABLED: "false"
-          AI_SUMMARY_CI_ONLY_CACHE: "false"
-          AI_SUMMARY_CI_FALLBACK: "true"
-        run: mkdocs gh-deploy --force
-```
-
-### 安全最佳实践
-- ✅ **永远不要**将API密钥写在代码中
-- ✅ 使用环境变量管理敏感信息
-- ✅ 定期轮换API密钥
-- ✅ 监控API使用量，设置上限
-- ✅ 为不同环境使用不同密钥
-
----
 
 ## 🌍 多语言支持
 
@@ -439,8 +436,8 @@ self.summary_language = 'zh'    # 中文摘要
 ```
 
 ### 支持的语言
-- **完全支持**: 中文、英文
-- **计划支持**: 日文、韩文、法文、德文
+- **完全支持**: 中文、English
+- **部分支持**: 日本語です、한글、Français、Deutsch
 
 ---
 
@@ -479,7 +476,18 @@ pip install -r requirements.txt
 
 ## 📝 更新日志
 
-### [v1.2.0] (2025-06-03) - 最新版本
+### [v1.3.0] (2025-06-04) - 最新版本  
+
+#### 核心改进
+
+- **统一缓存架构**
+- **缓存路径统一为项目根目录 .ai_cache**
+- **本地和 CI 环境使用相同缓存策略**
+- **增强 CI/CD 支持**，**支持 CI 仅缓存模式，大幅减少部署时间**
+- **智能识别 15+ 部署平台（GitHub Actions、GitLab CI 等）**
+- **可配置备用摘要机制**
+
+### [v1.2.0] (2025-06-03)
 
 #### ✨ 主要新功能
 - **多AI服务支持**: 集成DeepSeek、OpenAI、Gemini、Claude
@@ -493,10 +501,10 @@ pip install -r requirements.txt
 - **性能优化**: LRU缓存和正则预编译
 
 ### [v1.0.0] (2025-06-01) - 初始版本
-- 🤖 AI智能摘要功能
-- 📖 阅读时间统计功能
-- 💾 基础缓存系统
-- 🎯 基本配置选项
+- 🤖 **AI智能摘要功能**
+- 📖 **阅读时间统计功能**
+- 💾 **基础缓存系统**
+- 🎯 **基本配置选项**
 
 ---
 
@@ -578,7 +586,7 @@ pip install -r requirements.txt
 
 <div align="center">
 
-📝 *让MkDocs文档更加智能化和用户友好*
+📝 *让MkDocs文档更加智能化*
 
 **[⬆ 回到顶部](#mkdocs-ai-hooks)**
 

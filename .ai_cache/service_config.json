@@ -1,0 +1,10 @@
+{
+  "default_service": "openai",
+  "available_services": [
+    "deepseek",
+    "openai",
+    "gemini"
+  ],
+  "summary_language": "en",
+  "check_time": "2025-06-04T18:26:50.761049"
+}
