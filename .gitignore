@@ -9,3 +9,5 @@ site/
 
 # AI 摘要缓存目录（项目根目录）- 需要被提交
 !.ai_cache/
+
+.ai_cache/service_config.json

@@ -7,6 +7,7 @@ hide:
 # comments: false
 # icon: octicons/home-fill-24
 hide_reading_time: true
+ai_summary: false  # 强制启用AI摘要
 ---
 
 # MyBlog

@@ -1,7 +1,0 @@
-{
-  "summary": "The MkDocs AI Hooks project enhances technical documentation and blogs by integrating AI-driven summary generation and intelligent reading statistics using MkDocs hooks. Key features include AI-generated summaries, multi-language support, intelligent content cleaning, efficient caching, and flexible configuration. It also offers precise Chinese character counting, code detection, and estimated reading time. The system supports multiple programming languages, content type detection, cache optimization, and error handling. Installation involves downloading Python files and configuring directories. Advanced features include custom API services, cache settings, and customizable summary display formats.",
-  "service": "openai",
-  "page_title": "中文",
-  "timestamp": "2025-06-04T15:50:12.712683",
-  "language": "en"
-}

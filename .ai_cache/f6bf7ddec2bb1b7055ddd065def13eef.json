@@ -1,7 +1,0 @@
-{
-  "summary": "Enhance your MkDocs documentation with MkDocs AI Hooks, offering AI-driven summary generation and reading statistics. Features include multi-AI service integration, automatic summary generation, multi-language support, content cleaning, and intelligent caching. Reading statistics feature accurate character counting, code detection, and reading time estimation. The tool is environment adaptive, supports multiple languages, and detects content types. Installation methods include direct download and Git clone. Dependencies installation is required for setup. Visit the live demo for a hands-on experience.",
-  "service": "openai",
-  "page_title": "English",
-  "timestamp": "2025-06-04T18:26:59.543558",
-  "language": "en"
-}

@@ -1,7 +1,0 @@
-{
-  "summary": "The MkDocs AI Hooks project enhances technical documentation with AI-driven features. It offers automatic article summaries, multi-AI service support, multi-language support, content cleaning, and a fallback summary mechanism. Additionally, it provides intelligent reading statistics, including character counting, code detection, and reading time estimation. The tool supports multiple programming languages, optimizes performance with cache, and ensures robust error handling. Installation can be done via direct download or Git clone methods, with detailed configuration steps for quick setup.",
-  "service": "openai",
-  "page_title": "English",
-  "timestamp": "2025-06-04T15:50:10.183237",
-  "language": "en"
-}
