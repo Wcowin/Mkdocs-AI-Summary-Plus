@@ -99,7 +99,7 @@ jobs:
         env:
           # AI摘要配置 - 启用缓存模式
           AI_SUMMARY_CI_ENABLED: 'true'           # CI环境启用AI摘要
-          AI_SUMMARY_CI_ONLY_CACHE: 'true'       # 允许生成新摘要（如果没有缓存）
+          AI_SUMMARY_CI_ONLY_CACHE: 'false'       # 允许生成新摘要（如果没有缓存）
           AI_SUMMARY_CI_FALLBACK: 'false'          # 启用备用摘要（API失败时）
           AI_SUMMARY_CACHE_ENABLED: 'true'        # 明确启用缓存功能
           AI_SUMMARY_CACHE_EXPIRE_DAYS: '7'       # 缓存7天过期
