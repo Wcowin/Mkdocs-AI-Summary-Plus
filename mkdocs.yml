@@ -58,8 +58,8 @@ repo_name: mkdocs-ai-summary # 右上角的名字
 copyright: Copyright &copy; 2025 Wcowin # 左下角的版权声明
 
 nav:
-  - English: index.md
-  - 中文: blog/MkDocs-AI-Summary.md
+  - English tutorial instructions: index.md
+  - 中文教程说明: MkDocs-AI-Summary.md
   # - 小米: blog/xiaomi.md  #测试
   - 更新日志:
     - blog/index.md

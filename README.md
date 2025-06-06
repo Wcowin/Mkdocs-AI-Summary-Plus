@@ -16,7 +16,7 @@
 ![预览图1](https://s1.imagehub.cc/images/2025/06/03/d1563500263b22cfd0ffc3679993aa83.jpg)
 ![预览图2](https://s1.imagehub.cc/images/2025/06/03/526b59b6a2e478f2ffa1629320e3e2ce.png)
 
-🌐 **在线演示**: https://wcowin.work/mkdocs-ai-hooks/
+🌐 **在线演示**: https://wcowin.work/Mkdocs-AI-Summary/
 
 ---
 
@@ -315,7 +315,7 @@ OPENAI_API_KEY=your_openai_api_key_here
 ### AI摘要控制
 
 #### 方法1: 页面级控制（推荐）
-在Markdown文件最上面的yaml meta中：
+如果只想为特定文件生成摘要，在Markdown文件最上面的yaml meta中：
 
 **启用AI摘要**：
 ```yaml

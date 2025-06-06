@@ -30,7 +30,7 @@ class AISummaryGenerator:
             'ci_only_cache': os.getenv('AI_SUMMARY_CI_ONLY_CACHE', 'false').lower() == 'true',
             
             # 本地部署缓存功能开关 (true=启用缓存避免重复生成, false=总是生成新摘要)
-            'cache_enabled': os.getenv('AI_SUMMARY_CACHE_ENABLED', 'true').lower() == 'true',
+            'cache_enabled': os.getenv('AI_SUMMARY_CACHE_ENABLED', 'false').lower() == 'true',
             
             # CI部署备用摘要开关 (不用管，只在ci.yml中设置有效)
             'ci_fallback_enabled': os.getenv('AI_SUMMARY_CI_FALLBACK', 'true').lower() == 'true',
@@ -80,7 +80,8 @@ class AISummaryGenerator:
         # 📂 可自定义的文件夹配置
         self.enabled_folders = [
             'blog/',      # blog文件夹
-            'index.md',     
+            'index.md',
+            # 'docs/MkDocs-AI-Summary.md',  
             # 'develop/',   # develop文件夹
             # 'posts/',     # posts文件夹
             # 'trip/',     # trip文件夹
@@ -94,7 +95,7 @@ class AISummaryGenerator:
         
         # 📋 Excluded specific files
         self.exclude_files = [
-            'blog/index.md',
+            # 'blog/index.md',
         ]
         
         # 🌍 语言配置/Language Configuration

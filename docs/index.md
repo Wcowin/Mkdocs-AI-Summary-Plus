@@ -1,4 +1,5 @@
 ---
+title: MkDocs AI Summary
 hide:
 #   - navigation # 显示右
 #   - toc #显示左
@@ -7,7 +8,7 @@ hide:
 comments: false
 ---  
 
-# MkDocs AI Hooks
+<!-- # MkDocs AI Hooks -->
 
 <p align="center">
     <img src="https://img.shields.io/badge/MkDocs-Hooks-526CFE?style=for-the-badge&logo=MaterialForMkDocs&logoColor=white" alt="MkDocs Hooks">
@@ -25,7 +26,7 @@ This project provides powerful MkDocs hooks that add AI-driven summary generatio
 <!-- ![Preview 1](https://s1.imagehub.cc/images/2025/06/03/d1563500263b22cfd0ffc3679993aa83.jpg) -->
 ![Preview 2](https://s1.imagehub.cc/images/2025/06/03/526b59b6a2e478f2ffa1629320e3e2ce.png)
 
-🌐 **Live Demo**: https://wcowin.work/mkdocs-ai-hooks/
+🌐 **Live Demo**: https://wcowin.work/Mkdocs-AI-Summary/
 
 ---
 
@@ -584,4 +585,4 @@ Thanks to the following projects and services:
 📝 *Making MkDocs documentation smarter*
 
 
-[⬆ Back to Top](#mkdocs-ai-hooks)
+[⬆ Back to Top](#features)

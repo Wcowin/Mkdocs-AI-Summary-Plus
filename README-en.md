@@ -16,7 +16,7 @@ This project provides powerful MkDocs hooks that add AI-driven summary generatio
 ![Preview 1](https://s1.imagehub.cc/images/2025/06/03/d1563500263b22cfd0ffc3679993aa83.jpg)
 ![Preview 2](https://s1.imagehub.cc/images/2025/06/03/526b59b6a2e478f2ffa1629320e3e2ce.png)
 
-🌐 **Live Demo**: https://wcowin.work/mkdocs-ai-hooks/
+🌐 **Live Demo**: https://wcowin.work/Mkdocs-AI-Summary/
 
 ---
 
