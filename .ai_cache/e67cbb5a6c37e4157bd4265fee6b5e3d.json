@@ -1,8 +1,8 @@
 {
-  "summary": "This project enhances MkDocs documentation with AI-powered features like automatic summary generation and intelligent reading statistics. It supports multiple AI services, multi-language summaries, and intelligent content cleaning. Additionally, it offers a fallback summary mechanism and intelligent caching. The tool provides accurate character counting, code detection, and reading time estimation. It is environment adaptive, supports various programming languages, and offers content type detection. Installation is straightforward via direct download or Git clone methods.",
-  "service": "openai",
+  "summary": "This article provides a comprehensive guide on English tutorial instructions, including step-by-step instructions and important considerations for practical implementation.",
+  "service": "fallback",
   "page_title": "English tutorial instructions",
-  "timestamp": "2025-06-06T16:30:47.350484",
+  "timestamp": "2025-06-06T08:35:41.692238",
   "language": "en",
   "cache_version": "1.3.0"
 }

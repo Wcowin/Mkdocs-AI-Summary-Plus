@@ -1,8 +1,8 @@
 {
-  "summary": "The article introduces an AI-driven summary generation and intelligent reading statistics feature for MkDocs documentation and blogs. It integrates multiple AI services, supports multilingual summaries, and offers smart content cleaning. The tool provides precise character statistics, code detection, and estimated reading time. It adapts to different environments, supports various programming languages, and offers flexible configuration options. Installation methods, AI service setup, parameter settings, local testing, deployment configurations, and usage guidelines are detailed. The tool incurs minimal costs and offers advanced customization options.",
-  "service": "openai",
+  "summary": "This article discusses 中文教程说明, covering relevant technical concepts, application scenarios, and practical methods.",
+  "service": "fallback",
   "page_title": "中文教程说明",
-  "timestamp": "2025-06-06T16:30:49.857727",
+  "timestamp": "2025-06-06T08:35:41.790658",
   "language": "en",
   "cache_version": "1.3.0"
 }
