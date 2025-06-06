@@ -1,0 +1,8 @@
+{
+  "summary": "This project enhances MkDocs documentation with AI-powered features, including automatic summary generation, multi-language support, and intelligent content cleaning. It integrates with various AI services, offers fallback summaries, and has a flexible configuration. Additionally, it provides intelligent reading statistics, environment adaptability, and content type detection. The installation process involves downloading files and configuring MkDocs themes. The system supports error handling and plans to optimize cache performance.",
+  "service": "openai",
+  "page_title": "English tutorial instructions",
+  "timestamp": "2025-06-06T08:59:31.610929",
+  "language": "en",
+  "cache_version": "1.3.0"
+}
