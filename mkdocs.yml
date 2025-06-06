@@ -1,4 +1,4 @@
-site_name: MkDocs AI Hooks
+site_name: MkDocs AI Summary 
 site_url: https://wcowin.work/mkdocs-ai-hooks/
 site_author: Wcowin
 theme:
@@ -48,20 +48,20 @@ theme:
     - content.code.copy # 代码块一键复制
     - content.code.select # 代码块一键全选
     # - content.action.edit # 编辑按钮
-    - content.action.view # 查看源码按钮
+    # - content.action.view # 查看源码按钮
     - content.code.annotate # 代码注释
 
 edit_uri: edit/main/docs # 编辑按钮跳转的链接 
 repo_url: https://github.com/Wcowin/mkdocs-ai-hooks # 右上角点击跳转的链接
-repo_name: mkdocs-ai-hooks # 右上角的名字
+repo_name: mkdocs-ai-summary # 右上角的名字
 
 copyright: Copyright &copy; 2025 Wcowin # 左下角的版权声明
 
 nav:
   - English: index.md
-  - 中文: blog/MkDocs-AI-Hooks.md
-  # - 小米: blog/xiaomo.md  #测试
-  - 博客:
+  - 中文: blog/MkDocs-AI-Summary.md
+  # - 小米: blog/xiaomi.md  #测试
+  - 更新日志:
     - blog/index.md
     
 plugins:
