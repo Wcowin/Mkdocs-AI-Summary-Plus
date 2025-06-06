@@ -138,7 +138,7 @@ class AISummaryGenerator:
             'default_service': self.default_service,
             'available_services': list(self.ai_services.keys()),
             'summary_language': self.summary_language,
-            'check_time': datetime.now().isoformat()
+            # 'check_time': datetime.now().isoformat()
         }
         
         if self.service_config_file.exists():
