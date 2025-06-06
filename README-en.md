@@ -1,4 +1,6 @@
-# MkDocs AI Hooks
+# MkDocs AI Summary 
+
+![alt text](logo-2.png)
 
 <p align="center">
     <img src="https://img.shields.io/badge/MkDocs-Hooks-526CFE?style=for-the-badge&logo=MaterialForMkDocs&logoColor=white" alt="MkDocs Hooks">
