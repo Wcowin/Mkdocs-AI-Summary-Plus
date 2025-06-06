@@ -1,8 +1,8 @@
 {
-  "summary": "The article details the updates in MkDocs AI Summary, introducing features like multi-AI service support, adaptive environment configuration, intelligent caching system, and flexible configuration options. It highlights functionalities such as AI service integration, content cleaning, cache management, and API key handling. Technical features include unified API requests, error handling, timeout control, and display optimizations. Planned features include multi-AI service support, automatic API selection, and enhanced API key security.",
+  "summary": "The article discusses the updates in MkDocs AI Summary, introducing features like multi-AI service support, adaptive environment configuration, intelligent caching system, and flexible configuration options. It highlights the AI summary system's capabilities, such as multiple language support, automatic content cleaning, and local summary generation. The technical features include unified API integration, error handling, and display optimizations for dynamic summary titles. Planned features include multi-AI service support, secure API key management, and upcoming batch processing and data export functionalities.",
   "service": "openai",
   "page_title": "MkDocs AI 摘要更新日志",
-  "timestamp": "2025-06-06T08:59:40.763554",
+  "timestamp": "2025-06-06T10:01:34.078866",
   "language": "en",
   "cache_version": "1.3.0"
 }
