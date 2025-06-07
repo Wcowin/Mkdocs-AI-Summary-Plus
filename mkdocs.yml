@@ -130,3 +130,4 @@ markdown_extensions:
 hooks:
   - docs/overrides/hooks/reading_time.py
   - docs/overrides/hooks/ai_summary.py  # Add AI summary hook
+  - docs/overrides/hooks/image_optimizer.py

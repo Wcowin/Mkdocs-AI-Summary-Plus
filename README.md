@@ -625,13 +625,36 @@ hooks:
 
 ## 🌍 多语言支持
 
-### 语言配置
+### 默认全局语言配置
 ```python
 # 在 ai_summary.py 中设置
 self.summary_language = 'zh'    # 中文摘要
 # self.summary_language = 'en'  # 英文摘要
 # self.summary_language = 'both' # 双语摘要
 ```
+
+### 在页面中指定摘要语言  
+
+```yaml
+---
+title: "我的技术文章"
+ai_summary_lang: zh
+---
+```
+```
+---
+title: "My Technical Article"
+ai_summary_lang: en
+---
+```
+
+```
+---
+title: "双语技术文章 / Bilingual Technical Article"
+ai_summary_lang: both
+---
+```
+
 
 ### 支持的语言
 - **完全支持**: 中文、English

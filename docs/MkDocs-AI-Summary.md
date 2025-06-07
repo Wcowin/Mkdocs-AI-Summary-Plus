@@ -154,13 +154,15 @@ $ tree -a
 
 ### 2. 配置AI服务
 
-**选择AI服务提供商**：  
+**选择AI服务提供商**：    
+
 - 🌟 **DeepSeek**（推荐）：性价比高，中文表现优秀  
 - 🔥 **OpenAI**：功能强大，广泛支持  
 - ⚡ **Claude**：逻辑清晰，文本理解佳  
 - 🧠 **Gemini**：Google出品，多语言支持  
 
-**获取API密钥**：
+**获取API密钥**：  
+
 - [DeepSeek](https://platform.deepseek.com/usage) - 注册获取API密钥  
 - [ChatAnywhere](https://github.com/chatanywhere/GPT_API_free) - 免费OpenAI额度  
 

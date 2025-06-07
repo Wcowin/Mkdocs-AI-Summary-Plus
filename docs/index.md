@@ -153,13 +153,15 @@ Project Name
 
 ### 2. Configure AI Service
 
-**Choose AI Service Provider**:  
+**Choose AI Service Provider**:    
+
 - 🌟 **DeepSeek** (Recommended): High cost-performance ratio, excellent Chinese performance  
 - 🔥 **OpenAI**: Powerful features, wide support  
 - ⚡ **Claude**: Clear logic, excellent text understanding  
 - 🧠 **Gemini**: Google's product, multi-language support
 
-**Get API Keys**:
+**Get API Keys**:  
+
 - [DeepSeek](https://platform.deepseek.com/usage) - Register to get API key  
 - [ChatAnywhere](https://github.com/chatanywhere/GPT_API_free) - Free OpenAI quota
 
