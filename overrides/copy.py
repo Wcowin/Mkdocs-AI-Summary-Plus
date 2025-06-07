@@ -499,43 +499,83 @@ class AISummaryGenerator:
         if exclude_files is not None:
             self.exclude_files = exclude_files
     
-    def get_page_summary_language(self, page):
-        """
-        获取页面特定的摘要语言设置
-        
-        Args:
-            page: MkDocs页面对象
-            
-        Returns:
-            str: 页面的摘要语言设置，如果没有指定则返回全局设置
-            
-        优先级：
-        1. 页面 YAML front matter 中的 ai_summary_lang 设置
-        2. 全局 summary_language 设置
-        """
-        if hasattr(page, 'meta') and page.meta.get('ai_summary_lang'):
-            page_lang = page.meta.get('ai_summary_lang')
-            if page_lang in ['zh', 'en', 'both']:
-                return page_lang
-            else:
-                print(f"⚠️ 页面 {page.file.src_path} 的 ai_summary_lang 设置无效: {page_lang}，使用全局设置")
-        
-        return self.summary_language
-
-    def get_content_hash(self, content, page_language=None):
+    def get_content_hash(self, content):
         """生成内容hash用于缓存（包含语言设置）"""
-        # 使用页面特定的语言设置，如果没有则使用全局设置
-        language = page_language or self.summary_language
-        content_with_lang = f"{content}_{language}"
+        content_with_lang = f"{content}_{self.summary_language}"
         return hashlib.md5(content_with_lang.encode('utf-8')).hexdigest()
-
-    def build_payload(self, service_name, service_config, content, page_title, page_language=None):
-        """构建请求载荷"""
-        # 使用页面特定的语言设置
-        current_language = page_language or self.summary_language
+    
+    def clean_content_for_ai(self, markdown):
+        """清理内容，提取主要文本用于AI处理"""
+        content = markdown
         
+        # 移除YAML front matter
+        content = re.sub(r'^---.*?---\s*', '', content, flags=re.DOTALL)
+        
+        # 移除已存在的阅读信息块和AI摘要块
+        content = re.sub(r'!!! info "📖 阅读信息".*?(?=\n\n|\n#|\Z)', '', content, flags=re.DOTALL)
+        content = re.sub(r'!!! info "🤖 AI智能摘要".*?(?=\n\n|\n#|\Z)', '', content, flags=re.DOTALL)
+        content = re.sub(r'!!! tip "📝 自动摘要".*?(?=\n\n|\n#|\Z)', '', content, flags=re.DOTALL)
+        
+        # 移除HTML标签
+        content = re.sub(r'<[^>]+>', '', content)
+        
+        # 移除图片，保留alt文本作为内容提示
+        content = re.sub(r'!\[([^\]]*)\]\([^)]+\)', r'[图片：\1]', content)
+        
+        # 移除链接，保留文本
+        content = re.sub(r'\[([^\]]+)\]\([^)]+\)', r'\1', content)
+        
+        # 移除代码块，但保留关键信息
+        content = re.sub(r'```(\w+)?\n(.*?)\n```', r'[代码示例]', content, flags=re.DOTALL)
+        
+        # 移除行内代码
+        content = re.sub(r'`[^`]+`', '[代码]', content)
+        
+        # 移除表格格式但保留内容
+        content = re.sub(r'\|[^\n]+\|', '', content)
+        content = re.sub(r'^[-|:\s]+$', '', content, flags=re.MULTILINE)
+        
+        # 清理格式符号
+        content = re.sub(r'\*\*([^*]+)\*\*', r'\1', content)  # 粗体
+        content = re.sub(r'\*([^*]+)\*', r'\1', content)      # 斜体
+        content = re.sub(r'^#+\s*', '', content, flags=re.MULTILINE)  # 标题符号
+        
+        # 移除多余的空行和空格
+        content = re.sub(r'\n\s*\n', '\n\n', content)
+        content = re.sub(r'^[ \t]+', '', content, flags=re.MULTILINE)
+        content = content.strip()
+        
+        return content
+    
+    def build_headers(self, service_config):
+        """构建请求头"""
+        headers = {
+            'Content-Type': 'application/json'
+        }
+        
+        # 根据服务类型添加认证头
+        if 'azure_openai' in service_config.get('url', ''):
+            headers['api-key'] = service_config['api_key']
+        elif 'anthropic.com' in service_config.get('url', ''):
+            headers['x-api-key'] = service_config['api_key']
+            headers['anthropic-version'] = '2023-06-01'
+        elif 'googleapis.com' in service_config.get('url', ''):
+            # Google API使用URL参数
+            pass
+        else:
+            # OpenAI和DeepSeek使用Bearer token
+            headers['Authorization'] = f"Bearer {service_config['api_key']}"
+        
+        # 添加额外的头部
+        if 'headers_extra' in service_config:
+            headers.update(service_config['headers_extra'])
+        
+        return headers
+    
+    def build_payload(self, service_name, service_config, content, page_title):
+        """构建请求载荷"""
         # 根据语言设置生成不同的prompt
-        if current_language == 'en':
+        if self.summary_language == 'en':
             prompt = f"""Please generate a high-quality summary for the following technical article with these requirements:
 
 1. **Length Control**: Strictly limit to 80-120 words
@@ -556,7 +596,7 @@ Article Content:
 
 Please generate summary:"""
 
-        elif current_language == 'both':
+        elif self.summary_language == 'both':
             prompt = f"""Please generate a bilingual summary (Chinese and English) for the following technical article with these requirements:
 
 1. **Length Control**: 
@@ -644,19 +684,33 @@ Please generate bilingual summary:"""
                 "messages": [
                     {
                         "role": "system",
-                        "content": system_content.get(current_language, system_content['zh'])
+                        "content": system_content.get(self.summary_language, system_content['zh'])
                     },
                     {
                         "role": "user",
                         "content": prompt
                     }
                 ],
-                "max_tokens": service_config['max_tokens'] * (2 if current_language == 'both' else 1),
+                "max_tokens": service_config['max_tokens'] * (2 if self.summary_language == 'both' else 1),
                 "temperature": service_config['temperature'],
                 "top_p": 0.9
             }
-
-    def generate_ai_summary_with_service(self, content, page_title, service_name, page_language=None):
+    
+    def extract_response_content(self, service_name, response_data):
+        """从响应中提取内容"""
+        try:
+            if service_name == 'claude':
+                return response_data['content'][0]['text']
+            elif service_name == 'gemini':
+                return response_data['candidates'][0]['content']['parts'][0]['text']
+            else:
+                # OpenAI格式
+                return response_data['choices'][0]['message']['content']
+        except (KeyError, IndexError) as e:
+            print(f"解析{service_name}响应失败: {e}")
+            return None
+    
+    def generate_ai_summary_with_service(self, content, page_title, service_name):
         """使用指定服务生成摘要"""
         if service_name not in self.ai_services:
             print(f"不支持的AI服务: {service_name}")
@@ -671,7 +725,7 @@ Please generate bilingual summary:"""
         
         try:
             headers = self.build_headers(service_config)
-            payload = self.build_payload(service_name, service_config, content, page_title, page_language)
+            payload = self.build_payload(service_name, service_config, content, page_title)
             
             # 对于Google API，添加API密钥到URL
             url = service_config['url']
@@ -708,18 +762,22 @@ Please generate bilingual summary:"""
         except Exception as e:
             print(f"{service_name} 摘要生成异常: {e}")
             return None
-
-    def generate_ai_summary(self, content, page_title="", page_language=None):
+    
+    def generate_ai_summary(self, content, page_title=""):
         """
         生成AI摘要（带缓存逻辑）
         
         Args:
             content (str): 清理后的文章内容
             page_title (str): 文章标题
-            page_language (str): 页面特定的语言设置
             
         Returns:
             tuple: (摘要内容, 使用的服务名称)
+            
+        生成逻辑：
+        1. 检查是否应该生成新摘要
+        2. 按优先级顺序尝试不同的AI服务
+        3. 返回第一个成功的结果
         """
         # 如果配置为不生成新摘要（如CI仅缓存模式），直接返回
         if not self.should_generate_new_summary():
@@ -727,6 +785,7 @@ Please generate bilingual summary:"""
             return None, 'ci_cache_only'
         
         # 按优先级尝试不同的AI服务
+        # 首先尝试默认服务，然后按fallback顺序尝试其他服务
         services_to_try = [self.default_service] + [
             s for s in self.service_fallback_order if s != self.default_service
         ]
@@ -734,32 +793,33 @@ Please generate bilingual summary:"""
         for service_name in services_to_try:
             if service_name in self.ai_services:
                 print(f"🔄 尝试使用 {service_name} 生成摘要...")
-                summary = self.generate_ai_summary_with_service(content, page_title, service_name, page_language)
+                summary = self.generate_ai_summary_with_service(content, page_title, service_name)
                 if summary:
                     return summary, service_name
         
         print("⚠️ 所有AI服务均不可用")
         return None, None
-
-    def generate_fallback_summary(self, content, page_title="", page_language=None):
+    
+    def generate_fallback_summary(self, content, page_title=""):
         """
         生成备用摘要（当AI服务不可用时）
         
         Args:
             content (str): 清理后的文章内容
             page_title (str): 文章标题
-            page_language (str): 页面特定的语言设置
             
         Returns:
             str|None: 备用摘要内容，如果无法生成则返回None
+            
+        备用摘要策略：
+        1. 检查CI环境是否允许备用摘要
+        2. 使用关键词提取和句子分析
+        3. 根据语言设置生成相应的摘要
         """
-        # CI环境检查
+        # CI环境检查 - 如果CI环境禁用了备用摘要，直接返回
         if self.env_config['is_ci'] and not self.env_config['ci_fallback']:
             print(f"🚫 CI环境禁用备用摘要")
             return None
-        
-        # 使用页面特定的语言设置
-        current_language = page_language or self.summary_language
         
         # 移除格式符号
         clean_text = re.sub(r'^#+\s*', '', content, flags=re.MULTILINE)
@@ -811,10 +871,10 @@ Please generate bilingual summary:"""
             if len(summary) > 120:
                 summary = selected_sentences[0] + '.'
                 
-            # 根据页面语言设置生成不同的备用摘要
-            if current_language == 'en':
+            # 根据语言设置生成不同的备用摘要
+            if self.summary_language == 'en':
                 return self._generate_english_fallback(page_title)
-            elif current_language == 'both':
+            elif self.summary_language == 'both':
                 zh_summary = summary
                 en_summary = self._generate_english_fallback(page_title)
                 return f"{zh_summary}\n\n{en_summary}"
@@ -822,66 +882,145 @@ Please generate bilingual summary:"""
                 return summary
         else:
             # 根据标题和语言生成通用摘要
-            if current_language == 'en':
+            if self.summary_language == 'en':
                 return self._generate_english_fallback(page_title)
-            elif current_language == 'both':
+            elif self.summary_language == 'both':
                 zh_summary = self._generate_chinese_fallback(page_title)
                 en_summary = self._generate_english_fallback(page_title)
                 return f"{zh_summary}\n\n{en_summary}"
             else:
                 return self._generate_chinese_fallback(page_title)
+    
+    def _generate_chinese_fallback(self, page_title=""):
+        """生成中文备用摘要"""
+        if page_title:
+            # 根据标题生成通用摘要
+            if any(keyword in page_title for keyword in ['教程', '指南', '配置', '安装']):
+                return f"本文介绍了{page_title}的相关内容，包括具体的操作步骤和注意事项，为读者提供实用的技术指导。"
+            elif any(keyword in page_title for keyword in ['分析', '研究', '探讨', '原理']):
+                return f"本文深入分析了{page_title}的核心概念和技术原理，为读者提供详细的理论解析和实践见解。"
+            elif any(keyword in page_title for keyword in ['开发', '构建', '实现', '设计']):
+                return f"本文详细讲解了{page_title}的开发过程和实现方法，分享了实际的开发经验和技术方案。"
+            else:
+                return f"本文围绕{page_title}展开讨论，介绍了相关的技术概念、应用场景和实践方法。"
+        else:
+            return "本文介绍了相关的技术概念和实践方法，为读者提供有价值的参考信息。"
 
-    def format_summary(self, summary, ai_service, page_language=None):
-        """格式化摘要显示（包含CI环境标识）"""
-        # 使用页面特定的语言设置
-        current_language = page_language or self.summary_language
-        
-        # 根据语言设置显示不同的标题
-        service_names = {
-            'zh': {
-                'deepseek': 'AI智能摘要 (DeepSeek)',
-                'openai': 'AI智能摘要 (ChatGPT)',
-                'azure_openai': 'AI智能摘要 (Azure OpenAI)',
-                'claude': 'AI智能摘要 (Claude)',
-                'gemini': 'AI智能摘要 (Gemini)',
-                'fallback': '自动摘要',
-                'cached': 'AI智能摘要',
-                'ci_cache_only': 'AI智能摘要 (缓存)'
-            },
-            'en': {
-                'deepseek': 'AI Summary (DeepSeek)',
-                'openai': 'AI Summary (ChatGPT)',
-                'azure_openai': 'AI Summary (Azure OpenAI)',
-                'claude': 'AI Summary (Claude)',
-                'gemini': 'AI Summary (Gemini)',
-                'fallback': 'Auto Summary',
-                'cached': 'AI Summary',
-                'ci_cache_only': 'AI Summary (Cached)'
-            },
-            'both': {
-                'deepseek': 'AI智能摘要 / AI Summary (DeepSeek)',
-                'openai': 'AI智能摘要 / AI Summary (ChatGPT)',
-                'azure_openai': 'AI智能摘要 / AI Summary (Azure OpenAI)',
-                'claude': 'AI智能摘要 / AI Summary (Claude)',
-                'gemini': 'AI智能摘要 / AI Summary (Gemini)',
-                'fallback': '自动摘要 / Auto Summary',
-                'cached': 'AI智能摘要 / AI Summary',
-                'ci_cache_only': 'AI智能摘要 / AI Summary (缓存)'
-            }
-        }
-        
-        name_config = service_names.get(current_language, service_names['zh'])
-        service_name = name_config.get(ai_service, name_config['fallback'])
-        
-        # 图标和颜色配置
-        icon = '💾' if ai_service not in ['fallback', 'ci_cache_only'] else '📝'
-        color = 'info' if ai_service not in ['fallback', 'ci_cache_only'] else 'tip'
-        
-        return f'''!!! {color} "{icon} {service_name}"
-    {summary}
+    def _generate_english_fallback(self, page_title=""):
+        """生成英文备用摘要"""
+        if page_title:
+            # 根据标题生成通用摘要
+            if any(keyword in page_title.lower() for keyword in ['tutorial', 'guide', 'setup', 'install', 'config']):
+                return f"This article provides a comprehensive guide on {page_title}, including step-by-step instructions and important considerations for practical implementation."
+            elif any(keyword in page_title.lower() for keyword in ['analysis', 'research', 'study', 'principle']):
+                return f"This article presents an in-depth analysis of {page_title}, exploring core concepts and technical principles with detailed theoretical insights."
+            elif any(keyword in page_title.lower() for keyword in ['develop', 'build', 'implement', 'design']):
+                return f"This article explains the development process and implementation methods for {page_title}, sharing practical development experience and technical solutions."
+            else:
+                return f"This article discusses {page_title}, covering relevant technical concepts, application scenarios, and practical methods."
+        else:
+            return "This article introduces relevant technical concepts and practical methods, providing valuable reference information for readers."
 
-'''
-
+    def is_ci_environment(self):
+        """检测是否在 CI 环境中运行"""
+        # 常见的 CI 环境变量
+        ci_indicators = [
+            'CI', 'CONTINUOUS_INTEGRATION',           # 通用 CI 标识
+            'GITHUB_ACTIONS',                         # GitHub Actions
+            'GITLAB_CI',                              # GitLab CI
+            'JENKINS_URL',                            # Jenkins
+            'TRAVIS',                                 # Travis CI
+            'CIRCLECI',                               # CircleCI
+            'AZURE_HTTP_USER_AGENT',                  # Azure DevOps
+            'TEAMCITY_VERSION',                       # TeamCity
+            'BUILDKITE',                              # Buildkite
+            'CODEBUILD_BUILD_ID',                     # AWS CodeBuild
+            'NETLIFY',                                # Netlify
+            'VERCEL',                                 # Vercel
+            'CF_PAGES',                               # Cloudflare Pages
+        ]
+        
+        for indicator in ci_indicators:
+            if os.getenv(indicator):
+                return True
+        
+        return False
+    
+    def should_run_in_current_environment(self):
+        """判断是否应该在当前环境中运行 AI 摘要"""
+        return self._should_run
+    
+    def _get_ci_name(self):
+        """获取 CI 环境名称"""
+        if os.getenv('GITHUB_ACTIONS'):
+            return 'GitHub Actions'
+        elif os.getenv('GITLAB_CI'):
+            return 'GitLab CI'
+        elif os.getenv('JENKINS_URL'):
+            return 'Jenkins'
+        elif os.getenv('TRAVIS'):
+            return 'Travis CI'
+        elif os.getenv('CIRCLECI'):
+            return 'CircleCI'
+        elif os.getenv('AZURE_HTTP_USER_AGENT'):
+            return 'Azure DevOps'
+        elif os.getenv('NETLIFY'):
+            return 'Netlify'
+        elif os.getenv('VERCEL'):
+            return 'Vercel'
+        elif os.getenv('CF_PAGES'):
+            return 'Cloudflare Pages'
+        elif os.getenv('CODEBUILD_BUILD_ID'):
+            return 'AWS CodeBuild'
+        else:
+            return 'Unknown CI'
+    
+    def _auto_migrate_cache(self):
+        """自动迁移缓存文件（仅在需要时执行一次）"""
+        # 如果禁用了缓存功能，跳过缓存迁移
+        if not self.ci_config.get('cache_enabled', True):
+            return
+            
+        old_cache_dir = Path("site/.ai_cache")
+        new_cache_dir = Path(".ai_cache")
+        
+        # 检查是否需要迁移
+        if old_cache_dir.exists() and not new_cache_dir.exists():
+            print("🔄 检测到旧缓存目录，开始自动迁移...")
+            
+            try:
+                # 创建新目录
+                new_cache_dir.mkdir(exist_ok=True)
+                
+                # 复制文件
+                cache_files = list(old_cache_dir.glob("*.json"))
+                copied_count = 0
+                
+                for cache_file in cache_files:
+                    target_file = new_cache_dir / cache_file.name
+                    try:
+                        shutil.copy2(cache_file, target_file)
+                        copied_count += 1
+                    except Exception as e:
+                        print(f"⚠️ 复制缓存文件失败 {cache_file.name}: {e}")
+                
+                if copied_count > 0:
+                    print(f"✅ 自动迁移完成！共迁移 {copied_count} 个缓存文件")
+                    print("💡 提示：请将 .ai_cache 目录提交到 Git 仓库")
+                else:
+                    print("ℹ️ 没有缓存文件需要迁移")
+                    
+            except Exception as e:
+                print(f"❌ 自动迁移失败: {e}")
+        
+        elif new_cache_dir.exists():
+            # 新缓存目录已存在，检查是否有文件
+            cache_files = list(new_cache_dir.glob("*.json"))
+            if cache_files:
+                is_ci = self.is_ci_environment()
+                env_desc = '(CI)' if is_ci else '(本地)'
+                print(f"📦 发现根目录缓存 {env_desc}，共 {len(cache_files)} 个缓存文件")
+    
     def process_page(self, markdown, page, config):
         """
         处理页面的主要入口函数
@@ -909,61 +1048,55 @@ Please generate bilingual summary:"""
         if not self.should_generate_summary(page, markdown):
             return markdown
         
-        # 步骤3：获取页面特定的语言设置
-        page_language = self.get_page_summary_language(page)
-        
-        # 步骤4：内容预处理
+        # 步骤3：内容预处理
         clean_content = self.clean_content_for_ai(markdown)
         if len(clean_content) < 100:
             print(f"📄 内容太短，跳过: {page.file.src_path}")
             return markdown
         
-        # 步骤5：缓存处理（使用页面特定的语言设置）
-        content_hash = self.get_content_hash(clean_content, page_language)
+        # 步骤4：缓存处理
+        content_hash = self.get_content_hash(clean_content)
         page_title = getattr(page, 'title', '')
         
-        # 5.1 尝试获取缓存
+        # 4.1 尝试获取缓存
         cached_summary = self.get_cached_summary(content_hash)
         if cached_summary:
-            # 缓存命中
+            # 缓存命中 - 直接使用缓存的摘要
             summary = cached_summary.get('summary', '')
             ai_service = cached_summary.get('service', 'cached')
             env_desc = 'CI' if self.env_config['is_ci'] else '本地'
-            lang_desc = {'zh': '中文', 'en': '英文', 'both': '双语'}[page_language]
-            print(f"✅ 使用缓存摘要 ({lang_desc}) ({env_desc}): {page.file.src_path}")
+            print(f"✅ 使用缓存摘要 ({env_desc}): {page.file.src_path}")
         else:
-            # 5.2 缓存未命中 - 生成新摘要
+            # 4.2 缓存未命中 - 生成新摘要
             env_desc = 'CI' if self.env_config['is_ci'] else '本地'
-            lang_desc = {'zh': '中文', 'en': '英文', 'both': '双语'}[page_language]
-            print(f"🤖 生成AI摘要 ({lang_desc}) ({env_desc}): {page.file.src_path}")
+            print(f"🤖 生成AI摘要 ({env_desc}): {page.file.src_path}")
             
             # 尝试AI摘要
-            summary, ai_service = self.generate_ai_summary(clean_content, page_title, page_language)
+            summary, ai_service = self.generate_ai_summary(clean_content, page_title)
             
-            # 5.3 如果AI摘要失败，尝试备用摘要
+            # 4.3 如果AI摘要失败，尝试备用摘要
             if not summary:
-                summary = self.generate_fallback_summary(clean_content, page_title, page_language)
+                summary = self.generate_fallback_summary(clean_content, page_title)
                 if summary:
                     ai_service = 'fallback'
-                    print(f"📝 使用备用摘要 ({lang_desc}) ({env_desc}): {page.file.src_path}")
+                    print(f"📝 使用备用摘要 ({env_desc}): {page.file.src_path}")
                 else:
-                    print(f"❌ 无法生成摘要 ({lang_desc}) ({env_desc}): {page.file.src_path}")
+                    print(f"❌ 无法生成摘要 ({env_desc}): {page.file.src_path}")
                     return markdown
             else:
-                print(f"✅ AI摘要生成成功 ({ai_service}) ({lang_desc}) ({env_desc}): {page.file.src_path}")
+                print(f"✅ AI摘要生成成功 ({ai_service}) ({env_desc}): {page.file.src_path}")
             
-            # 5.4 保存新生成的摘要到缓存
+            # 4.4 保存新生成的摘要到缓存
             if summary:
                 self.save_summary_cache(content_hash, {
                     'summary': summary,
                     'service': ai_service,
-                    'page_title': page_title,
-                    'page_language': page_language  # 保存页面语言设置
+                    'page_title': page_title
                 })
         
-        # 步骤6：格式化并返回最终内容
+        # 步骤5：格式化并返回最终内容
         if summary:
-            summary_html = self.format_summary(summary, ai_service, page_language)
+            summary_html = self.format_summary(summary, ai_service)
             return summary_html + '\n\n' + markdown
         
         return markdown
@@ -1001,169 +1134,54 @@ Please generate bilingual summary:"""
         
         # 默认不生成摘要
         return False
-
-    def clean_content_for_ai(self, markdown):
-        """
-        清理Markdown内容供AI处理
-        
-        Args:
-            markdown (str): 原始markdown内容
-            
-        Returns:
-            str: 清理后的内容
-        """
-        # 移除YAML front matter
-        content = re.sub(r'^---\s*\n.*?\n---\s*\n', '', markdown, flags=re.DOTALL)
-        
-        # 移除HTML标签
-        content = re.sub(r'<[^>]+>', '', content)
-        
-        # 移除代码块
-        content = re.sub(r'```[\s\S]*?```', '', content)
-        content = re.sub(r'`[^`]+`', '', content)
-        
-        # 移除链接，保留文本
-        content = re.sub(r'\[([^\]]+)\]\([^\)]+\)', r'\1', content)
-        
-        # 移除图片
-        content = re.sub(r'!\[[^\]]*\]\([^\)]+\)', '', content)
-        
-        # 移除Markdown标记
-        content = re.sub(r'^#+\s*', '', content, flags=re.MULTILINE)
-        content = re.sub(r'\*\*([^*]+)\*\*', r'\1', content)
-        content = re.sub(r'\*([^*]+)\*', r'\1', content)
-        content = re.sub(r'__([^_]+)__', r'\1', content)
-        content = re.sub(r'_([^_]+)_', r'\1', content)
-        
-        # 移除表格
-        content = re.sub(r'\|[^\n]+\|', '', content)
-        
-        # 移除多余的空行
-        content = re.sub(r'\n\s*\n', '\n', content)
-        
-        # 移除特殊符号
-        content = re.sub(r'[>#\-\*\+]', '', content)
-        
-        return content.strip()
-
-    def build_headers(self, service_config):
-        """
-        构建HTTP请求头
-        
-        Args:
-            service_config (dict): AI服务配置
-            
-        Returns:
-            dict: HTTP请求头
-        """
-        return {
-            'Content-Type': 'application/json',
-            'Authorization': f'Bearer {service_config["api_key"]}'
+    
+    def format_summary(self, summary, ai_service):
+        """格式化摘要显示（包含CI环境标识）"""
+        # 根据语言设置显示不同的标题
+        service_names = {
+            'zh': {
+                'deepseek': 'AI智能摘要 (DeepSeek)',
+                'openai': 'AI智能摘要 (ChatGPT)',
+                'azure_openai': 'AI智能摘要 (Azure OpenAI)',
+                'claude': 'AI智能摘要 (Claude)',
+                'gemini': 'AI智能摘要 (Gemini)',
+                'fallback': '自动摘要',
+                'cached': 'AI智能摘要',
+                'ci_cache_only': 'AI智能摘要 (缓存)'
+            },
+            'en': {
+                'deepseek': 'AI Summary (DeepSeek)',
+                'openai': 'AI Summary (ChatGPT)',
+                'azure_openai': 'AI Summary (Azure OpenAI)',
+                'claude': 'AI Summary (Claude)',
+                'gemini': 'AI Summary (Gemini)',
+                'fallback': 'Auto Summary',
+                'cached': 'AI Summary',
+                'ci_cache_only': 'AI Summary (Cached)'
+            },
+            'both': {
+                'deepseek': 'AI智能摘要 / AI Summary (DeepSeek)',
+                'openai': 'AI智能摘要 / AI Summary (ChatGPT)',
+                'azure_openai': 'AI智能摘要 / AI Summary (Azure OpenAI)',
+                'claude': 'AI智能摘要 / AI Summary (Claude)',
+                'gemini': 'AI智能摘要 / AI Summary (Gemini)',
+                'fallback': '自动摘要 / Auto Summary',
+                'cached': 'AI智能摘要 / AI Summary',
+                'ci_cache_only': 'AI智能摘要 / AI Summary (缓存)'
+            }
         }
-
-    def extract_response_content(self, service_name, response_data):
-        """
-        从不同AI服务的响应中提取摘要内容
         
-        Args:
-            service_name (str): AI服务名称
-            response_data (dict): API响应数据
-            
-        Returns:
-            str|None: 提取的摘要内容
-        """
-        try:
-            if service_name == 'claude':
-                # Claude API响应格式
-                return response_data.get('content', [{}])[0].get('text', '').strip()
-            
-            elif service_name == 'gemini':
-                # Gemini API响应格式
-                candidates = response_data.get('candidates', [])
-                if candidates:
-                    content = candidates[0].get('content', {})
-                    parts = content.get('parts', [])
-                    if parts:
-                        return parts[0].get('text', '').strip()
-                return None
-            
-            else:
-                # OpenAI格式 (OpenAI, DeepSeek, Azure OpenAI)
-                choices = response_data.get('choices', [])
-                if choices:
-                    message = choices[0].get('message', {})
-                    return message.get('content', '').strip()
-                return None
-                
-        except (KeyError, IndexError, AttributeError) as e:
-            print(f"⚠️ 解析 {service_name} 响应失败: {e}")
-            return None
-
-    def _get_ci_name(self):
-        """
-        获取CI环境名称
+        name_config = service_names.get(self.summary_language, service_names['zh'])
+        service_name = name_config.get(ai_service, name_config['fallback'])
         
-        Returns:
-            str: CI环境名称
-        """
-        if os.getenv('GITHUB_ACTIONS'):
-            return 'GitHub Actions'
-        elif os.getenv('GITLAB_CI'):
-            return 'GitLab CI'
-        elif os.getenv('JENKINS_URL'):
-            return 'Jenkins'
-        elif os.getenv('TRAVIS'):
-            return 'Travis CI'
-        elif os.getenv('CIRCLECI'):
-            return 'CircleCI'
-        elif os.getenv('AZURE_HTTP_USER_AGENT'):
-            return 'Azure DevOps'
-        elif os.getenv('NETLIFY'):
-            return 'Netlify'
-        elif os.getenv('VERCEL'):
-            return 'Vercel'
-        elif os.getenv('CF_PAGES'):
-            return 'Cloudflare Pages'
-        else:
-            return 'Unknown CI'
-
-    def _generate_chinese_fallback(self, page_title):
-        """
-        生成中文备用摘要
+        # 图标和颜色配置
+        icon = '💾' if ai_service not in ['fallback', 'ci_cache_only'] else '📝'
+        color = 'info' if ai_service not in ['fallback', 'ci_cache_only'] else 'tip'
         
-        Args:
-            page_title (str): 页面标题
-            
-        Returns:
-            str: 中文备用摘要
-        """
-        if '教程' in page_title or '指南' in page_title:
-            return f"本文是关于{page_title}的详细教程，提供了完整的操作步骤和实用技巧。"
-        elif '分析' in page_title or '研究' in page_title:
-            return f"本文对{page_title}进行了深入分析，探讨了相关的技术原理和应用场景。"
-        elif '配置' in page_title or '设置' in page_title:
-            return f"本文介绍了{page_title}的详细配置方法，帮助用户快速完成环境搭建。"
-        else:
-            return f"本文介绍了{page_title}的相关内容，提供了实用的技术知识和经验分享。"
+        return f'''!!! {color} "{icon} {service_name}"
+    {summary}
 
-    def _generate_english_fallback(self, page_title):
-        """
-        生成英文备用摘要
-        
-        Args:
-            page_title (str): 页面标题
-            
-        Returns:
-            str: 英文备用摘要
-        """
-        if any(word in page_title.lower() for word in ['tutorial', 'guide', 'how to']):
-            return f"This article provides a comprehensive tutorial on {page_title}, offering step-by-step instructions and practical tips."
-        elif any(word in page_title.lower() for word in ['analysis', 'review', 'study']):
-            return f"This article presents an in-depth analysis of {page_title}, exploring technical principles and use cases."
-        elif any(word in page_title.lower() for word in ['setup', 'configuration', 'install']):
-            return f"This article covers the detailed configuration of {page_title}, helping users set up their environment quickly."
-        else:
-            return f"This article introduces {page_title}, providing practical technical knowledge and experience sharing."
+'''
 
 # 创建全局实例
 ai_summary_generator = AISummaryGenerator()
