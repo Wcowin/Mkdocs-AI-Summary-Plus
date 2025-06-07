@@ -1,0 +1,8 @@
+{
+  "summary": "The MkDocs AI update log highlights key improvements in version 1.3.0, including unified cache architecture, enhanced CI/CD support, and intelligent deployment platform recognition. Version 1.2.0 introduced multiple AI service support, adaptive environments, smart caching, and security enhancements. Technical enhancements encompass unified API interfaces, improved error handling, and performance optimizations. Planned features include multi-AI service support, secure API key management, and batch processing mode, aiming to streamline operations and enhance functionality.",
+  "service": "openai",
+  "page_title": "MkDocs AI 摘要更新日志",
+  "timestamp": "2025-06-07T21:50:02.758538",
+  "language": "en",
+  "cache_version": "1.3.0"
+}

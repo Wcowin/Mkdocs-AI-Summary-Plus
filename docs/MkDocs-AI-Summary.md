@@ -370,7 +370,7 @@ self.exclude_files = [
 
 ### 💰 成本说明
 - **单次费用**: 约0.03-0.05元（中大型文档）
-- **月度预估**: 普通博客约1-5元
+- **月度预估**: 普通博客约1元到3元
 - **免费额度**: 多数AI服务商提供新用户免费额度
 
 ---
@@ -512,7 +512,8 @@ pip install -r requirements.txt
 
 遇到问题？请在 [Issues](https://github.com/Wcowin/mkdocs-ai-hooks/issues) 中反馈。
 
-**反馈时请包含**：  
+**反馈时请包含**：   
+ 
 - MkDocs版本  
 - Python版本  
 - 完整错误信息  
