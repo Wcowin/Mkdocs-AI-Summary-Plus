@@ -724,66 +724,43 @@
   <div class="md-post__content md-typeset">
     <h2 id="mkdocs-ai"><a class="toclink" href="../../2025/06/03/mkdocs-ai-%E6%91%98%E8%A6%81%E6%9B%B4%E6%96%B0%E6%97%A5%E5%BF%97/">MkDocs AI 摘要更新日志</a></h2>
 <div class="admonition info">
-<p class="admonition-title">💾 AI Summary (ChatGPT)</p>
-<p>The MkDocs AI summary update log highlights the introduction of AI intelligent summary functionality, read time statistics, and smart caching. Version 1.2.0 introduces multiple AI service support, intelligent service switching, multi-language summaries, content cleaning, and adaptive environment configuration. It also features a robust caching system, flexible configuration options, API integration, error handling, and display optimizations. Planned functionalities include multi-AI service support, automatic API selection, and secure API key handling, among others.</p>
+<p class="admonition-title">💾 AI智能摘要 (ChatGPT)</p>
+<p>MkDocs AI更新日志介绍了最新版本的核心改进，包括统一缓存架构、CI/CD支持增强、智能识别部署平台等功能。前版本新增了多AI服务支持、智能缓存系统、安全配置等技术改进。未来计划包括多AI服务支持、API密钥安全处理等功能。</p>
 </div>
 <h2 id="blog"><a class="toclink" href="../../2025/06/03/mkdocs-ai-%E6%91%98%E8%A6%81%E6%9B%B4%E6%96%B0%E6%97%A5%E5%BF%97/#blog">Blog</a></h2>
 <h3 id="_1"><a class="toclink" href="../../2025/06/03/mkdocs-ai-%E6%91%98%E8%A6%81%E6%9B%B4%E6%96%B0%E6%97%A5%E5%BF%97/#_1">📝 更新日志</a></h3>
-<h4 id="v100-2025-06-01"><a class="toclink" href="../../2025/06/03/mkdocs-ai-%E6%91%98%E8%A6%81%E6%9B%B4%E6%96%B0%E6%97%A5%E5%BF%97/#v100-2025-06-01">[v1.0.0] (2025-06-01)</a></h4>
+<h4 id="v130-2025-06-04-"><a class="toclink" href="../../2025/06/03/mkdocs-ai-%E6%91%98%E8%A6%81%E6%9B%B4%E6%96%B0%E6%97%A5%E5%BF%97/#v130-2025-06-04-">[v1.3.0] (2025-06-04) - 最新版本</a></h4>
+<h5 id="_2"><a class="toclink" href="../../2025/06/03/mkdocs-ai-%E6%91%98%E8%A6%81%E6%9B%B4%E6%96%B0%E6%97%A5%E5%BF%97/#_2">核心改进</a></h5>
 <ul>
-<li>✨ 初始发布</li>
-<li>🤖 AI智能摘要功能</li>
-<li>📖 阅读时间统计功能</li>
-<li>💾 智能缓存系统</li>
-<li>🎯 灵活配置选项</li>
+<li><strong>统一缓存架构</strong></li>
+<li><strong>缓存路径统一为项目根目录 .ai_cache</strong></li>
+<li><strong>本地和 CI 环境使用相同缓存策略</strong></li>
+<li><strong>增强 CI/CD 支持</strong>，<strong>支持 CI 仅缓存模式，大幅减少部署时间</strong></li>
+<li><strong>智能识别 15+ 部署平台（GitHub Actions、GitLab CI 等）</strong></li>
+<li><strong>可配置备用摘要机制</strong></li>
 </ul>
-<hr />
-<h4 id="v120-2025-06-03"><a class="toclink" href="../../2025/06/03/mkdocs-ai-%E6%91%98%E8%A6%81%E6%9B%B4%E6%96%B0%E6%97%A5%E5%BF%97/#v120-2025-06-03">[v1.2.0]  (2025-06-03)</a></h4>
-<h4 id="features"><a class="toclink" href="../../2025/06/03/mkdocs-ai-%E6%91%98%E8%A6%81%E6%9B%B4%E6%96%B0%E6%97%A5%E5%BF%97/#features">✨ 新功能 (Features)</a></h4>
-<h5 id="ai"><a class="toclink" href="../../2025/06/03/mkdocs-ai-%E6%91%98%E8%A6%81%E6%9B%B4%E6%96%B0%E6%97%A5%E5%BF%97/#ai">🤖 AI智能摘要系统</a></h5>
+<h4 id="v120-2025-06-03"><a class="toclink" href="../../2025/06/03/mkdocs-ai-%E6%91%98%E8%A6%81%E6%9B%B4%E6%96%B0%E6%97%A5%E5%BF%97/#v120-2025-06-03">[v1.2.0] (2025-06-03)</a></h4>
+<h5 id="_3"><a class="toclink" href="../../2025/06/03/mkdocs-ai-%E6%91%98%E8%A6%81%E6%9B%B4%E6%96%B0%E6%97%A5%E5%BF%97/#_3">✨ 主要新功能</a></h5>
 <ul>
-<li><strong>多AI服务支持</strong>: 集成 DeepSeek、OpenAI、Gemini、Claude 四大AI服务</li>
-<li><strong>智能服务切换</strong>: 支持服务优先级配置和自动故障转移</li>
-<li><strong>多语言摘要</strong>: 支持中文、英文、双语摘要生成</li>
-<li><strong>内容智能清理</strong>: 自动移除无关格式，提取核心文本用于AI处理</li>
-<li><strong>备用摘要机制</strong>: AI服务不可用时自动生成基于关键词的本地摘要</li>
+<li><strong>多AI服务支持</strong>: 集成DeepSeek、OpenAI、Gemini、Claude</li>
+<li><strong>环境自适应</strong>: 自动识别CI/本地环境</li>
+<li><strong>智能缓存系统</strong>: 内容哈希缓存，7天自动过期</li>
+<li><strong>安全配置</strong>: GitHub Secrets集成，API密钥安全管理</li>
 </ul>
-<h5 id="_2"><a class="toclink" href="../../2025/06/03/mkdocs-ai-%E6%91%98%E8%A6%81%E6%9B%B4%E6%96%B0%E6%97%A5%E5%BF%97/#_2">🌍 环境自适应配置</a></h5>
+<h5 id="_4"><a class="toclink" href="../../2025/06/03/mkdocs-ai-%E6%91%98%E8%A6%81%E6%9B%B4%E6%96%B0%E6%97%A5%E5%BF%97/#_4">🔧 技术改进</a></h5>
 <ul>
-<li><strong>CI/本地环境检测</strong>: 自动识别 GitHub Actions、GitLab CI、Netlify 等15种CI环境</li>
-<li><strong>分离式配置</strong>: CI和本地环境可独立配置启用/禁用状态</li>
-<li><strong>推荐配置</strong>: 默认仅在CI环境启用，本地环境禁用，减少开发干扰</li>
+<li><strong>统一API接口</strong>: 自适配不同AI服务格式</li>
+<li><strong>错误处理增强</strong>: 完善的异常处理机制</li>
+<li><strong>性能优化</strong>: LRU缓存和正则预编译</li>
 </ul>
-<h5 id="_3"><a class="toclink" href="../../2025/06/03/mkdocs-ai-%E6%91%98%E8%A6%81%E6%9B%B4%E6%96%B0%E6%97%A5%E5%BF%97/#_3">💾 智能缓存系统</a></h5>
+<h4 id="v100-2025-06-01-"><a class="toclink" href="../../2025/06/03/mkdocs-ai-%E6%91%98%E8%A6%81%E6%9B%B4%E6%96%B0%E6%97%A5%E5%BF%97/#v100-2025-06-01-">[v1.0.0] (2025-06-01) - 初始版本</a></h4>
 <ul>
-<li><strong>内容哈希缓存</strong>: 基于文章内容+语言设置生成唯一缓存标识</li>
-<li><strong>缓存过期管理</strong>: 7天自动过期机制，确保内容时效性</li>
-<li><strong>服务变更检测</strong>: AI服务或语言设置变更时自动清理相关缓存</li>
-<li><strong>缓存健壮性</strong>: 支持目录级和文件级缓存清理策略</li>
+<li>🤖 <strong>AI智能摘要功能</strong>  </li>
+<li>📖 <strong>阅读时间统计功能</strong>  </li>
+<li>💾 <strong>基础缓存系统</strong>  </li>
+<li>🎯 <strong>基本配置选项</strong>  </li>
 </ul>
-<h5 id="_4"><a class="toclink" href="../../2025/06/03/mkdocs-ai-%E6%91%98%E8%A6%81%E6%9B%B4%E6%96%B0%E6%97%A5%E5%BF%97/#_4">🎯 灵活配置选项</a></h5>
-<ul>
-<li><strong>文件夹精确控制</strong>: 支持指定特定文件夹启用AI摘要</li>
-<li><strong>排除模式</strong>: 支持文件模式和具体文件路径排除</li>
-<li><strong>页面级控制</strong>: 通过 front matter 的 <code>ai_summary</code> 字段强制启用/禁用</li>
-<li><strong>API密钥管理</strong>: 支持环境变量和代码配置两种方式</li>
-</ul>
-<h4 id="technical-features"><a class="toclink" href="../../2025/06/03/mkdocs-ai-%E6%91%98%E8%A6%81%E6%9B%B4%E6%96%B0%E6%97%A5%E5%BF%97/#technical-features">🔧 技术特性 (Technical Features)</a></h4>
-<h5 id="api"><a class="toclink" href="../../2025/06/03/mkdocs-ai-%E6%91%98%E8%A6%81%E6%9B%B4%E6%96%B0%E6%97%A5%E5%BF%97/#api">📡 API集成</a></h5>
-<ul>
-<li><strong>统一请求构建</strong>: 自动适配不同AI服务的API格式和认证方式</li>
-<li><strong>错误处理</strong>: 完善的网络异常和API错误处理机制</li>
-<li><strong>超时控制</strong>: 30秒请求超时，防止构建过程阻塞</li>
-<li><strong>响应解析</strong>: 智能提取和清理AI返回的摘要内容</li>
-</ul>
-<h5 id="_5"><a class="toclink" href="../../2025/06/03/mkdocs-ai-%E6%91%98%E8%A6%81%E6%9B%B4%E6%96%B0%E6%97%A5%E5%BF%97/#_5">🎨 显示优化</a></h5>
-<ul>
-<li><strong>自适应标题</strong>: 根据AI服务和语言设置动态生成摘要标题</li>
-<li><strong>视觉区分</strong>: 使用不同图标和颜色区分AI摘要和备用摘要</li>
-<li><strong>格式规范</strong>: 自动清理摘要格式，移除多余前缀和后缀</li>
-</ul>
-<hr />
-<h4 id="_6"><a class="toclink" href="../../2025/06/03/mkdocs-ai-%E6%91%98%E8%A6%81%E6%9B%B4%E6%96%B0%E6%97%A5%E5%BF%97/#_6">计划功能</a></h4>
+<h4 id="_5"><a class="toclink" href="../../2025/06/03/mkdocs-ai-%E6%91%98%E8%A6%81%E6%9B%B4%E6%96%B0%E6%97%A5%E5%BF%97/#_5">计划功能</a></h4>
 <ul class="task-list">
 <li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> 多AI服务支持（OpenAI、Claude等）</li>
 <li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> 自动选择最佳API</li>

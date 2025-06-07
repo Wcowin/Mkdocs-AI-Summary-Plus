@@ -1608,7 +1608,7 @@
 
 <div class="admonition info">
 <p class="admonition-title">💾 AI Summary (ChatGPT)</p>
-<p>This project enhances MkDocs documentation with AI-driven features like automatic summary generation and intelligent reading statistics. It supports multiple AI services, multi-language summaries, and content cleaning. The system includes a fallback mechanism, caching, and flexible configuration options. Reading statistics offer character counting, code detection, and reading time estimation. Smart features adapt to different environments, recognize languages, and distinguish content types. Installation can be done via direct download or Git clone, with instructions for basic configuration and AI service selection provided.</p>
+<p>This project enhances MkDocs documentation with AI-driven features like automatic summary generation and intelligent reading statistics. It supports multiple AI services, multi-language summaries, content cleaning, and fallback mechanisms. The tool also provides reading time estimation, code detection, and environment adaptability. Users can install it directly or via Git, configure hooks, and select AI services. The system offers flexible configuration, error handling, and LRU cache optimization. Detailed installation and configuration steps are provided for easy setup.</p>
 </div>
 <!-- # MkDocs AI Hooks -->
 
@@ -1767,14 +1767,18 @@ Create a <code>.env</code> file in the root directory to store API keys (remembe
 <a id="__codelineno-7-15" name="__codelineno-7-15"></a>└── mkdocs.yml
 </code></pre></div></td></tr></table></div></p>
 <h3 id="2-configure-ai-service">2. Configure AI Service<a class="headerlink" href="#2-configure-ai-service" title="Permanent link">&para;</a></h3>
-<p><strong>Choose AI Service Provider</strong>:<br />
-- 🌟 <strong>DeepSeek</strong> (Recommended): High cost-performance ratio, excellent Chinese performance<br />
-- 🔥 <strong>OpenAI</strong>: Powerful features, wide support<br />
-- ⚡ <strong>Claude</strong>: Clear logic, excellent text understanding<br />
-- 🧠 <strong>Gemini</strong>: Google's product, multi-language support</p>
-<p><strong>Get API Keys</strong>:
-- <a href="https://platform.deepseek.com/usage">DeepSeek</a> - Register to get API key<br />
-- <a href="https://github.com/chatanywhere/GPT_API_free">ChatAnywhere</a> - Free OpenAI quota</p>
+<p><strong>Choose AI Service Provider</strong>:    </p>
+<ul>
+<li>🌟 <strong>DeepSeek</strong> (Recommended): High cost-performance ratio, excellent Chinese performance  </li>
+<li>🔥 <strong>OpenAI</strong>: Powerful features, wide support  </li>
+<li>⚡ <strong>Claude</strong>: Clear logic, excellent text understanding  </li>
+<li>🧠 <strong>Gemini</strong>: Google's product, multi-language support</li>
+</ul>
+<p><strong>Get API Keys</strong>:  </p>
+<ul>
+<li><a href="https://platform.deepseek.com/usage">DeepSeek</a> - Register to get API key  </li>
+<li><a href="https://github.com/chatanywhere/GPT_API_free">ChatAnywhere</a> - Free OpenAI quota</li>
+</ul>
 <p><strong>Store the obtained API keys in the <code>.env</code> file created in the previous step!!!</strong></p>
 <h3 id="3-set-parameters">3. Set Parameters<a class="headerlink" href="#3-set-parameters" title="Permanent link">&para;</a></h3>
 <p>Configure directories that need AI summaries in <code>ai_summary.py</code>:

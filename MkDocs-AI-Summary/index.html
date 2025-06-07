@@ -1610,11 +1610,11 @@
 
 <div class="admonition info">
 <p class="admonition-title">💾 AI智能摘要 (ChatGPT)</p>
-<p>这篇文章介绍了一个利用MkDocs hooks实现的智能摘要生成工具，包括AI智能摘要、智能阅读统计和智能化特性等功能。工具支持多语言、智能内容清理、灵活配置等特点，可提高文档阅读效率。同时介绍了安装、配置AI服务、使用指南和成本说明等内容。</p>
+<p>这篇文章介绍了一个利用MkDocs hooks实现的智能摘要生成工具，包括AI智能摘要、智能阅读统计、智能化特性等功能。该工具支持多种AI服务、多语言生成、智能内容清理等特点，可提高文档阅读效率。同时，文章还介绍了安装、配置、快速开始和高级配置等方面的内容，帮助用户快速上手并优化文档管理体验。</p>
 </div>
 <div class="admonition info">
 <p class="admonition-title">📖 阅读信息</p>
-<p>阅读时间：<strong>2</strong> 分钟 | 中文字符：<strong>888</strong> | 有效代码行数：<strong>205</strong></p>
+<p>阅读时间：<strong>2</strong> 分钟 | 中文字符：<strong>890</strong> | 有效代码行数：<strong>205</strong></p>
 </div>
 <!-- # MkDocs AI Summary -->
 
@@ -1773,14 +1773,18 @@ ai_summary.py务必放到docs/overrides/hooks目录下，然后：
 <a id="__codelineno-7-15" name="__codelineno-7-15"></a>└── mkdocs.yml
 </code></pre></div></td></tr></table></div></p>
 <h3 id="2-ai">2. 配置AI服务<a class="headerlink" href="#2-ai" title="Permanent link">&para;</a></h3>
-<p><strong>选择AI服务提供商</strong>：<br />
-- 🌟 <strong>DeepSeek</strong>（推荐）：性价比高，中文表现优秀<br />
-- 🔥 <strong>OpenAI</strong>：功能强大，广泛支持<br />
-- ⚡ <strong>Claude</strong>：逻辑清晰，文本理解佳<br />
-- 🧠 <strong>Gemini</strong>：Google出品，多语言支持  </p>
-<p><strong>获取API密钥</strong>：
-- <a href="https://platform.deepseek.com/usage">DeepSeek</a> - 注册获取API密钥<br />
-- <a href="https://github.com/chatanywhere/GPT_API_free">ChatAnywhere</a> - 免费OpenAI额度  </p>
+<p><strong>选择AI服务提供商</strong>：    </p>
+<ul>
+<li>🌟 <strong>DeepSeek</strong>（推荐）：性价比高，中文表现优秀  </li>
+<li>🔥 <strong>OpenAI</strong>：功能强大，广泛支持  </li>
+<li>⚡ <strong>Claude</strong>：逻辑清晰，文本理解佳  </li>
+<li>🧠 <strong>Gemini</strong>：Google出品，多语言支持  </li>
+</ul>
+<p><strong>获取API密钥</strong>：  </p>
+<ul>
+<li><a href="https://platform.deepseek.com/usage">DeepSeek</a> - 注册获取API密钥  </li>
+<li><a href="https://github.com/chatanywhere/GPT_API_free">ChatAnywhere</a> - 免费OpenAI额度  </li>
+</ul>
 <p><strong>获取的密钥存放于上一步创建的<code>.env</code> 文件中！！！</strong></p>
 <h3 id="3">3. 设置参数<a class="headerlink" href="#3" title="Permanent link">&para;</a></h3>
 <p>在 <code>ai_summary.py</code> 中配置需要AI摘要的目录：
@@ -2080,7 +2084,7 @@ ai_summary.py务必放到docs/overrides/hooks目录下，然后：
 <h3 id="_9">💰 成本说明<a class="headerlink" href="#_9" title="Permanent link">&para;</a></h3>
 <ul>
 <li><strong>单次费用</strong>: 约0.03-0.05元（中大型文档）</li>
-<li><strong>月度预估</strong>: 普通博客约1-5元</li>
+<li><strong>月度预估</strong>: 普通博客约1元到3元</li>
 <li><strong>免费额度</strong>: 多数AI服务商提供新用户免费额度</li>
 </ul>
 <hr />
@@ -2234,12 +2238,14 @@ ai_summary.py务必放到docs/overrides/hooks目录下，然后：
 <hr />
 <h2 id="_26">🐛 问题反馈<a class="headerlink" href="#_26" title="Permanent link">&para;</a></h2>
 <p>遇到问题？请在 <a href="https://github.com/Wcowin/mkdocs-ai-hooks/issues">Issues</a> 中反馈。</p>
-<p><strong>反馈时请包含</strong>：<br />
-- MkDocs版本<br />
-- Python版本<br />
-- 完整错误信息<br />
-- 复现步骤<br />
-- 配置文件（去除敏感信息）  </p>
+<p><strong>反馈时请包含</strong>：   </p>
+<ul>
+<li>MkDocs版本  </li>
+<li>Python版本  </li>
+<li>完整错误信息  </li>
+<li>复现步骤  </li>
+<li>配置文件（去除敏感信息）  </li>
+</ul>
 <hr />
 <h2 id="_27">📄 许可证<a class="headerlink" href="#_27" title="Permanent link">&para;</a></h2>
 <p>本项目采用 <a href="https://github.com/Wcowin/mkdocs-ai-hooks/blob/main/LICENSE">MIT License</a> 开源协议。</p>
