@@ -1,8 +1,0 @@
-{
-  "summary": "The article introduces an AI-driven summary generation and intelligent reading statistics feature for MkDocs documentation and blogs. It offers AI-powered summarization with support for multiple AI services, multilingual summaries, content filtering, and flexible configuration. The intelligent reading statistics include precise character counting, code detection, estimated reading time, and visually appealing information display. The system is environment-adaptive, supports multiple programming languages, and provides advanced features like LRU cache optimization. Installation, configuration, and usage guidelines are detailed, with cost estimates and advanced customization options.",
-  "service": "openai",
-  "page_title": "中文教程说明",
-  "timestamp": "2025-06-06T10:01:22.974969",
-  "language": "en",
-  "cache_version": "1.3.0"
-}
