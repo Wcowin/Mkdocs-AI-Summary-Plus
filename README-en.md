@@ -379,47 +379,234 @@ self.exclude_files = [
 
 ## ⚙️ Advanced Configuration
 
-### Custom AI Service
+### Custom AI Services
+
+#### Method 1: Using Configuration Functions (Recommended)
 ```python
-# Add new AI service
-self.ai_services = {
-    'your_service': {
-        'url': 'https://api.yourservice.com/v1/chat/completions',
-        'model': 'your-model',
-        'api_key': os.getenv('YOUR_API_KEY'),
-        'max_tokens': 150,
-        'temperature': 0.3
-    }
+# Create hooks_config.py in the same directory as mkdocs.yml
+from docs.overrides.hooks.ai_summary import configure_ai_summary, add_ai_service, add_openai_service
+
+# Add OpenAI-compatible service
+add_openai_service(
+    'my_deepseek',
+    'https://api.deepseek.com/v1/chat/completions',
+    'deepseek-chat',
+    'your-deepseek-key'
+)
+
+# Add locally deployed model
+add_openai_service(
+    'local_llm',
+    'http://localhost:8000/v1/chat/completions',
+    'local-model',
+    'dummy-key',
+    temperature=0.7
+)
+
+# Add completely custom service
+add_ai_service('custom_service', {
+    'url': 'https://api.custom.com/v1/chat/completions',
+    'model': 'custom-model',
+    'api_key': 'your-custom-key',
+    'format': 'openai',  # or 'claude', 'gemini', 'custom'
+    'max_tokens': 200,
+    'temperature': 0.3,
+    'headers': {'Custom-Header': 'value'}
+})
+
+# Configure basic settings and service priority
+configure_ai_summary(
+    enabled_folders=['blog/', 'docs/'],
+    language='en',
+    service_priority=['my_deepseek', 'local_llm', 'custom_service', 'openai']
+)
+```
+
+#### Method 2: Configuration from Environment Variables
+```python
+# Create hooks_config.py in the same directory as mkdocs.yml
+from docs.overrides.hooks.ai_summary import add_service_from_env, configure_ai_summary
+
+# Auto-configure from environment variables
+add_service_from_env('my_service', 'MYAPI')
+
+configure_ai_summary(
+    enabled_folders=['blog/'],
+    service_priority=['my_service', 'openai']
+)
+```
+
+```bash
+# Add to .env file
+MYAPI_URL=https://api.myservice.com/v1/chat/completions
+MYAPI_MODEL=my-model
+MYAPI_API_KEY=your-api-key
+MYAPI_MAX_TOKENS=150
+MYAPI_TEMPERATURE=0.3
+MYAPI_FORMAT=openai
+```
+
+#### Method 3: Direct Configuration in configure_ai_summary
+```python
+# Create hooks_config.py in the same directory as mkdocs.yml
+from docs.overrides.hooks.ai_summary import configure_ai_summary
+
+configure_ai_summary(
+    enabled_folders=['blog/', 'docs/'],
+    language='en',
+    custom_services={
+        'my_openai': {
+            'url': 'https://api.openai.com/v1/chat/completions',
+            'model': 'gpt-4',
+            'api_key': 'your-openai-key',
+            'format': 'openai'
+        },
+        'local_llm': {
+            'url': 'http://localhost:8000/v1/chat/completions',
+            'model': 'local-model',
+            'api_key': 'dummy',
+            'format': 'openai',
+            'temperature': 0.7
+        }
+    },
+    service_priority=['my_openai', 'local_llm', 'deepseek']
+)
+```
+
+### Supported API Formats
+
+#### OpenAI-Compatible Format
+```python
+{
+    'url': 'https://api.openai.com/v1/chat/completions',
+    'model': 'gpt-4',
+    'api_key': 'your-key',
+    'format': 'openai'
 }
-
-# Default AI service to use
-self.default_service = 'your_service'
-
-# Service priority (try in order)
-self.service_fallback_order = ['openai', 'deepseek', 'claude', 'gemini'] # Try in order
 ```
 
-### Custom Prompts
+#### Claude Format
 ```python
-def generate_ai_summary(self, content, page_title=""):
-    prompt = f"""Please generate a concise English summary (80-120 words) for the following technical document:
-    
-    Article title: {page_title}
-    Article content: {content[:2500]}
-    
-    Requirements:
-    1. Highlight core technical points
-    2. Use concise professional language
-    3. Keep length between 80-120 words
-    """
+{
+    'url': 'https://api.anthropic.com/v1/messages',
+    'model': 'claude-3-haiku-20240307',
+    'api_key': 'your-key',
+    'format': 'claude'
+}
 ```
 
-### Cache Configuration
+#### Gemini Format
 ```python
-# Modify cache expiration time
-cache_time = datetime.fromisoformat(cache_data.get('timestamp', '1970-01-01'))
-if (datetime.now() - cache_time).days < 30:  # Change to 30 days
-    return cache_data
+{
+    'url': 'https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent',
+    'model': 'gemini-pro',
+    'api_key': 'your-key',
+    'format': 'gemini'
+}
+```
+
+#### Fully Custom Format
+```python
+def custom_payload_builder(content, title, config):
+    return {
+        "prompt": f"Please summarize: {content}",
+        "max_length": 120
+    }
+
+def custom_response_parser(response_data):
+    return response_data.get('summary', '')
+
+{
+    'url': 'https://api.custom.com/summarize',
+    'api_key': 'your-key',
+    'format': 'custom',
+    'custom_payload_builder': custom_payload_builder,
+    'custom_response_parser': custom_response_parser
+}
+```
+
+### Common Custom Configuration Examples
+
+#### 1. Using Azure OpenAI
+```python
+add_ai_service('azure_openai', {
+    'url': 'https://your-resource.openai.azure.com/openai/deployments/your-deployment/chat/completions?api-version=2023-12-01-preview',
+    'model': 'gpt-4',
+    'api_key': 'your-azure-key',
+    'format': 'openai',
+    'headers': {'api-key': 'your-azure-key'}  # Azure uses api-key header
+})
+```
+
+#### 2. Using Ollama Local Model
+```python
+add_openai_service(
+    'ollama',
+    'http://localhost:11434/v1/chat/completions',
+    'llama2',
+    'dummy-key'  # Ollama doesn't need real key
+)
+```
+
+#### 3. Using Alibaba Qwen
+```python
+add_openai_service(
+    'qwen',
+    'https://dashscope.aliyuncs.com/compatible-mode/v1/chat/completions',
+    'qwen-turbo',
+    'your-dashscope-key'
+)
+```
+
+#### 4. Using Zhipu AI
+```python
+add_openai_service(
+    'zhipu',
+    'https://open.bigmodel.cn/api/paas/v4/chat/completions',
+    'glm-4',
+    'your-zhipu-key'
+)
+```
+
+### Service Management Functions
+
+```python
+from docs.overrides.hooks.ai_summary import list_ai_services, set_service_priority
+
+# List all available services
+list_ai_services()
+
+# Dynamically adjust service priority
+set_service_priority('my_custom_service', 'openai', 'deepseek')
+```
+
+### Configuration File Organization
+
+It's recommended to create `hooks_config.py` in the project root to manage all custom configurations:
+
+```python
+# hooks_config.py
+from docs.overrides.hooks.ai_summary import *
+
+# Custom service configuration
+add_openai_service('my_gpt4', 'https://api.openai.com/v1/chat/completions', 'gpt-4', os.getenv('OPENAI_API_KEY'))
+add_service_from_env('aliyun_qwen', 'QWEN')
+
+# Basic configuration
+configure_ai_summary(
+    enabled_folders=['blog/', 'docs/'],
+    language='en',
+    service_priority=['my_gpt4', 'aliyun_qwen', 'deepseek'],
+    cache_enabled=True
+)
+```
+
+Then include it in `mkdocs.yml`:
+
+```yaml
+hooks:
+  - docs/overrides/hooks/ai_summary.py
+  - hooks_config.py  # Include custom configuration
 ```
 
 ---

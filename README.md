@@ -379,52 +379,249 @@ self.exclude_files = [
 ## ⚙️ 高级配置
 
 ### 自定义AI服务
+
+#### 方法1: 使用配置函数（推荐）
 ```python
-# 添加新的AI服务
-self.ai_services = {
-    'your_service': {
-        'url': 'https://api.yourservice.com/v1/chat/completions',
-        'model': 'your-model',
-        'api_key': os.getenv('YOUR_API_KEY'),
-        'max_tokens': 150,
-        'temperature': 0.3
-    }
+# 在 mkdocs.yml 同级目录创建 hooks_config.py
+from docs.overrides.hooks.ai_summary import configure_ai_summary, add_ai_service, add_openai_service
+
+# 添加OpenAI兼容的服务
+add_openai_service(
+    'my_deepseek',
+    'https://api.deepseek.com/v1/chat/completions',
+    'deepseek-chat',
+    'your-deepseek-key'
+)
+
+# 添加本地部署的模型
+add_openai_service(
+    'local_llm',
+    'http://localhost:8000/v1/chat/completions',
+    'local-model',
+    'dummy-key',
+    temperature=0.7
+)
+
+# 添加完全自定义的服务
+add_ai_service('custom_service', {
+    'url': 'https://api.custom.com/v1/chat/completions',
+    'model': 'custom-model',
+    'api_key': 'your-custom-key',
+    'format': 'openai',  # 或 'claude', 'gemini', 'custom'
+    'max_tokens': 200,
+    'temperature': 0.3,
+    'headers': {'Custom-Header': 'value'}
+})
+
+# 配置基本设置和服务优先级
+configure_ai_summary(
+    enabled_folders=['blog/', 'docs/'],
+    language='zh',
+    service_priority=['my_deepseek', 'local_llm', 'custom_service', 'openai']
+)
+```
+
+#### 方法2: 从环境变量配置
+```python
+# 在 mkdocs.yml 同级目录创建 hooks_config.py
+from docs.overrides.hooks.ai_summary import add_service_from_env, configure_ai_summary
+
+# 从环境变量自动配置
+add_service_from_env('my_service', 'MYAPI')
+
+configure_ai_summary(
+    enabled_folders=['blog/'],
+    service_priority=['my_service', 'openai']
+)
+```
+
+```bash
+# .env 文件中添加
+MYAPI_URL=https://api.myservice.com/v1/chat/completions
+MYAPI_MODEL=my-model
+MYAPI_API_KEY=your-api-key
+MYAPI_MAX_TOKENS=150
+MYAPI_TEMPERATURE=0.3
+MYAPI_FORMAT=openai
+```
+
+#### 方法3: 直接在configure_ai_summary中配置
+```python
+# 在 mkdocs.yml 同级目录创建 hooks_config.py
+from docs.overrides.hooks.ai_summary import configure_ai_summary
+
+configure_ai_summary(
+    enabled_folders=['blog/', 'docs/'],
+    language='zh',
+    custom_services={
+        'my_openai': {
+            'url': 'https://api.openai.com/v1/chat/completions',
+            'model': 'gpt-4',
+            'api_key': 'your-openai-key',
+            'format': 'openai'
+        },
+        'local_llm': {
+            'url': 'http://localhost:8000/v1/chat/completions',
+            'model': 'local-model',
+            'api_key': 'dummy',
+            'format': 'openai',
+            'temperature': 0.7
+        }
+    },
+    service_priority=['my_openai', 'local_llm', 'deepseek']
+)
+```
+
+### 支持的API格式
+
+#### OpenAI兼容格式
+```python
+{
+    'url': 'https://api.openai.com/v1/chat/completions',
+    'model': 'gpt-4',
+    'api_key': 'your-key',
+    'format': 'openai'
 }
-
-# 默认使用的AI服务
-self.default_service = 'your_service'
-
-# 服务优先级（按顺序尝试）
-self.service_fallback_order = ['openai', 'deepseek', 'claude', 'gemini'] # 按顺序尝试
 ```
 
-
-
-### 自定义提示词
+#### Claude格式
 ```python
-def generate_ai_summary(self, content, page_title=""):
-    prompt = f"""请为以下技术文档生成一个简洁的中文摘要（80-120字）：
-    
-    文章标题：{page_title}
-    文章内容：{content[:2500]}
-    
-    要求：
-    1. 突出核心技术要点
-    2. 使用简洁专业的语言
-    3. 长度控制在80-120字
-    """
+{
+    'url': 'https://api.anthropic.com/v1/messages',
+    'model': 'claude-3-haiku-20240307',
+    'api_key': 'your-key',
+    'format': 'claude'
+}
 ```
 
-### 缓存配置
+#### Gemini格式
 ```python
-# 修改缓存过期时间
-cache_time = datetime.fromisoformat(cache_data.get('timestamp', '1970-01-01'))
-if (datetime.now() - cache_time).days < 30:  # 改为30天
-    return cache_data
+{
+    'url': 'https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent',
+    'model': 'gemini-pro',
+    'api_key': 'your-key',
+    'format': 'gemini'
+}
+```
+
+#### 完全自定义格式
+```python
+def custom_payload_builder(content, title, config):
+    return {
+        "prompt": f"请总结以下内容：{content}",
+        "max_length": 120
+    }
+
+def custom_response_parser(response_data):
+    return response_data.get('summary', '')
+
+{
+    'url': 'https://api.custom.com/summarize',
+    'api_key': 'your-key',
+    'format': 'custom',
+    'custom_payload_builder': custom_payload_builder,
+    'custom_response_parser': custom_response_parser
+}
+```
+
+### 常见自定义配置示例
+
+#### 1. 使用Azure OpenAI
+```python
+add_ai_service('azure_openai', {
+    'url': 'https://your-resource.openai.azure.com/openai/deployments/your-deployment/chat/completions?api-version=2023-12-01-preview',
+    'model': 'gpt-4',
+    'api_key': 'your-azure-key',
+    'format': 'openai',
+    'headers': {'api-key': 'your-azure-key'}  # Azure使用api-key头部
+})
+```
+
+#### 2. 使用Ollama本地模型
+```python
+add_openai_service(
+    'ollama',
+    'http://localhost:11434/v1/chat/completions',
+    'llama2',
+    'dummy-key'  # Ollama不需要真实key
+)
+```
+
+#### 3. 使用通义千问
+```python
+add_openai_service(
+    'qwen',
+    'https://dashscope.aliyuncs.com/compatible-mode/v1/chat/completions',
+    'qwen-turbo',
+    'your-dashscope-key'
+)
+```
+
+#### 4. 使用智谱AI
+```python
+add_openai_service(
+    'zhipu',
+    'https://open.bigmodel.cn/api/paas/v4/chat/completions',
+    'glm-4',
+    'your-zhipu-key'
+)
+```
+
+### 服务管理功能
+
+```python
+from docs.overrides.hooks.ai_summary import list_ai_services, set_service_priority
+
+# 列出所有可用服务
+list_ai_services()
+
+# 动态调整服务优先级
+set_service_priority('my_custom_service', 'openai', 'deepseek')
+```
+
+### 配置文件组织
+
+推荐在项目根目录创建 `hooks_config.py` 来管理所有自定义配置：
+
+```python
+# hooks_config.py
+from docs.overrides.hooks.ai_summary import *
+
+# 自定义服务配置
+add_openai_service('my_gpt4', 'https://api.openai.com/v1/chat/completions', 'gpt-4', os.getenv('OPENAI_API_KEY'))
+add_service_from_env('aliyun_qwen', 'QWEN')
+
+# 基础配置
+configure_ai_summary(
+    enabled_folders=['blog/', 'docs/'],
+    language='zh',
+    service_priority=['my_gpt4', 'aliyun_qwen', 'deepseek'],
+    cache_enabled=True
+)
+```
+
+然后在 `mkdocs.yml` 中引入：
+
+```yaml
+hooks:
+  - docs/overrides/hooks/ai_summary.py
+  - hooks_config.py  # 引入自定义配置
 ```
 
 ---
 
+## 🔐 安全配置
+
+### 密钥管理
+- **使用环境变量**: 在 `.env` 文件中配置您的API密钥
+- **GitHub Secrets**: 在GitHub仓库的Secrets中配置密钥，名称为 `DEEPSEEK_API_KEY` 和 `OPENAI_API_KEY`
+
+### 安全注意事项
+- 切勿将密钥直接写入代码中
+- 定期轮换您的API密钥
+- 监控API使用情况，及时发现异常
+
+---
 
 ## 🌍 多语言支持
 

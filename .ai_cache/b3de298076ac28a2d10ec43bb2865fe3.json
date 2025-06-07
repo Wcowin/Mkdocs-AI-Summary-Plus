@@ -1,0 +1,9 @@
+{
+  "summary": "The MkDocs AI update log showcases the introduction of AI smart abstract features, reading time statistics, and intelligent caching systems. Version 1.2.0 introduces multi-AI service support, language-specific abstract generation, adaptive environment configuration, and flexible customization options. Technical features include unified API integration, error handling, timeout control, and display optimizations. Planned functionalities include multi-AI support, secure API key management, batch processing mode, data export, and web interface configuration.",
+  "service": "openai",
+  "page_title": "MkDocs AI 摘要更新日志",
+  "page_language": "en",
+  "timestamp": "2025-06-07T10:59:27.484279",
+  "language": "en",
+  "cache_version": "1.3.0"
+}

@@ -7,6 +7,7 @@ hide:
   - feedback
 comments: false
 ai_summary: true  # 单独启用AI摘要
+ai_summary_lang: zh  # 摘要语言，支持 "zh" 和 "en"
 ---  
 
 <!-- # MkDocs AI Summary -->
