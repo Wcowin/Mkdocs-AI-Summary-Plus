@@ -78,6 +78,7 @@
 <!-- height=720 width=1280 -->
 
 
+<body>
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2327435979273742"
      crossorigin="anonymous"></script>
 <!-- AD1 -->
@@ -90,3 +91,4 @@
 <script>
      (adsbygoogle = window.adsbygoogle || []).push({});
 </script>
+</body>
