@@ -1,4 +1,4 @@
-# MkDocs AI Summary
+# MkDocs AI Summary Plus
 
 ![alt text](logo-2.png)
 <p align="center">
