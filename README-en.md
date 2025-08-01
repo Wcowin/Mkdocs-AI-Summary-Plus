@@ -1,779 +1,1126 @@
-# MkDocs AI Summary 
+# MkDocs AI Summary Plugin
 
-![alt text](logo-2.png)
+[![PyPI version](https://badge.fury.io/py/mkdocs-ai-summary-wcowin.svg)](https://badge.fury.io/py/mkdocs-ai-summary-wcowin)
+[![Python Support](https://img.shields.io/pypi/pyversions/mkdocs-ai-summary-wcowin.svg)](https://pypi.org/project/mkdocs-ai-summary-wcowin/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-<p align="center">
-    <img src="https://img.shields.io/badge/MkDocs-Hooks-526CFE?style=for-the-badge&logo=MaterialForMkDocs&logoColor=white" alt="MkDocs Hooks">
-    <img src="https://img.shields.io/badge/AI_Powered-DeepSeek-FF6B35?style=for-the-badge&logo=openai&logoColor=white" alt="AI Powered">
-    <img src="https://img.shields.io/badge/Python-3.7+-3776AB?style=for-the-badge&logo=python&logoColor=white" alt="Python 3.7+">
-</p>
+An intelligent MkDocs plugin that automatically generates AI-powered summaries for your documentation pages using multiple AI services including OpenAI, DeepSeek, Google Gemini, and GLM.
 
-<p align="center">
-    <a href="README.md">中文</a> | <a href="README-en.md">English</a>
-</p>
+## Features
 
-🚀 **Supercharge Your MkDocs Documentation with AI!**   
-This project provides powerful MkDocs hooks that add AI-driven summary generation and intelligent reading statistics to your technical documentation and blogs.
+- 🤖 **Multiple AI Services**: Support for OpenAI, DeepSeek, Google Gemini, and GLM
+- 🚀 **Smart Caching**: Intelligent caching system to reduce API calls and costs
+- 🎯 **Flexible Configuration**: Fine-grained control over which pages get summaries
+- 🌍 **Multi-language Support**: Generate summaries in different languages
+- 🔧 **CI/CD Ready**: Seamless integration with GitHub Actions and other CI/CD systems
+- 📱 **Responsive Design**: Beautiful summary cards that work on all devices
+- ⚡ **Performance Optimized**: Minimal impact on build times with smart caching
 
-![Preview 1](https://s1.imagehub.cc/images/2025/06/03/d1563500263b22cfd0ffc3679993aa83.jpg)
-![Preview 2](https://s1.imagehub.cc/images/2025/06/03/526b59b6a2e478f2ffa1629320e3e2ce.png)
+## Installation
 
-🌐 **Live Demo**: https://wcowin.work/mkdocs-ai-hooks/
-
----
-
-## 📋 Table of Contents
-
-- [✨ Features](#-features)
-- [📦 Quick Installation](#-quick-installation)
-- [🚀 Quick Start](#-quick-start)
-- [📖 Usage Guide](#-usage-guide)
-- [🎨 Display Examples](#-display-examples)
-- [⚙️ Advanced Configuration](#️-advanced-configuration)
-- [🌍 Multi-Language Support](#-multi-language-support)
-- [📊 Performance Optimization](#-performance-optimization)
-- [🤝 Contributing Guide](#-contributing-guide)
-
----
-
-## ✨ Features
-
-### 🤖 AI Smart Summary
-- **Multi-AI Service Integration**: Support for DeepSeek, OpenAI, Claude, Gemini and other mainstream AI services
-- **Automatic Summary Generation**: Generate high-quality 80-120 word intelligent summaries
-- **Multi-Language Support**: Support for Chinese, English, and bilingual summary generation
-- **Intelligent Content Cleaning**: Automatically filter YAML frontmatter, HTML tags, code blocks and other formatting elements
-- **Fallback Summary Mechanism**: Provides keyword-based local summaries when AI services are unavailable
-- **Intelligent Caching System**: 7-day intelligent expiration, avoiding duplicate API calls
-- **Flexible Configuration**: Support precise control at both folder and page levels
-
-### 📊 Intelligent Reading Statistics (Optional)
-- **Accurate Character Counting**: Specially optimized for Chinese and English content recognition
-- **Smart Code Detection**: Recognizes 30+ programming languages and command-line code
-- **Reading Time Estimation**: Intelligent calculation based on language characteristics (Chinese: 400 chars/min, English: 200 words/min)
-- **Beautiful Information Display**: Uses MkDocs Material theme styled info boxes
-
-### 🚀 Smart Features
-- **Environment Adaptive**: Automatically recognizes CI/local environment, locally or deployment both configurable enable/disable
-- **Automatic Language Recognition**: Supports 30+ programming and markup languages
-- **Content Type Detection**: Distinguishes between code, configuration, command-line and other content types
-- **LRU Cache Optimization**: Improves processing performance (Todo)
-- **Comprehensive Error Handling**: Exception handling and logging (Todo)
-
----
-
-## 📦 Quick Installation
-
-### Method 1: Direct Download (Recommended)
-
-**Step 1**: Download Files
-- Download the latest version from [Releases page](https://github.com/Wcowin/mkdocs-ai-hooks/releases)
-- Or directly download `ai_summary.py` file
-
-**Step 2**: Create Directory and Place Files
-```bash
-# Execute in your MkDocs project root directory
-mkdir -p docs/overrides/hooks/
-mv ai_summary.py docs/overrides/hooks/
-```
-
-**Step 3**: Configure MkDocs Theme and Override Path
-```yaml
-# Add to mkdocs.yml
-theme:
-  name: material
-  custom_dir: docs/overrides  # Required configuration!!!
-  features:
-    - content.code.copy
-    - content.code.select
-```
-
-### Method 2: Git Clone
-```bash
-git clone https://github.com/Wcowin/mkdocs-ai-hooks.git
-cd mkdocs-ai-hooks 
-pip install -r requirements.txt
-```
-
-### Dependencies Installation
-```bash
-pip install -r requirements.txt
-```
-
----
-
-## 🚀 Quick Start
-
-### 1. Basic Configuration
-
-**Step 1**: Configure Hooks
-Make sure ai_summary.py is placed in the docs/overrides/hooks directory, then:
-```yaml
-# Add to mkdocs.yml
-hooks:
-  - docs/overrides/hooks/ai_summary.py      # AI summary hook
-```
-
-**Step 2**: Local Configuration
-Create a `.env` file in the root directory to store API keys (remember to add to `.gitignore`):
-```bash
-# .env file content
-DEEPSEEK_API_KEY=your_deepseek_api_key_here
-OPENAI_API_KEY=your_openai_api_key_here
-```
+### From PyPI (Recommended)
 
 ```bash
-# .gitignore file content
-# Environment variable files (sensitive information)
-.env
-.env.local
-.env.*.local
-*.key
-
-# MkDocs build output directory
-site/
-
-# AI summary cache directory (project root) - needs to be committed
-!.ai_cache/
+pip install mkdocs-ai-summary-wcowin
 ```
 
-Check the directory tree structure here:
-```
-$ tree -a
-Project Name
-├── .github
-│   ├── .DS_Store
-│   └── workflows
-│       └── ci.yml
-├── docs
-│   └── index.md
-|   └── overrides
-│       └── hooks
-│           └── ai_summary.py
-├── .env
-├── .gitignore
-├── README.md
-└── mkdocs.yml
-```
-
-### 2. Configure AI Service
-
-**Choose AI Service Provider**:
-- 🌟 **DeepSeek** (Recommended): High cost-performance ratio, excellent Chinese performance
-- 🔥 **OpenAI**: Powerful features, wide support
-- ⚡ **Claude**: Clear logic, excellent text understanding
-- 🧠 **Gemini**: Google's product, multi-language support
-
-**Get API Keys**:
-- [DeepSeek](https://platform.deepseek.com/usage) - Register to get API key
-- [ChatAnywhere](https://github.com/chatanywhere/GPT_API_free) - Free OpenAI quota
-
-**Store the obtained API keys in the `.env` file created in the previous step!!!**
-
-### 3. Set Parameters
-
-Configure directories that need AI summaries in `ai_summary.py`:
-```python
-# 📂 Folders to enable AI summaries
-self.enabled_folders = [
-    'blog/',      # Blog articles
-    # Add more folders...
-]
-```
-
-### 4. Local Run and Test
+### From Source
 
 ```bash
-mkdocs serve  # Local preview
+git clone https://github.com/Wcowin/Mkdocs-AI-Summary-Plus.git
+cd Mkdocs-AI-Summary-Plus
+pip install -e .
 ```
 
-### 5. Deployment Configuration
+## Quick Start
+
+### 1. Configure your MkDocs
+
+Add the plugin to your `mkdocs.yml`:
 
 ```yaml
-# ci.yml
-name: ci 
+plugins:
+  - ai-summary:
+      ai_service: "deepseek"  # or "openai", "gemini", "glm"
+      summary_language: "en"  # or "zh"
+      cache_enabled: true
+      cache_expire_days: 30
+      enabled_folders:
+        - "docs"
+      exclude_patterns:
+        - "**/api/**"
+        - "**/reference/**"
+```
+
+### 2. Set up Environment Variables
+
+Create a `.env` file in your project root:
+
+```env
+# Choose one or more AI services
+DEEPSEEK_API_KEY=your_deepseek_api_key
+OPENAI_API_KEY=your_openai_api_key
+GEMINI_API_KEY=your_gemini_api_key
+GLM_API_KEY=your_glm_api_key
+```
+
+### 3. Build Your Documentation
+
+```bash
+mkdocs build
+```
+
+The plugin will automatically generate AI summaries for your pages and inject them into the content.
+
+## Configuration Guide
+
+### Local Development Setup
+
+#### Step 1: Get API Keys
+
+Obtain API keys for your chosen AI service:
+
+**DeepSeek (Recommended)**
+1. Visit [DeepSeek Platform](https://platform.deepseek.com/)
+2. Register and log in
+3. Go to API management
+4. Create a new API key
+5. Copy the key for later use
+
+**OpenAI**
+1. Visit [OpenAI Platform](https://platform.openai.com/)
+2. Log in to your account
+3. Go to API Keys page
+4. Click "Create new secret key"
+5. Copy the key for later use
+
+**Google Gemini**
+1. Visit [Google AI Studio](https://makersuite.google.com/)
+2. Log in with your Google account
+3. Create a new API key
+4. Copy the key for later use
+
+**GLM (Zhipu AI)**
+1. Visit [Zhipu AI Platform](https://open.bigmodel.cn/)
+2. Register and log in
+3. Go to API management
+4. Create an API key
+5. Copy the key for later use
+
+#### Step 2: Create .env File
+
+Create a `.env` file in your project root (same level as `mkdocs.yml`):
+
+```bash
+# In your project root directory
+touch .env
+```
+
+#### Step 3: Configure API Keys
+
+Edit the `.env` file and add your API keys:
+
+```env
+# DeepSeek API Key (Recommended)
+DEEPSEEK_API_KEY=sk-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+# OpenAI API Key
+OPENAI_API_KEY=sk-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+# Google Gemini API Key
+GEMINI_API_KEY=AIzaSyxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+# GLM API Key
+GLM_API_KEY=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx.xxxxxxxxxxxxxx
+
+# Optional: Debug mode
+AI_SUMMARY_DEBUG=false
+
+# Optional: API timeout (seconds)
+AI_SUMMARY_TIMEOUT=30
+
+# Optional: Maximum retry attempts
+AI_SUMMARY_MAX_RETRIES=3
+```
+
+**Important Notes:**
+- Only configure API keys for the services you plan to use
+- Ensure `.env` file is added to `.gitignore` to prevent API key leakage
+- API key formats vary by service, ensure you copy the complete key
+
+#### Step 4: Verify Configuration
+
+Run the following commands to verify your configuration:
+
+```bash
+# Local build test
+mkdocs build
+
+# Local preview
+mkdocs serve
+```
+
+If configured correctly, you should see the plugin load successfully and generate AI summaries.
+
+### GitHub Deployment Configuration
+
+#### Step 1: Prepare GitHub Repository
+
+1. Push your project to a GitHub repository
+2. Ensure `.env` file is added to `.gitignore`
+3. Ensure `mkdocs.yml` and plugin configuration are committed
+
+#### Step 2: Configure Repository Secrets
+
+Configure API keys in your GitHub repository:
+
+1. **Access Repository Settings**
+   - Open your GitHub repository
+   - Click the "Settings" tab
+   - Find "Secrets and variables" in the left menu
+   - Click "Actions"
+
+2. **Add Repository Secrets**
+   
+   Click "New repository secret" and add the following secrets:
+   
+   | Secret Name | Value | Description |
+   |-------------|-------|-------------|
+   | `DEEPSEEK_API_KEY` | Your DeepSeek API key | If using DeepSeek service |
+   | `OPENAI_API_KEY` | Your OpenAI API key | If using OpenAI service |
+   | `GEMINI_API_KEY` | Your Gemini API key | If using Gemini service |
+   | `GLM_API_KEY` | Your GLM API key | If using GLM service |
+
+   **Adding Steps:**
+   - Name: Enter the secret name (e.g., `DEEPSEEK_API_KEY`)
+   - Secret: Paste your API key
+   - Click "Add secret"
+
+#### Step 3: Create GitHub Actions Workflow
+
+Create `.github/workflows/deploy.yml` in your repository:
+
+```yaml
+name: Deploy MkDocs with AI Summary
+
 on:
   push:
-    branches:
-      - master 
-      - main
-  # Prevent access to secrets from fork repositories
+    branches: [ main, master ]
   pull_request:
-    types: [closed]
-    branches: [main, master]
-permissions:
-  contents: write
+    branches: [ main, master ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+    
+    - name: Setup Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.x'
+    
+    - name: Cache pip dependencies
+      uses: actions/cache@v3
+      with:
+        path: ~/.cache/pip
+        key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
+        restore-keys: |
+          ${{ runner.os }}-pip-
+    
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install mkdocs-material
+        pip install mkdocs-ai-summary-wcowin
+        # If you have requirements.txt
+        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+    
+    - name: Build documentation with AI summaries
+      env:
+        # Configure API key environment variables
+        DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
+        OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        GLM_API_KEY: ${{ secrets.GLM_API_KEY }}
+        # Optional configuration
+        AI_SUMMARY_DEBUG: false
+        AI_SUMMARY_TIMEOUT: 30
+      run: |
+        mkdocs build --verbose
+    
+    - name: Deploy to GitHub Pages
+      if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./site
+        # Optional: Custom domain
+        # cname: your-domain.com
+```
+
+#### Step 4: Enable GitHub Pages
+
+1. In repository settings, find "Pages" option
+2. Source: select "Deploy from a branch"
+3. Branch: select "gh-pages"
+4. Click "Save"
+
+#### Step 5: Trigger Deployment
+
+Push code to main branch to trigger automatic deployment:
+
+```bash
+git add .
+git commit -m "Add AI summary plugin configuration"
+git push origin main
+```
+
+### Advanced CI/CD Configuration
+
+#### Multi-Environment Configuration
+
+```yaml
+name: Deploy Documentation
+
+on:
+  push:
+    branches: [ main, develop ]
+  workflow_dispatch:
+
+env:
+  PYTHON_VERSION: '3.x'
+  NODE_VERSION: '18'
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - name: Setup Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: ${{ env.PYTHON_VERSION }}
+    
+    - name: Install and test
+      run: |
+        pip install mkdocs-material mkdocs-ai-summary-wcowin
+        mkdocs build --strict
+  
+  deploy-staging:
+    needs: test
+    if: github.ref == 'refs/heads/develop'
+    runs-on: ubuntu-latest
+    environment: staging
+    steps:
+    - uses: actions/checkout@v4
+    - name: Deploy to staging
+      env:
+        DEEPSEEK_API_KEY: ${{ secrets.STAGING_DEEPSEEK_API_KEY }}
+      run: |
+        pip install mkdocs-material mkdocs-ai-summary-wcowin
+        mkdocs build
+        # Deploy to staging environment
+  
+  deploy-production:
+    needs: test
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    environment: production
+    steps:
+    - uses: actions/checkout@v4
+    - name: Deploy to production
+      env:
+        DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
+        OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+      run: |
+        pip install mkdocs-material mkdocs-ai-summary-wcowin
+        mkdocs build
+        # Deploy to production environment
+```
+
+#### Cache Optimization Configuration
+
+```yaml
+    - name: Cache AI summaries
+      uses: actions/cache@v3
+      with:
+        path: .ai_cache
+        key: ai-cache-${{ hashFiles('docs/**/*.md') }}-${{ hashFiles('mkdocs.yml') }}
+        restore-keys: |
+          ai-cache-${{ hashFiles('docs/**/*.md') }}-
+          ai-cache-
+```
+
+## Configuration
+
+### Basic Configuration
+
+```yaml
+plugins:
+  - ai-summary:
+      # AI Service Configuration
+      ai_service: "deepseek"          # Primary AI service
+      fallback_services:               # Fallback services if primary fails
+        - "openai"
+        - "gemini"
+      
+      # Summary Configuration
+      summary_language: "en"           # Summary language (zh/en)
+      summary_length: "medium"         # Summary length (short/medium/long)
+      
+      # Caching Configuration
+      cache_enabled: true              # Enable caching
+      cache_expire_days: 30            # Cache expiration in days
+      
+      # File Selection
+      enabled_folders:                 # Folders to process
+        - "docs"
+        - "guides"
+      exclude_patterns:                # Patterns to exclude
+        - "**/api/**"
+        - "**/reference/**"
+      exclude_files:                   # Specific files to exclude
+        - "index.md"
+        - "404.md"
+      
+      # Environment Configuration
+      local_enabled: true              # Enable in local development
+      ci_enabled: true                 # Enable in CI/CD
+      ci_cache_only: false             # Only use cache in CI (no new API calls)
+      ci_fallback_summary: true        # Use fallback summary in CI if no cache
+```
+
+### File Selection Configuration Guide
+
+#### enabled_folders Configuration Examples
+
+The `enabled_folders` parameter specifies which folders contain Markdown files that should be processed by the plugin. Here are configuration examples for different project structures:
+
+**Standard MkDocs Project Structure:**
+```yaml
+plugins:
+  - ai-summary:
+      enabled_folders:
+        - "docs"                    # Process all files in docs/ folder
+```
+
+**Multi-Source Documentation Project:**
+```yaml
+plugins:
+  - ai-summary:
+      enabled_folders:
+        - "docs"                    # Main documentation
+        - "tutorials"               # Tutorial documentation
+        - "guides"                  # Guide documentation
+        - "blog"                    # Blog posts
+        - "examples"                # Example documentation
+```
+
+**Multi-Language Project:**
+```yaml
+plugins:
+  - ai-summary:
+      enabled_folders:
+        - "docs/zh"                 # Chinese documentation
+        - "docs/en"                 # English documentation
+        - "docs/shared"             # Shared documentation
+```
+
+**Complex Project Structure:**
+```yaml
+plugins:
+  - ai-summary:
+      enabled_folders:
+        - "documentation"           # Main documentation directory
+        - "user-guides"             # User guides
+        - "developer-docs"          # Developer documentation
+        - "release-notes"           # Release notes
+        - "knowledge-base"          # Knowledge base
+```
+
+#### exclude_patterns Configuration Examples
+
+The `exclude_patterns` uses glob patterns to exclude files that don't need summaries. Here are common exclusion patterns:
+
+**Exclude API Documentation and References:**
+```yaml
+plugins:
+  - ai-summary:
+      exclude_patterns:
+        - "**/api/**"               # Exclude all api folders
+        - "**/reference/**"         # Exclude all reference folders
+        - "**/generated/**"         # Exclude auto-generated documentation
+```
+
+**Exclude Specific Document Types:**
+```yaml
+plugins:
+  - ai-summary:
+      exclude_patterns:
+        - "**/changelog/**"         # Exclude changelogs
+        - "**/archive/**"           # Exclude archived documents
+        - "**/draft/**"             # Exclude draft documents
+        - "**/temp/**"              # Exclude temporary documents
+        - "**/internal/**"          # Exclude internal documents
+```
+
+**Exclude Specific File Patterns:**
+```yaml
+plugins:
+  - ai-summary:
+      exclude_patterns:
+        - "**/*-draft.md"           # Exclude draft files
+        - "**/*-template.md"        # Exclude template files
+        - "**/README.md"            # Exclude README files
+        - "**/CONTRIBUTING.md"      # Exclude contribution guides
+        - "**/LICENSE.md"           # Exclude license files
+```
+
+**Complex Exclusion Patterns:**
+```yaml
+plugins:
+  - ai-summary:
+      exclude_patterns:
+        - "**/api/**"               # Exclude API documentation
+        - "**/reference/**"         # Exclude reference documentation
+        - "**/examples/**/output/**" # Exclude example outputs
+        - "docs/legacy/**"          # Exclude legacy documentation
+        - "**/*-internal.md"        # Exclude internal documents
+        - "**/node_modules/**"      # Exclude dependency files
+```
+
+#### Real-World Project Configuration Examples
+
+**Blog Website Configuration:**
+```yaml
+plugins:
+  - ai-summary:
+      enabled_folders:
+        - "blog"                    # Blog posts
+        - "pages"                   # Static pages
+      exclude_patterns:
+        - "**/drafts/**"            # Exclude drafts
+        - "**/archive/**"           # Exclude archives
+        - "blog/tags/**"            # Exclude tag pages
+      exclude_files:
+        - "index.md"                # Exclude homepage
+        - "404.md"                  # Exclude error pages
+        - "sitemap.md"              # Exclude sitemap
+```
+
+**Technical Documentation Website:**
+```yaml
+plugins:
+  - ai-summary:
+      enabled_folders:
+        - "docs/user-guide"         # User guides
+        - "docs/tutorials"          # Tutorials
+        - "docs/how-to"             # How-to guides
+      exclude_patterns:
+        - "**/api-reference/**"     # Exclude API references
+        - "**/generated/**"         # Exclude auto-generated content
+        - "**/schemas/**"           # Exclude schema definitions
+      exclude_files:
+        - "glossary.md"             # Exclude glossary
+        - "changelog.md"            # Exclude changelog
+```
+
+**Multi-Language Documentation:**
+```yaml
+plugins:
+  - ai-summary:
+      enabled_folders:
+        - "docs/zh-cn"              # Chinese documentation
+        - "docs/en"                 # English documentation
+      exclude_patterns:
+        - "**/translations/**"      # Exclude translation work files
+        - "**/locales/**"           # Exclude localization files
+      exclude_files:
+        - "translation-guide.md"    # Exclude translation guide
+```
+
+#### Configuration Best Practices
+
+1. **Specify Folders Explicitly**: Use `enabled_folders` to explicitly specify which folders need processing, avoiding unnecessary file processing.
+
+2. **Use Exclusion Patterns Wisely**: Use `exclude_patterns` to exclude file types that don't need summaries, such as API documentation and reference materials.
+
+3. **Performance Considerations**: Excluding large files and auto-generated documentation can significantly improve build speed.
+
+4. **Maintainability**: Regularly review and update configurations to ensure new documentation structures are properly handled.
+
+5. **Test Configurations**: Test configurations in local environments to ensure all expected files are correctly processed or excluded.
+
+### Advanced Configuration
+
+```yaml
+plugins:
+  - ai-summary:
+      # Custom API Endpoints
+      custom_endpoints:
+        deepseek:
+          base_url: "https://api.deepseek.com"
+          model: "deepseek-chat"
+        openai:
+          base_url: "https://api.openai.com/v1"
+          model: "gpt-3.5-turbo"
+      
+      # Content Processing
+      max_content_length: 8000         # Maximum content length for AI processing
+      summary_position: "top"          # Position of summary (top/bottom)
+      
+      # Styling
+      summary_style:
+        theme: "material"               # Summary card theme
+        show_icon: true                 # Show AI service icon
+        show_language: true             # Show summary language
+```
+
+## Environment Variables
+
+### Required API Keys
+
+| Variable | Description | Required |
+|----------|-------------|----------|
+| `DEEPSEEK_API_KEY` | DeepSeek API key | If using DeepSeek |
+| `OPENAI_API_KEY` | OpenAI API key | If using OpenAI |
+| `GEMINI_API_KEY` | Google Gemini API key | If using Gemini |
+| `GLM_API_KEY` | GLM API key | If using GLM |
+
+### Optional Configuration
+
+| Variable | Description | Default |
+|----------|-------------|----------|
+| `AI_SUMMARY_DEBUG` | Enable debug logging | `false` |
+| `AI_SUMMARY_TIMEOUT` | API request timeout (seconds) | `30` |
+| `AI_SUMMARY_MAX_RETRIES` | Maximum API retry attempts | `3` |
+
+## CI/CD Integration
+
+### GitHub Actions
+
+Add your API keys to GitHub Secrets and use them in your workflow:
+
+```yaml
+name: Deploy Documentation
+
+on:
+  push:
+    branches: [main]
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-          sparse-checkout: |
-            docs
-            includes
-            requirements.txt
-            .ai_cache
-      - uses: actions/setup-python@v4
+      - uses: actions/checkout@v3
+      
+      - name: Setup Python
+        uses: actions/setup-python@v4
         with:
           python-version: 3.x
-      - name: Set cache ID
-        run: echo "cache_id=$(date --utc '+%V')" >> $GITHUB_ENV 
-      - uses: actions/cache@v3
-        with:
-          key: mkdocs-material-${{ github.run_number }}
-          path: .cache
-          restore-keys: |
-            mkdocs-material-
-      - run: pip install mkdocs-git-revision-date-localized-plugin
-      - run: pip install mkdocs-git-authors-plugin
-      - run: pip install mkdocs-git-committers-plugin-2
-      - run: pip install markdown-callouts
-      - run: pip install mkdocs-rss-plugin
-      - run: pip install requests>=2.25.0
-      - run: pip install python-dateutil>=2.8.0
-      - run: pip install cachetools>=4.2.0
-      - run: pip install python-dotenv>=0.19.0
-      - run: pip install pymdown-extensions
-      - run: pip install mkdocs-material 
-      - run: pip install --upgrade --force-reinstall mkdocs-material
-      - name: Deploy with AI Summary
+      
+      - name: Install dependencies
+        run: |
+          pip install mkdocs-material mkdocs-ai-summary-wcowin
+      
+      - name: Build documentation
         env:
-          # AI summary switch control
-          AI_SUMMARY_CI_ENABLED: 'true'           # Enable AI summary in CI deployment environment (true=generate AI summaries for articles in CI)
-          AI_SUMMARY_CI_ONLY_CACHE: 'true'       # CI deployment does not generate new summaries (true=use local deployment summary cache, no repeated API calls)
-          AI_SUMMARY_CI_FALLBACK: 'true'          # Enable fallback summary in CI deployment (true=generate offline basic summary when API fails)
-          # AI_SUMMARY_LOCAL_ENABLED: 'false'       # Disable AI summary in local deployment environment (true=generate summaries during local development) (no need to manage this line)
-          # AI_SUMMARY_CACHE_ENABLED: 'true'        # Enable cache function locally (true=cache summaries to avoid repeated generation) (no need to manage this line)
-          # API key configuration
           DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
-        run: mkdocs gh-deploy --force
+        run: mkdocs build
       
-      # Auto-commit newly generated AI cache files
-      - name: Auto-commit AI cache (if any new files)
-        run: |
-          if [ -d ".ai_cache" ] && [ "$(ls -A .ai_cache 2>/dev/null)" ]; then
-            git config --local user.email "action@github.com"
-            git config --local user.name "GitHub Action"
-            git add .ai_cache/
-            if ! git diff --cached --quiet; then
-              git commit -m "🤖 Auto-update AI summary cache [skip ci]"
-              git push
-              echo "✅ Auto-committed new AI cache files"
-            else
-              echo "ℹ️ No new cache files to commit"
-            fi
-          else
-            echo "ℹ️ No cache directory found or cache is empty"
-          fi
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./site
 ```
 
-```python
-# Configuration in ai_summary.py
-# AI summary local environment configuration
-self.ci_config = {
-    # CI deployment environment switch (no need to manage, only effective when set in ci.yml)
-    'enabled_in_ci': os.getenv('AI_SUMMARY_CI_ENABLED', 'true').lower() == 'true',
-    
-    # Local deployment environment switch (true=enable AI summary during local development)
-    'enabled_in_local': os.getenv('AI_SUMMARY_LOCAL_ENABLED', 'true').lower() == 'true',
-    
-    # CI deployment cache-only mode (no need to manage, only effective when set in ci.yml)
-    'ci_only_cache': os.getenv('AI_SUMMARY_CI_ONLY_CACHE', 'false').lower() == 'true',
-    
-    # Local deployment cache function switch (true=enable cache to avoid repeated generation, false=always generate new summaries)
-    'cache_enabled': os.getenv('AI_SUMMARY_CACHE_ENABLED', 'true').lower() == 'true',
-    
-    # CI deployment fallback summary switch (no need to manage, only effective when set in ci.yml)
-    'ci_fallback_enabled': os.getenv('AI_SUMMARY_CI_FALLBACK', 'true').lower() == 'true',
-}
-```
+## AI Services
 
-**Several Operation Modes**:
-1. **Completely Disabled**: No summary generation in both local and CI deployment
-2. **CI Deployment Only**: Disabled locally, generate new summaries in CI deployment
-3. **Cache Mode**: Summaries already generated locally, CI deployment uses cache (**Recommended. The above configuration has default CI deployment cache mode, you can choose combinations yourself**)
-4. **Fully Enabled**: Both local and CI deployment run (more API consumption)
+### Supported Services
 
-### 6. GitHub Secrets Configuration
+| Service | Model | Languages | Rate Limits |
+|---------|-------|-----------|-------------|
+| DeepSeek | deepseek-chat | zh, en | High |
+| OpenAI | gpt-3.5-turbo, gpt-4 | zh, en | Medium |
+| Google Gemini | gemini-pro | zh, en | High |
+| GLM | glm-4 | zh, en | Medium |
 
-**Step 1**: Set Repository Secrets
-1. Go to GitHub repository → **Settings** → **Secrets and variables** → **Actions**
-2. Click **New repository secret** to add:
-```
-DEEPSEEK_API_KEY=your_deepseek_api_key_here
-OPENAI_API_KEY=your_openai_api_key_here
-```
-![GitHub Secrets Configuration](https://s1.imagehub.cc/images/2025/06/04/b5fd63d839bb6443c8560a5f690d2c41.png)
+### Service Selection Strategy
 
----
+1. **Primary Service**: The main AI service specified in configuration
+2. **Fallback Services**: Used if primary service fails or is unavailable
+3. **Automatic Retry**: Built-in retry mechanism with exponential backoff
+4. **Cost Optimization**: Intelligent service selection based on content length
 
-Then deploy to GitHub Pages or other platforms.
+## Caching System
 
-**If there are errors, you can ask ChatGPT or ask questions in Issues.**
+### How It Works
 
-## 📖 Usage Guide
+- **Content Hashing**: Each page's content is hashed to detect changes
+- **Service Configuration**: Cache is invalidated when AI service settings change
+- **Expiration**: Configurable cache expiration (default: 30 days)
+- **CI Optimization**: Special caching behavior for CI/CD environments
 
-### AI Summary Control
-
-#### Method 1: Page-Level Control (Recommended)
-In the YAML meta at the top of Markdown files:
-
-**Enable AI Summary**:
-```yaml
----
-title: Article Title
-ai_summary: true   # Enable AI summary
----
-```
-
-**Disable AI Summary**:
-```yaml
----
-title: Article Title
-ai_summary: false  # Disable AI summary
-description: Custom summary content  # Optional manual summary
----
-```
-
-#### Method 2: Folder-Level Control
-```python
-# Configure in ai_summary.py
-# 📂 Customizable folder configuration
-self.enabled_folders = [
-    'blog/',      # blog folder
-    'index.md',     
-    # 'develop/',   # develop folder
-    # 'posts/',     # posts folder
-    # 'trip/',     # trip folder
-    # 'about/',     # about folder
-]
-
-# 📋 Excluded files and folders
-self.exclude_patterns = [
-    '404.md', 'tag.md', 'tags.md',
-]
-
-# 📋 Excluded specific files
-self.exclude_files = [
-    'blog/index.md',
-]
-```
-
----
-
-## 🎨 Display Examples
-
-### AI Summary Display
-**Live Preview**:
-![AI Summary Display](https://s1.imagehub.cc/images/2025/06/04/152205c10ef1bfd7658b383a3e5e6e9f.png)
-
-### 💰 Cost Information
-- **Single Request**: Approximately $0.005-0.008 USD (medium to large documents)
-- **Monthly Estimate**: About $1-5 USD for regular blogs
-- **Free Quota**: Most AI service providers offer free credits for new users
-
----
-
-## ⚙️ Advanced Configuration
-
-### Custom AI Services
-
-#### Method 1: Using Configuration Functions (Recommended)
-```python
-# Create hooks_config.py in the same directory as mkdocs.yml
-from docs.overrides.hooks.ai_summary import configure_ai_summary, add_ai_service, add_openai_service
-
-# Add OpenAI-compatible service
-add_openai_service(
-    'my_deepseek',
-    'https://api.deepseek.com/v1/chat/completions',
-    'deepseek-chat',
-    'your-deepseek-key'
-)
-
-# Add locally deployed model
-add_openai_service(
-    'local_llm',
-    'http://localhost:8000/v1/chat/completions',
-    'local-model',
-    'dummy-key',
-    temperature=0.7
-)
-
-# Add completely custom service
-add_ai_service('custom_service', {
-    'url': 'https://api.custom.com/v1/chat/completions',
-    'model': 'custom-model',
-    'api_key': 'your-custom-key',
-    'format': 'openai',  # or 'claude', 'gemini', 'custom'
-    'max_tokens': 200,
-    'temperature': 0.3,
-    'headers': {'Custom-Header': 'value'}
-})
-
-# Configure basic settings and service priority
-configure_ai_summary(
-    enabled_folders=['blog/', 'docs/'],
-    language='en',
-    service_priority=['my_deepseek', 'local_llm', 'custom_service', 'openai']
-)
-```
-
-#### Method 2: Configuration from Environment Variables
-```python
-# Create hooks_config.py in the same directory as mkdocs.yml
-from docs.overrides.hooks.ai_summary import add_service_from_env, configure_ai_summary
-
-# Auto-configure from environment variables
-add_service_from_env('my_service', 'MYAPI')
-
-configure_ai_summary(
-    enabled_folders=['blog/'],
-    service_priority=['my_service', 'openai']
-)
-```
+### Cache Management
 
 ```bash
-# Add to .env file
-MYAPI_URL=https://api.myservice.com/v1/chat/completions
-MYAPI_MODEL=my-model
-MYAPI_API_KEY=your-api-key
-MYAPI_MAX_TOKENS=150
-MYAPI_TEMPERATURE=0.3
-MYAPI_FORMAT=openai
+# Clear all cache
+rm -rf .ai_cache/
+
+# Clear expired cache (automatic during build)
+# No manual action needed
 ```
 
-#### Method 3: Direct Configuration in configure_ai_summary
-```python
-# Create hooks_config.py in the same directory as mkdocs.yml
-from docs.overrides.hooks.ai_summary import configure_ai_summary
+## Troubleshooting
 
-configure_ai_summary(
-    enabled_folders=['blog/', 'docs/'],
-    language='en',
-    custom_services={
-        'my_openai': {
-            'url': 'https://api.openai.com/v1/chat/completions',
-            'model': 'gpt-4',
-            'api_key': 'your-openai-key',
-            'format': 'openai'
-        },
-        'local_llm': {
-            'url': 'http://localhost:8000/v1/chat/completions',
-            'model': 'local-model',
-            'api_key': 'dummy',
-            'format': 'openai',
-            'temperature': 0.7
-        }
-    },
-    service_priority=['my_openai', 'local_llm', 'deepseek']
-)
+### Common Local Development Issues
+
+#### 1. API Key Not Found
+
+**Error Message:**
+```
+Error: No valid API key found for service 'deepseek'
+Warning: No available AI services, please check API key configuration
 ```
 
-### Supported API Formats
+**Solutions:**
+1. Check if `.env` file exists in project root
+2. Verify API key name spelling (case-sensitive)
+3. Validate API key format
+4. Ensure `.env` file has no syntax errors
 
-#### OpenAI-Compatible Format
-```python
-{
-    'url': 'https://api.openai.com/v1/chat/completions',
-    'model': 'gpt-4',
-    'api_key': 'your-key',
-    'format': 'openai'
-}
-```
-
-#### Claude Format
-```python
-{
-    'url': 'https://api.anthropic.com/v1/messages',
-    'model': 'claude-3-haiku-20240307',
-    'api_key': 'your-key',
-    'format': 'claude'
-}
-```
-
-#### Gemini Format
-```python
-{
-    'url': 'https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent',
-    'model': 'gemini-pro',
-    'api_key': 'your-key',
-    'format': 'gemini'
-}
-```
-
-#### Fully Custom Format
-```python
-def custom_payload_builder(content, title, config):
-    return {
-        "prompt": f"Please summarize: {content}",
-        "max_length": 120
-    }
-
-def custom_response_parser(response_data):
-    return response_data.get('summary', '')
-
-{
-    'url': 'https://api.custom.com/summarize',
-    'api_key': 'your-key',
-    'format': 'custom',
-    'custom_payload_builder': custom_payload_builder,
-    'custom_response_parser': custom_response_parser
-}
-```
-
-### Common Custom Configuration Examples
-
-#### 1. Using Azure OpenAI
-```python
-add_ai_service('azure_openai', {
-    'url': 'https://your-resource.openai.azure.com/openai/deployments/your-deployment/chat/completions?api-version=2023-12-01-preview',
-    'model': 'gpt-4',
-    'api_key': 'your-azure-key',
-    'format': 'openai',
-    'headers': {'api-key': 'your-azure-key'}  # Azure uses api-key header
-})
-```
-
-#### 2. Using Ollama Local Model
-```python
-add_openai_service(
-    'ollama',
-    'http://localhost:11434/v1/chat/completions',
-    'llama2',
-    'dummy-key'  # Ollama doesn't need real key
-)
-```
-
-#### 3. Using Alibaba Qwen
-```python
-add_openai_service(
-    'qwen',
-    'https://dashscope.aliyuncs.com/compatible-mode/v1/chat/completions',
-    'qwen-turbo',
-    'your-dashscope-key'
-)
-```
-
-#### 4. Using Zhipu AI
-```python
-add_openai_service(
-    'zhipu',
-    'https://open.bigmodel.cn/api/paas/v4/chat/completions',
-    'glm-4',
-    'your-zhipu-key'
-)
-```
-
-### Service Management Functions
-
-```python
-from docs.overrides.hooks.ai_summary import list_ai_services, set_service_priority
-
-# List all available services
-list_ai_services()
-
-# Dynamically adjust service priority
-set_service_priority('my_custom_service', 'openai', 'deepseek')
-```
-
-### Configuration File Organization
-
-It's recommended to create `hooks_config.py` in the project root to manage all custom configurations:
-
-```python
-# hooks_config.py
-from docs.overrides.hooks.ai_summary import *
-
-# Custom service configuration
-add_openai_service('my_gpt4', 'https://api.openai.com/v1/chat/completions', 'gpt-4', os.getenv('OPENAI_API_KEY'))
-add_service_from_env('aliyun_qwen', 'QWEN')
-
-# Basic configuration
-configure_ai_summary(
-    enabled_folders=['blog/', 'docs/'],
-    language='en',
-    service_priority=['my_gpt4', 'aliyun_qwen', 'deepseek'],
-    cache_enabled=True
-)
-```
-
-Then include it in `mkdocs.yml`:
-
-```yaml
-hooks:
-  - docs/overrides/hooks/ai_summary.py
-  - hooks_config.py  # Include custom configuration
-```
-
----
-
-## 🌍 Multi-Language Support
-
-### Language Configuration
-```python
-# Set in ai_summary.py
-self.summary_language = 'en'    # English summaries
-# self.summary_language = 'zh'  # Chinese summaries
-# self.summary_language = 'both' # Bilingual summaries
-```
-
-### Supported Languages
-- **Fully Supported**: Chinese, English
-- **Partially Supported**: Japanese, Korean, French, German
-
----
-
-## 📊 Performance Optimization
-
-### Implemented Optimizations
-- **LRU Caching**: Function-level caching improves performance
-- **Precompiled Regex**: Faster text processing
-- **Smart Filtering**: Reduces unnecessary API calls
-- **Content Hashing**: Intelligent caching based on content changes
-
-### Performance Recommendations
-- Use `ci_only_cache: true` to only use cache in CI environment
-- Set `enabled_folders` appropriately to avoid processing unnecessary files
-- Regularly clean expired cache files
-
----
-
-## 🤝 Contributing Guide
-
-### How to Contribute
-1. **Fork** this repository
-2. Create feature branch
-3. Commit changes
-4. Push branch
-5. Create **Pull Request**
-
-### Development Environment
+**Verification Steps:**
 ```bash
-git clone https://github.com/Wcowin/mkdocs-ai-hooks.git
-cd mkdocs-ai-hooks
-pip install -r requirements.txt
+# Check .env file content
+cat .env
+
+# Verify environment variables are loaded
+python -c "import os; print('DEEPSEEK_API_KEY:', os.getenv('DEEPSEEK_API_KEY', 'Not found'))"
 ```
 
----
+#### 2. Plugin Configuration Parameters Not Recognized
 
-## 📝 Changelog
+**Error Message:**
+```
+Config value: 'ai_service'. Warning: Unrecognised config name: ai_service
+```
 
-### [v1.3.0] (2025-06-04) - Latest Version
+**Solutions:**
+1. Ensure latest plugin version is installed:
+   ```bash
+   pip install --upgrade mkdocs-ai-summary-wcowin
+   ```
+2. Check plugin configuration format in `mkdocs.yml`:
+   ```yaml
+   plugins:
+     - ai-summary:  # Note the space after colon
+         ai_service: "deepseek"
+   ```
 
-#### Core Improvements
+#### 3. Network and Permission Issues
 
-- **Unified Cache Architecture**
-- **Cache path unified to project root directory .ai_cache**
-- **Local and CI environments use the same cache strategy**
-- **Enhanced CI/CD support**, **Support CI cache-only mode, significantly reducing deployment time**
-- **Smart recognition of 15+ deployment platforms (GitHub Actions, GitLab CI, etc.)**
-- **Configurable fallback summary mechanism**
+**Error Message:**
+```
+ConnectionError: Failed to connect to API endpoint
+Timeout: Request timed out after 30 seconds
+```
 
-### [v1.2.0] (2025-06-03)
+**Solutions:**
+1. Check network connection
+2. Verify API key validity
+3. Increase timeout:
+   ```env
+   AI_SUMMARY_TIMEOUT=60
+   ```
+4. Check firewall settings
 
-#### ✨ Major New Features
-- **Multi-AI Service Support**: Integration of DeepSeek, OpenAI, Gemini, Claude
-- **Environment Adaptive**: Automatic recognition of CI/local environment
-- **Intelligent Caching System**: Content hash caching, 7-day automatic expiration
-- **Security Configuration**: GitHub Secrets integration, secure API key management
+#### 4. Content Too Long Warning
 
-#### 🔧 Technical Improvements
-- **Unified API Interface**: Automatic adaptation to different AI service formats
-- **Enhanced Error Handling**: Comprehensive exception handling mechanisms
-- **Performance Optimization**: LRU caching and regex precompilation
+**Warning Message:**
+```
+Warning: Content too long for AI processing, truncating...
+```
 
-### [v1.0.0] (2025-06-01) - Initial Version
-- 🤖 **AI smart summary functionality**
-- 📖 **Reading time statistics functionality**
-- 💾 **Basic caching system**
-- 🎯 **Basic configuration options**
+**Solutions:**
+1. Increase max content length in `mkdocs.yml`:
+   ```yaml
+   plugins:
+     - ai-summary:
+         max_content_length: 12000
+   ```
+2. Split long pages into smaller ones
+3. Use `exclude_patterns` to exclude overly long pages
 
----
+#### 5. File Selection Configuration Issues
 
-## 🐛 Issue Reporting
+**Problem: Cache file count is 0, no AI summaries generated**
 
-Encountered a problem? Please report it in [Issues](https://github.com/Wcowin/mkdocs-ai-hooks/issues).
+**Common Causes and Solutions:**
 
-**When reporting, please include**:
-- MkDocs version
-- Python version
-- Complete error messages
-- Reproduction steps
-- Configuration files (remove sensitive information)
+**Cause 1: enabled_folders configuration mismatch**
+```
+# Incorrect configuration example
+plugins:
+  - ai-summary:
+      enabled_folders:
+        - "docs"  # But actual files are in blog/ directory
+```
 
----
+**Solutions:**
+1. Check actual document directory structure:
+   ```bash
+   find . -name "*.md" -type f | head -10
+   ```
+2. Adjust configuration based on actual structure:
+   ```yaml
+   plugins:
+     - ai-summary:
+         enabled_folders:
+           - "blog"      # Match actual directory
+           - "docs"
+           - "pages"
+   ```
 
-## 📄 License
+**Cause 2: exclude_patterns too broad**
+```yaml
+# Overly broad exclusion pattern
+plugins:
+  - ai-summary:
+      exclude_patterns:
+        - "**/*.md"  # This excludes ALL Markdown files!
+```
 
-This project is licensed under the [MIT License](LICENSE).
+**Solutions:**
+1. Check if exclusion patterns are too broad
+2. Use more precise exclusion patterns:
+   ```yaml
+   plugins:
+     - ai-summary:
+         exclude_patterns:
+           - "**/draft/**"     # Only exclude draft directories
+           - "**/temp/**"      # Only exclude temporary directories
+           - "**/*-draft.md"   # Only exclude draft files
+   ```
 
----
+**Cause 3: Path separator issues**
+```yaml
+# Windows system might encounter this issue
+plugins:
+  - ai-summary:
+      enabled_folders:
+        - "docs\\tutorials"  # Incorrect path separator
+```
 
-## 🙏 Acknowledgments
+**Solutions:**
+Always use forward slashes (/) as path separators:
+```yaml
+plugins:
+  - ai-summary:
+      enabled_folders:
+        - "docs/tutorials"   # Correct path separator
+```
 
-Thanks to the following projects and services:
-- [MkDocs](https://www.mkdocs.org/) - Excellent static site generator
-- [Material for MkDocs](https://squidfunk.github.io/mkdocs-material/) - Beautiful theme
-- [DeepSeek](https://deepseek.com/) - High cost-performance AI API service
-- All contributors and users
+**Cause 4: Incorrect relative path configuration**
+```yaml
+# Incorrect absolute path configuration
+plugins:
+  - ai-summary:
+      enabled_folders:
+        - "/home/user/project/docs"  # Absolute paths not recommended
+```
 
----
+**Solutions:**
+Use paths relative to project root:
+```yaml
+plugins:
+  - ai-summary:
+      enabled_folders:
+        - "docs"             # Relative path
+        - "content/posts"    # Relative path
+```
 
-## 🔗 Contact Author
+**Methods to Debug Configuration Issues:**
 
-<div align="center">
+1. **Enable debug mode**:
+   ```bash
+   export AI_SUMMARY_DEBUG=true
+   mkdocs serve
+   ```
 
-### Telegram
-<a href="https://t.me/wecowin" target="_blank">
-<img src="https://pica.zhimg.com/80/v2-d5876bc0c8c756ecbba8ff410ed29c14_1440w.webp" alt="Telegram" style="border-radius: 10px;" width="300px">
-</a>
+2. **Check debug output**:
+   ```
+   DEBUG: Processing page: blog/post1.md
+   DEBUG: should_generate_summary: False
+   DEBUG: enabled_folders: ['docs']
+   DEBUG: Skipping page: Path not in enabled folders
+   ```
 
-### WeChat
-<img src="https://pic3.zhimg.com/80/v2-5ef3dde831c9d0a41fe35fabb0cb8784_1440w.webp" style="border-radius: 10px;" width="300px">
+3. **Verify file paths**:
+   ```bash
+   # List all Markdown files and their paths
+   find . -name "*.md" -type f | grep -v node_modules
+   ```
 
-</div>
+4. **Test configuration**:
+   ```yaml
+   # Temporary configuration: process all folders
+   plugins:
+     - ai-summary:
+         enabled_folders:
+           - "."  # Process all directories (for testing only)
+         exclude_patterns: []  # Temporarily exclude no files
+   ```
 
----
+### GitHub Actions Deployment Issues
 
-## ⭐ Project Statistics
+#### 1. Secrets Configuration Error
 
-<div align="center">
+**Error Message:**
+```
+Error: No valid API key found for service 'deepseek'
+```
 
-[![Star History Chart](https://api.star-history.com/svg?repos=Wcowin/mkdocs-ai-hooks&type=Date)](https://www.star-history.com/#Wcowin/mkdocs-ai-hooks&Date)
+**Solutions:**
+1. Check Repository Secrets configuration:
+   - Go to GitHub repository → Settings → Secrets and variables → Actions
+   - Verify secret names match environment variable names in workflow
+   - Re-add potentially corrupted secrets
 
-<a href="https://github.com/Wcowin/mkdocs-ai-hooks/stargazers">
-<img src="https://img.shields.io/github/stars/Wcowin/mkdocs-ai-hooks?style=social" alt="Stars">
-</a>
-<a href="https://github.com/Wcowin/mkdocs-ai-hooks/network/members">
-<img src="https://img.shields.io/github/forks/Wcowin/mkdocs-ai-hooks?style=social" alt="Forks">
-</a>
+2. Verify workflow configuration:
+   ```yaml
+   env:
+     DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}  # Ensure names match
+   ```
 
-</div>
+#### 2. Build Failure
 
----
+**Error Message:**
+```
+ERROR - Config value: 'plugins'. Error: The "ai-summary" plugin is not installed
+```
 
-## ☕ Support the Project
+**Solutions:**
+1. Ensure plugin is installed in workflow:
+   ```yaml
+   - name: Install dependencies
+     run: |
+       pip install mkdocs-material
+       pip install mkdocs-ai-summary-wcowin  # Ensure this line is included
+   ```
 
-<div align="center">
+2. Check Python version compatibility:
+   ```yaml
+   - name: Setup Python
+     uses: actions/setup-python@v4
+     with:
+       python-version: '3.8'  # Or higher version
+   ```
 
-<a href="https://s1.imagehub.cc/images/2025/05/11/36eb33bf18f9041667267605b6b99bd0.jpeg" target="_blank">
-<img src="https://s1.imagehub.cc/images/2025/05/11/36eb33bf18f9041667267605b6b99bd0.jpeg" style="width: 300px; border-radius: 15px;">
-</a>
+#### 3. Deployment Permission Issues
 
-**If this project helps you, please give it a ⭐ Star!**
+**Error Message:**
+```
+Error: The process '/usr/bin/git' failed with exit code 128
+```
 
-</div>
+**Solutions:**
+1. Ensure GitHub Pages is enabled
+2. Check `GITHUB_TOKEN` permissions
+3. Verify branch name is correct (main/master)
 
----
+### Performance Optimization Issues
 
-<div align="center">
+#### 1. Long Build Times
 
-📝 *Making MkDocs documentation smarter*
+**Solutions:**
+1. Enable caching:
+   ```yaml
+   plugins:
+     - ai-summary:
+         cache_enabled: true
+         cache_expire_days: 30
+   ```
 
-**[⬆ Back to Top](#mkdocs-ai-hooks)**
+2. Use caching in GitHub Actions:
+   ```yaml
+   - name: Cache AI summaries
+     uses: actions/cache@v3
+     with:
+       path: .ai_cache
+       key: ai-cache-${{ hashFiles('docs/**/*.md') }}
+   ```
 
-</div>
+3. Limit processing scope:
+   ```yaml
+   plugins:
+     - ai-summary:
+         enabled_folders:
+           - "docs/important"  # Only process important docs
+         exclude_patterns:
+           - "**/archive/**"   # Exclude archived content
+   ```
+
+#### 2. Too Many API Calls
+
+**Solutions:**
+1. Optimize caching strategy
+2. Use CI cache mode:
+   ```yaml
+   plugins:
+     - ai-summary:
+         ci_cache_only: true  # Only use cache in CI
+   ```
+
+### Debugging and Diagnostics
+
+#### Enable Verbose Logging
+
+**Local Debugging:**
+```bash
+# Enable debug mode
+export AI_SUMMARY_DEBUG=true
+mkdocs build --verbose
+```
+
+**GitHub Actions Debugging:**
+```yaml
+- name: Build with debug
+  env:
+    AI_SUMMARY_DEBUG: true
+  run: |
+    mkdocs build --verbose
+```
+
+#### Check Plugin Status
+
+```bash
+# Check if plugin is correctly installed
+pip show mkdocs-ai-summary-wcowin
+
+# Check MkDocs plugin list
+mkdocs --help
+
+# Verify configuration file
+mkdocs config
+```
+
+#### Test API Connection
+
+Create test script `test_api.py`:
+
+```python
+import os
+from dotenv import load_dotenv
+
+# Load environment variables
+load_dotenv()
+
+# Test API keys
+services = {
+    'DEEPSEEK_API_KEY': os.getenv('DEEPSEEK_API_KEY'),
+    'OPENAI_API_KEY': os.getenv('OPENAI_API_KEY'),
+    'GEMINI_API_KEY': os.getenv('GEMINI_API_KEY'),
+    'GLM_API_KEY': os.getenv('GLM_API_KEY')
+}
+
+for service, key in services.items():
+    if key:
+        print(f"✅ {service}: {key[:10]}...{key[-4:]}")
+    else:
+        print(f"❌ {service}: Not configured")
+```
+
+Run test:
+```bash
+python test_api.py
+```
+
+### Getting Help
+
+If the above solutions don't resolve your issue, please:
+
+1. **Check Detailed Logs**: Enable debug mode for more information
+2. **Check Version Compatibility**: Ensure you're using the latest plugin and MkDocs versions
+3. **Submit an Issue**: Create an issue in the [GitHub repository](https://github.com/Wcowin/Mkdocs-AI-Summary-Plus/issues)
+4. **Provide Information**: Include error logs, configuration files, and environment information
+
+**Issue Template:**
+```
+## Problem Description
+[Describe the issue you're experiencing]
+
+## Environment Information
+- Operating System:
+- Python Version:
+- MkDocs Version:
+- Plugin Version:
+
+## Configuration File
+```yaml
+[Paste your mkdocs.yml configuration]
+```
+
+## Error Logs
+```
+[Paste complete error messages]
+```
+
+## Reproduction Steps
+1. 
+2. 
+3. 
+```
+
+## Contributing
+
+We welcome contributions! Please see our [Contributing Guide](CONTRIBUTING.md) for details.
+
+### Development Setup
+
+```bash
+git clone https://github.com/Wcowin/Mkdocs-AI-Summary-Plus.git
+cd Mkdocs-AI-Summary-Plus
+pip install -e ".[dev]"
+```
+
+### Running Tests
+
+```bash
+pytest
+```
+
+### Code Quality
+
+```bash
+black .
+flake8 .
+mypy .
+```
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## Changelog
+
+See [CHANGELOG.md](CHANGELOG.md) for a list of changes and version history.
+
+## Support
+
+- 📖 [Documentation](https://wcowin.work/mkdocs-ai-hooks/)
+- 🐛 [Issue Tracker](https://github.com/Wcowin/Mkdocs-AI-Summary-Plus/issues)
+- 💬 [Discussions](https://github.com/Wcowin/Mkdocs-AI-Summary-Plus/discussions)
+- 📧 [Email Support](mailto:wcowin@qq.com)
+
+## Acknowledgments
+
+- [MkDocs](https://www.mkdocs.org/) - The static site generator this plugin extends
+- [MkDocs Material](https://squidfunk.github.io/mkdocs-material/) - The beautiful theme that inspired our design
+- All the AI service providers for making this plugin possible

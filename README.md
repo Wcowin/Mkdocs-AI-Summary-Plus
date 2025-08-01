@@ -1,814 +1,1126 @@
-# MkDocs AI Summary Plus
+# MkDocs AI Summary Plugin
 
-![alt text](logo-2.png)
-<p align="center">
-    <img src="https://img.shields.io/badge/MkDocs-Hooks-526CFE?style=for-the-badge&logo=MaterialForMkDocs&logoColor=white" alt="MkDocs Hooks">
-    <img src="https://img.shields.io/badge/AI_Powered-DeepSeek-FF6B35?style=for-the-badge&logo=openai&logoColor=white" alt="AI Powered">
-    <img src="https://img.shields.io/badge/Python-3.7+-3776AB?style=for-the-badge&logo=python&logoColor=white" alt="Python 3.7+">
-</p>
+[![PyPI version](https://badge.fury.io/py/mkdocs-ai-summary-wcowin.svg)](https://badge.fury.io/py/mkdocs-ai-summary-wcowin)
+[![Python Support](https://img.shields.io/pypi/pyversions/mkdocs-ai-summary-wcowin.svg)](https://pypi.org/project/mkdocs-ai-summary-wcowin/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-<p align="center">
-    <a href="https://github.com/Wcowin/mkdocs-ai-hooks/blob/main/README.md">中文</a> | <a href="README-en.md">English</a>
-</p>
+一个智能的 MkDocs 插件，使用多种 AI 服务（包括 OpenAI、DeepSeek、Google Gemini 和 GLM）为您的文档页面自动生成 AI 驱动的摘要。
 
-🚀 **您的MkDocs文档首选智能摘要！**   
-这个项目利用MkDocs hooks，为您的技术文档和博客添加AI驱动的摘要生成和智能阅读统计功能。
+## 功能特性
 
-![预览图1](https://s1.imagehub.cc/images/2025/06/03/d1563500263b22cfd0ffc3679993aa83.jpg)
-![预览图2](https://s1.imagehub.cc/images/2025/06/03/526b59b6a2e478f2ffa1629320e3e2ce.png)
+- 🤖 **多种 AI 服务**：支持 OpenAI、DeepSeek、Google Gemini 和 GLM
+- 🚀 **智能缓存**：智能缓存系统减少 API 调用和成本
+- 🎯 **灵活配置**：精细控制哪些页面生成摘要
+- 🌍 **多语言支持**：生成不同语言的摘要
+- 🔧 **CI/CD 就绪**：与 GitHub Actions 和其他 CI/CD 系统无缝集成
+- 📱 **响应式设计**：在所有设备上都能正常工作的美观摘要卡片
+- ⚡ **性能优化**：通过智能缓存对构建时间的影响最小
 
-🌐 **在线演示**: https://wcowin.work/mkdocs-ai-hooks/
+## 安装
 
----
-
-## 📋 目录导航
-
-- [✨ 功能特性](#-功能特性)
-- [📦 快速安装](#-快速安装)
-- [🚀 快速开始](#-快速开始)
-- [📖 使用指南](#-使用指南)
-- [🎨 显示效果](#-显示效果)
-- [⚙️ 高级配置](#️-高级配置)
-- [🔐 安全配置](#-安全配置)
-- [🌍 多语言支持](#-多语言支持)
-- [📊 性能优化](#-性能优化)
-- [🤝 贡献指南](#-贡献指南)
-
----
-
-## ✨ 功能特性
-
-### 🤖 AI智能摘要
-- **多AI服务集成**: 支持DeepSeek、OpenAI、Claude、Gemini等主流AI服务
-- **自动摘要生成**: 生成高质量的80-120字智能摘要
-- **多语言支持**: 支持中文、英文、双语摘要生成
-- **智能内容清理**: 自动过滤YAML、HTML、代码块等格式内容
-- **备用摘要机制**: API失败时提供基于关键词的本地摘要
-- **智能缓存系统**: 7天智能过期，避免重复API调用
-- **灵活配置**: 支持文件夹级别和页面级别的精确控制
-
-### 📊 智能阅读统计（可选）
-- **精准字符统计**: 专门优化的中英文内容识别
-- **智能代码检测**: 识别30+编程语言和命令行代码
-- **阅读时间估算**: 基于语言特性的智能计算（中文400字/分钟，英文200词/分钟）
-- **美观信息展示**: 使用MkDocs Material风格的信息框
-
-### 🚀 智能化特性
-- **环境自适应**: 自动识别CI/本地环境，本地或者部署都可选启用/禁用
-- **自动语言识别**: 支持30+编程语言和标记语言
-- **内容类型检测**: 区分代码、配置、命令行等不同内容
-- **LRU缓存优化**: 提升处理性能（Todo）
-- **完善错误处理**: 异常处理和日志记录（Todo）
-
----
-
-## 📦 快速安装
-
-### 方法1: 直接下载（推荐）
-
-**步骤1**: 下载文件
-- 从 [Releases页面](https://github.com/Wcowin/mkdocs-ai-hooks/releases) 下载最新版本
-- 或直接下载 `ai_summary.py`文件
-
-**步骤2**: 创建目录并放置文件
-```bash
-# 在您的MkDocs项目根目录下执行
-mkdir -p docs/overrides/hooks/
-mv ai_summary.py docs/overrides/hooks/
-```
-
-**步骤3**: 配置MkDocs主题以及覆写路径
-```yaml
-# 在 mkdocs.yml 中添加
-theme:
-  name: material
-  custom_dir: docs/overrides  # 必需配置！！！
-  features:
-    - content.code.copy
-    - content.code.select
-```
-
-### 方法2: Git克隆
-```bash
-git clone https://github.com/Wcowin/mkdocs-ai-hooks.git
-cd mkdocs-ai-hooks 
-pip install -r requirements.txt
-```
-
-### 依赖安装
-```bash
-pip install -r requirements.txt
-```
-
----
-
-## 🚀 快速开始
-
-### 1. 基础配置
-
-**步骤1**: 配置hooks
-ai_summary.py务必放到docs/overrides/hooks目录下，然后：
-```yaml
-# 在 mkdocs.yml 中添加
-hooks:
-  - docs/overrides/hooks/ai_summary.py      # AI摘要hook
-```
-**步骤2**: 本地配置
-根目录下创建 `.env` 文件存放密钥（记得添加到 `.gitignore`）：
-```bash
-# .env 文件内容
-DEEPSEEK_API_KEY=your_deepseek_api_key_here
-OPENAI_API_KEY=your_openai_api_key_here
-```
+### 从 PyPI 安装（推荐）
 
 ```bash
-#.gitignore 文件内容
-# 环境变量文件（敏感信息）
-.env
-.env.local
-.env.*.local
-*.key
-
-# MkDocs 构建输出目录
-site/
-
-# AI 摘要缓存目录（项目根目录）- 需要被提交
-!.ai_cache/
+pip install mkdocs-ai-summary-wcowin
 ```
 
-到这里检查下目录树状图:
-```
-$ tree -a
-文件名
-├── .github
-│   ├── .DS_Store
-│   └── workflows
-│       └── ci.yml
-├── docs
-│   └── index.md
-|   └── overrides
-│       └── hooks
-│           └── ai_summary.py
-├── .env
-├──.gitignore
-├── README.md
-└── mkdocs.yml
-```
-
-### 2. 配置AI服务
-
-**选择AI服务提供商**：
-- 🌟 **DeepSeek**（推荐）：性价比高，中文表现优秀
-- 🔥 **OpenAI**：功能强大，广泛支持
-- ⚡ **Claude**：逻辑清晰，文本理解佳
-- 🧠 **Gemini**：Google出品，多语言支持
-
-**获取API密钥**：
-- [DeepSeek](https://platform.deepseek.com/usage) - 注册获取API密钥
-- [ChatAnywhere](https://github.com/chatanywhere/GPT_API_free) - 免费OpenAI额度
-
-**获取的密钥存放于上一步创建的`.env` 文件中！！！**
-
-### 3. 设置参数
-
-在 `ai_summary.py` 中配置需要AI摘要的目录：
-```python
-# 📂 启用AI摘要的文件夹
-self.enabled_folders = [
-    'blog/',      # 博客文章
-    # 添加更多文件夹...
-]
-```
-
-### 4. 本地运行和测试
+### 从源码安装
 
 ```bash
-mkdocs serve  # 本地预览
+git clone https://github.com/Wcowin/Mkdocs-AI-Summary-Plus.git
+cd Mkdocs-AI-Summary-Plus
+pip install -e .
 ```
-### 5. 部署配置
+
+## 快速开始
+
+### 1. 配置您的 MkDocs
+
+在您的 `mkdocs.yml` 中添加插件：
 
 ```yaml
-#ci.yml
-name: ci 
+plugins:
+  - ai-summary:
+      ai_service: "deepseek"  # 或 "openai", "gemini", "glm"
+      summary_language: "zh"  # 或 "en"
+      cache_enabled: true
+      cache_expire_days: 30
+      enabled_folders:
+        - "docs"
+      exclude_patterns:
+        - "**/api/**"
+        - "**/reference/**"
+```
+
+### 2. 设置环境变量
+
+在项目根目录创建 `.env` 文件：
+
+```env
+# 选择一个或多个 AI 服务
+DEEPSEEK_API_KEY=your_deepseek_api_key
+OPENAI_API_KEY=your_openai_api_key
+GEMINI_API_KEY=your_gemini_api_key
+GLM_API_KEY=your_glm_api_key
+```
+
+### 3. 构建您的文档
+
+```bash
+mkdocs build
+```
+
+插件将自动为您的页面生成 AI 摘要并将其注入到内容中。
+
+## 详细配置指南
+
+### 本地开发配置
+
+#### 步骤1：获取API密钥
+
+根据您选择的AI服务，获取相应的API密钥：
+
+**DeepSeek (推荐)**
+1. 访问 [DeepSeek官网](https://platform.deepseek.com/)
+2. 注册账号并登录
+3. 进入API管理页面
+4. 创建新的API密钥
+5. 复制密钥备用
+
+**OpenAI**
+1. 访问 [OpenAI Platform](https://platform.openai.com/)
+2. 登录您的账号
+3. 进入API Keys页面
+4. 点击"Create new secret key"
+5. 复制密钥备用
+
+**Google Gemini**
+1. 访问 [Google AI Studio](https://makersuite.google.com/)
+2. 登录Google账号
+3. 创建新的API密钥
+4. 复制密钥备用
+
+**GLM (智谱AI)**
+1. 访问 [智谱AI开放平台](https://open.bigmodel.cn/)
+2. 注册并登录账号
+3. 进入API管理
+4. 创建API密钥
+5. 复制密钥备用
+
+#### 步骤2：创建.env文件
+
+在您的项目根目录（与`mkdocs.yml`同级）创建`.env`文件：
+
+```bash
+# 在项目根目录执行
+touch .env
+```
+
+#### 步骤3：配置API密钥
+
+编辑`.env`文件，添加您的API密钥：
+
+```env
+# DeepSeek API密钥 (推荐)
+DEEPSEEK_API_KEY=sk-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+# OpenAI API密钥
+OPENAI_API_KEY=sk-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+# Google Gemini API密钥
+GEMINI_API_KEY=AIzaSyxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+# GLM API密钥
+GLM_API_KEY=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx.xxxxxxxxxxxxxx
+
+# 可选：调试模式
+AI_SUMMARY_DEBUG=false
+
+# 可选：API超时设置（秒）
+AI_SUMMARY_TIMEOUT=30
+
+# 可选：最大重试次数
+AI_SUMMARY_MAX_RETRIES=3
+```
+
+**重要提示：**
+- 只需要配置您计划使用的AI服务的API密钥
+- 确保`.env`文件已添加到`.gitignore`中，避免泄露API密钥
+- API密钥格式因服务而异，请确保复制完整的密钥
+
+#### 步骤4：验证配置
+
+运行以下命令验证配置是否正确：
+
+```bash
+# 本地构建测试
+mkdocs build
+
+# 本地预览
+mkdocs serve
+```
+
+如果配置正确，您应该能看到插件成功加载并生成AI摘要。
+
+### GitHub部署配置
+
+#### 步骤1：准备GitHub仓库
+
+1. 将您的项目推送到GitHub仓库
+2. 确保`.env`文件已添加到`.gitignore`中
+3. 确保`mkdocs.yml`和插件配置已提交
+
+#### 步骤2：配置Repository Secrets
+
+在GitHub仓库中配置API密钥：
+
+1. **进入仓库设置**
+   - 打开您的GitHub仓库
+   - 点击"Settings"选项卡
+   - 在左侧菜单中找到"Secrets and variables"
+   - 点击"Actions"
+
+2. **添加Repository Secrets**
+   
+   点击"New repository secret"按钮，逐个添加以下密钥：
+   
+   | Secret名称 | 值 | 说明 |
+   |-----------|----|----------|
+   | `DEEPSEEK_API_KEY` | 您的DeepSeek API密钥 | 如果使用DeepSeek服务 |
+   | `OPENAI_API_KEY` | 您的OpenAI API密钥 | 如果使用OpenAI服务 |
+   | `GEMINI_API_KEY` | 您的Gemini API密钥 | 如果使用Gemini服务 |
+   | `GLM_API_KEY` | 您的GLM API密钥 | 如果使用GLM服务 |
+
+   **添加步骤：**
+   - Name: 输入密钥名称（如`DEEPSEEK_API_KEY`）
+   - Secret: 粘贴您的API密钥
+   - 点击"Add secret"
+
+#### 步骤3：创建GitHub Actions工作流
+
+在您的仓库中创建`.github/workflows/deploy.yml`文件：
+
+```yaml
+name: Deploy MkDocs with AI Summary
+
 on:
   push:
-    branches:
-      - master 
-      - main
-  # 禁止从 fork 仓库访问 secrets
+    branches: [ main, master ]
   pull_request:
-    types: [closed]
-    branches: [main, master]
-permissions:
-  contents: write
+    branches: [ main, master ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+    
+    - name: Setup Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.x'
+    
+    - name: Cache pip dependencies
+      uses: actions/cache@v3
+      with:
+        path: ~/.cache/pip
+        key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
+        restore-keys: |
+          ${{ runner.os }}-pip-
+    
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install mkdocs-material
+        pip install mkdocs-ai-summary-wcowin
+        # 如果有requirements.txt文件
+        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+    
+    - name: Build documentation with AI summaries
+      env:
+        # 配置API密钥环境变量
+        DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
+        OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        GLM_API_KEY: ${{ secrets.GLM_API_KEY }}
+        # 可选配置
+        AI_SUMMARY_DEBUG: false
+        AI_SUMMARY_TIMEOUT: 30
+      run: |
+        mkdocs build --verbose
+    
+    - name: Deploy to GitHub Pages
+      if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./site
+        # 可选：自定义域名
+        # cname: your-domain.com
+```
+
+#### 步骤4：启用GitHub Pages
+
+1. 在仓库设置中找到"Pages"选项
+2. Source选择"Deploy from a branch"
+3. Branch选择"gh-pages"
+4. 点击"Save"
+
+#### 步骤5：触发部署
+
+推送代码到main分支即可触发自动部署：
+
+```bash
+git add .
+git commit -m "Add AI summary plugin configuration"
+git push origin main
+```
+
+### 高级CI/CD配置
+
+#### 多环境配置
+
+```yaml
+name: Deploy Documentation
+
+on:
+  push:
+    branches: [ main, develop ]
+  workflow_dispatch:
+
+env:
+  PYTHON_VERSION: '3.x'
+  NODE_VERSION: '18'
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - name: Setup Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: ${{ env.PYTHON_VERSION }}
+    
+    - name: Install and test
+      run: |
+        pip install mkdocs-material mkdocs-ai-summary-wcowin
+        mkdocs build --strict
+  
+  deploy-staging:
+    needs: test
+    if: github.ref == 'refs/heads/develop'
+    runs-on: ubuntu-latest
+    environment: staging
+    steps:
+    - uses: actions/checkout@v4
+    - name: Deploy to staging
+      env:
+        DEEPSEEK_API_KEY: ${{ secrets.STAGING_DEEPSEEK_API_KEY }}
+      run: |
+        pip install mkdocs-material mkdocs-ai-summary-wcowin
+        mkdocs build
+        # 部署到staging环境
+  
+  deploy-production:
+    needs: test
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    environment: production
+    steps:
+    - uses: actions/checkout@v4
+    - name: Deploy to production
+      env:
+        DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
+        OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+      run: |
+        pip install mkdocs-material mkdocs-ai-summary-wcowin
+        mkdocs build
+        # 部署到生产环境
+```
+
+#### 缓存优化配置
+
+```yaml
+    - name: Cache AI summaries
+      uses: actions/cache@v3
+      with:
+        path: .ai_cache
+        key: ai-cache-${{ hashFiles('docs/**/*.md') }}-${{ hashFiles('mkdocs.yml') }}
+        restore-keys: |
+          ai-cache-${{ hashFiles('docs/**/*.md') }}-
+          ai-cache-
+```
+
+## 配置
+
+### 基础配置
+
+```yaml
+plugins:
+  - ai-summary:
+      # AI 服务配置
+      ai_service: "deepseek"          # 主要 AI 服务
+      fallback_services:               # 主要服务失败时的备用服务
+        - "openai"
+        - "gemini"
+      
+      # 摘要配置
+      summary_language: "zh"           # 摘要语言 (zh/en)
+      summary_length: "medium"         # 摘要长度 (short/medium/long)
+      
+      # 缓存配置
+      cache_enabled: true              # 启用缓存
+      cache_expire_days: 30            # 缓存过期天数
+      
+      # 文件选择
+      enabled_folders:                 # 要处理的文件夹
+        - "docs"
+        - "guides"
+      exclude_patterns:                # 要排除的模式
+        - "**/api/**"
+        - "**/reference/**"
+      exclude_files:                   # 要排除的特定文件
+        - "index.md"
+        - "404.md"
+      
+      # 环境配置
+      local_enabled: true              # 在本地开发中启用
+      ci_enabled: true                 # 在 CI/CD 中启用
+      ci_cache_only: false             # 在 CI 中仅使用缓存（不进行新的 API 调用）
+      ci_fallback_summary: true        # 在 CI 中如果没有缓存则使用备用摘要
+```
+
+### 文件选择配置详解
+
+#### enabled_folders 配置示例
+
+`enabled_folders` 参数指定插件应该处理哪些文件夹中的 Markdown 文件。以下是针对不同项目结构的配置示例：
+
+**标准 MkDocs 项目结构：**
+```yaml
+plugins:
+  - ai-summary:
+      enabled_folders:
+        - "docs"                    # 处理 docs/ 文件夹下的所有文件
+```
+
+**多文档源项目：**
+```yaml
+plugins:
+  - ai-summary:
+      enabled_folders:
+        - "docs"                    # 主要文档
+        - "tutorials"               # 教程文档
+        - "guides"                  # 指南文档
+        - "blog"                    # 博客文章
+        - "examples"                # 示例文档
+```
+
+**多语言项目：**
+```yaml
+plugins:
+  - ai-summary:
+      enabled_folders:
+        - "docs/zh"                 # 中文文档
+        - "docs/en"                 # 英文文档
+        - "docs/shared"             # 共享文档
+```
+
+**复杂项目结构：**
+```yaml
+plugins:
+  - ai-summary:
+      enabled_folders:
+        - "documentation"           # 主文档目录
+        - "user-guides"             # 用户指南
+        - "developer-docs"          # 开发者文档
+        - "release-notes"           # 发布说明
+        - "knowledge-base"          # 知识库
+```
+
+#### exclude_patterns 配置示例
+
+`exclude_patterns` 使用 glob 模式来排除不需要生成摘要的文件。以下是常见的排除模式：
+
+**排除 API 文档和参考资料：**
+```yaml
+plugins:
+  - ai-summary:
+      exclude_patterns:
+        - "**/api/**"               # 排除所有 api 文件夹
+        - "**/reference/**"         # 排除所有 reference 文件夹
+        - "**/generated/**"         # 排除自动生成的文档
+```
+
+**排除特定类型的文档：**
+```yaml
+plugins:
+  - ai-summary:
+      exclude_patterns:
+        - "**/changelog/**"         # 排除更新日志
+        - "**/archive/**"           # 排除归档文档
+        - "**/draft/**"             # 排除草稿文档
+        - "**/temp/**"              # 排除临时文档
+        - "**/internal/**"          # 排除内部文档
+```
+
+**排除特定文件模式：**
+```yaml
+plugins:
+  - ai-summary:
+      exclude_patterns:
+        - "**/*-draft.md"           # 排除草稿文件
+        - "**/*-template.md"        # 排除模板文件
+        - "**/README.md"            # 排除 README 文件
+        - "**/CONTRIBUTING.md"      # 排除贡献指南
+        - "**/LICENSE.md"           # 排除许可证文件
+```
+
+**复合排除模式：**
+```yaml
+plugins:
+  - ai-summary:
+      exclude_patterns:
+        - "**/api/**"               # 排除 API 文档
+        - "**/reference/**"         # 排除参考文档
+        - "**/examples/**/output/**" # 排除示例输出
+        - "docs/legacy/**"          # 排除遗留文档
+        - "**/*-internal.md"        # 排除内部文档
+        - "**/node_modules/**"      # 排除依赖文件
+```
+
+#### 实际项目配置示例
+
+**博客网站配置：**
+```yaml
+plugins:
+  - ai-summary:
+      enabled_folders:
+        - "blog"                    # 博客文章
+        - "pages"                   # 静态页面
+      exclude_patterns:
+        - "**/drafts/**"            # 排除草稿
+        - "**/archive/**"           # 排除归档
+        - "blog/tags/**"            # 排除标签页面
+      exclude_files:
+        - "index.md"                # 排除首页
+        - "404.md"                  # 排除错误页面
+        - "sitemap.md"              # 排除站点地图
+```
+
+**技术文档网站配置：**
+```yaml
+plugins:
+  - ai-summary:
+      enabled_folders:
+        - "docs/user-guide"         # 用户指南
+        - "docs/tutorials"          # 教程
+        - "docs/how-to"             # 操作指南
+      exclude_patterns:
+        - "**/api-reference/**"     # 排除 API 参考
+        - "**/generated/**"         # 排除自动生成内容
+        - "**/schemas/**"           # 排除模式定义
+      exclude_files:
+        - "glossary.md"             # 排除术语表
+        - "changelog.md"            # 排除更新日志
+```
+
+**多语言文档配置：**
+```yaml
+plugins:
+  - ai-summary:
+      enabled_folders:
+        - "docs/zh-cn"              # 中文文档
+        - "docs/en"                 # 英文文档
+      exclude_patterns:
+        - "**/translations/**"      # 排除翻译工作文件
+        - "**/locales/**"           # 排除本地化文件
+      exclude_files:
+        - "translation-guide.md"    # 排除翻译指南
+```
+
+#### 配置最佳实践
+
+1. **明确指定文件夹**：使用 `enabled_folders` 明确指定需要处理的文件夹，避免处理不必要的文件。
+
+2. **合理使用排除模式**：使用 `exclude_patterns` 排除不需要摘要的文件类型，如 API 文档、参考资料等。
+
+3. **性能考虑**：排除大型文件和自动生成的文档可以显著提高构建速度。
+
+4. **维护性**：定期检查和更新配置，确保新增的文档结构被正确处理。
+
+5. **测试配置**：在本地环境中测试配置，确保所有期望的文件都被正确处理或排除。
+
+### 高级配置
+
+```yaml
+plugins:
+  - ai-summary:
+      # 自定义 API 端点
+      custom_endpoints:
+        deepseek:
+          base_url: "https://api.deepseek.com"
+          model: "deepseek-chat"
+        openai:
+          base_url: "https://api.openai.com/v1"
+          model: "gpt-3.5-turbo"
+      
+      # 内容处理
+      max_content_length: 8000         # AI 处理的最大内容长度
+      summary_position: "top"          # 摘要位置 (top/bottom)
+      
+      # 样式
+      summary_style:
+        theme: "material"               # 摘要卡片主题
+        show_icon: true                 # 显示 AI 服务图标
+        show_language: true             # 显示摘要语言
+```
+
+## 环境变量
+
+### 必需的 API 密钥
+
+| 变量 | 描述 | 必需 |
+|------|------|------|
+| `DEEPSEEK_API_KEY` | DeepSeek API 密钥 | 如果使用 DeepSeek |
+| `OPENAI_API_KEY` | OpenAI API 密钥 | 如果使用 OpenAI |
+| `GEMINI_API_KEY` | Google Gemini API 密钥 | 如果使用 Gemini |
+| `GLM_API_KEY` | GLM API 密钥 | 如果使用 GLM |
+
+### 可选配置
+
+| 变量 | 描述 | 默认值 |
+|------|------|--------|
+| `AI_SUMMARY_DEBUG` | 启用调试日志 | `false` |
+| `AI_SUMMARY_TIMEOUT` | API 请求超时（秒） | `30` |
+| `AI_SUMMARY_MAX_RETRIES` | 最大 API 重试次数 | `3` |
+
+## CI/CD 集成
+
+### GitHub Actions
+
+将您的 API 密钥添加到 GitHub Secrets 并在工作流中使用：
+
+```yaml
+name: Deploy Documentation
+
+on:
+  push:
+    branches: [main]
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-          sparse-checkout: |
-            docs
-            includes
-            requirements.txt
-            .ai_cache
-      - uses: actions/setup-python@v4
+      - uses: actions/checkout@v3
+      
+      - name: Setup Python
+        uses: actions/setup-python@v4
         with:
           python-version: 3.x
-      - name: Set cache ID
-        run: echo "cache_id=$(date --utc '+%V')" >> $GITHUB_ENV 
-      - uses: actions/cache@v3
-        with:
-          key: mkdocs-material-${{ github.run_number }}
-          path: .cache
-          restore-keys: |
-            mkdocs-material-
-      - run: pip install mkdocs-git-revision-date-localized-plugin
-      - run: pip install mkdocs-git-authors-plugin
-      - run: pip install mkdocs-git-committers-plugin-2
-      - run: pip install markdown-callouts
-      - run: pip install mkdocs-rss-plugin
-      - run: pip install requests>=2.25.0
-      - run: pip install python-dateutil>=2.8.0
-      - run: pip install cachetools>=4.2.0
-      - run: pip install python-dotenv>=0.19.0
-      - run: pip install pymdown-extensions
-      - run: pip install mkdocs-material 
-      - run: pip install --upgrade --force-reinstall mkdocs-material
-      - name: Deploy with AI Summary
+      
+      - name: Install dependencies
+        run: |
+          pip install mkdocs-material mkdocs-ai-summary-wcowin
+      
+      - name: Build documentation
         env:
-          # AI摘要开关控制
-          AI_SUMMARY_CI_ENABLED: 'true'           # CI部署环境启用AI摘要 (true=在CI中为文章生成AI摘要)
-          AI_SUMMARY_CI_ONLY_CACHE: 'true'       # CI部署不生成新摘要 (true=使用本地部署过的摘要缓存，不再重复调用API)
-          AI_SUMMARY_CI_FALLBACK: 'true'          # CI部署启用备用摘要 (true=API失败时生成离线基础摘要)
-          # AI_SUMMARY_LOCAL_ENABLED: 'false'       # 本地部署环境禁用AI摘要 (true=本地开发时也生成摘要)（不需要管这条）
-          # AI_SUMMARY_CACHE_ENABLED: 'true'        # 本地启用缓存功能 (true=缓存摘要避免重复生成)（不需要管这条）
-          # API密钥配置
           DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
-        run: mkdocs gh-deploy --force
+        run: mkdocs build
       
-      # 自动提交新生成的AI缓存文件
-      - name: Auto-commit AI cache (if any new files)
-        run: |
-          if [ -d ".ai_cache" ] && [ "$(ls -A .ai_cache 2>/dev/null)" ]; then
-            git config --local user.email "action@github.com"
-            git config --local user.name "GitHub Action"
-            git add .ai_cache/
-            if ! git diff --cached --quiet; then
-              git commit -m "🤖 Auto-update AI summary cache [skip ci]"
-              git push
-              echo "✅ 自动提交了新的 AI 缓存文件"
-            else
-              echo "ℹ️ 没有新的缓存文件需要提交"
-            fi
-          else
-            echo "ℹ️ 没有找到缓存目录或缓存为空"
-          fi
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./site
 ```
 
-```python
-# ai_summary.py 中配置
-# AI摘要本地环境配置
-self.ci_config = {
-    # CI部署环境开关 (不用管，只在ci.yml中设置有效)
-    'enabled_in_ci': os.getenv('AI_SUMMARY_CI_ENABLED', 'true').lower() == 'true',
-    
-    # 本地部署环境开关 (true=本地开发时启用AI摘要)
-    'enabled_in_local': os.getenv('AI_SUMMARY_LOCAL_ENABLED', 'true').lower() == 'true',
-    
-    # CI部署仅缓存模式(不用管，只在ci.yml中设置有效)
-    'ci_only_cache': os.getenv('AI_SUMMARY_CI_ONLY_CACHE', 'false').lower() == 'true',
-    
-    # 本地部署缓存功能开关 (true=启用缓存避免重复生成, false=总是生成新摘要)
-    'cache_enabled': os.getenv('AI_SUMMARY_CACHE_ENABLED', 'true').lower() == 'true',
-    
-    # CI部署备用摘要开关 (不用管，只在ci.yml中设置有效)
-    'ci_fallback_enabled': os.getenv('AI_SUMMARY_CI_FALLBACK', 'true').lower() == 'true',
-}
-```  
+## AI 服务
 
-**几种运行模式**：
-1. **完全禁用**: 本地和CI部署都不运行摘要生成
-2. **仅CI部署启用**: 本地禁用，CI部署生成新摘要
-3. **缓存模式**：本地已经生成过摘要，CI部署使用缓存（**推荐。上方配置项中已默认CI部署的缓存模式，可自行搭配选择**）
-4. **完全启用**: 本地和CI部署都运行(API消耗会更多)
+### 支持的服务
 
-### 6. GitHub Secrets配置
+| 服务 | 模型 | 语言 | 速率限制 |
+|------|------|------|----------|
+| DeepSeek | deepseek-chat | zh, en | 高 |
+| OpenAI | gpt-3.5-turbo, gpt-4 | zh, en | 中等 |
+| Google Gemini | gemini-pro | zh, en | 高 |
+| GLM | glm-4 | zh, en | 中等 |
 
-**步骤1**: 设置Repository Secrets
-1. 进入GitHub仓库 → **Settings** → **Secrets and variables** → **Actions**
-2. 点击 **New repository secret** 添加：
-```
-DEEPSEEK_API_KEY=your_deepseek_api_key_here
-OPENAI_API_KEY=your_openai_api_key_here
-```
-![image](https://s1.imagehub.cc/images/2025/06/04/b5fd63d839bb6443c8560a5f690d2c41.png)
----
+### 服务选择策略
 
-然后部署到GitHub Pages或其他平台即可。
+1. **主要服务**：配置中指定的主要 AI 服务
+2. **备用服务**：主要服务失败或不可用时使用
+3. **自动重试**：内置重试机制，采用指数退避
+4. **成本优化**：基于内容长度的智能服务选择
 
-**有报错可以去问ChatGPT或者在Issues中提问。**
+## 缓存系统
 
-## 📖 使用指南
+### 工作原理
 
-### AI摘要控制
+- **内容哈希**：每个页面的内容都会被哈希以检测变化
+- **服务配置**：AI 服务设置更改时缓存会失效
+- **过期**：可配置的缓存过期时间（默认：30天）
+- **CI 优化**：CI/CD 环境的特殊缓存行为
 
-#### 方法1: 页面级控制（推荐）
-如果只想为特定文件生成摘要，在Markdown文件最上面的yaml meta中：
-
-**启用AI摘要**：
-```yaml
----
-title: 文章标题
-ai_summary: true   # 启用AI摘要
----
-```
-
-**禁用AI摘要**：
-```yaml
----
-title: 文章标题
-ai_summary: false  # 禁用AI摘要
-description: 自定义摘要内容  # 可选手动摘要
----
-```
-
-#### 方法2: 文件夹级控制
-```python
-# 在 ai_summary.py 中配置
-# 📂 可自定义的文件夹配置
-self.enabled_folders = [
-    'blog/',      # blog文件夹
-    'index.md',     
-    # 'develop/',   # develop文件夹
-    # 'posts/',     # posts文件夹
-    # 'trip/',     # trip文件夹
-    # 'about/',     # about文件夹
-]
-
-# 📋 Excluded files and folders
-self.exclude_patterns = [
-    '404.md', 'tag.md', 'tags.md',
-]
-
-# 📋 Excluded specific files
-self.exclude_files = [
-    'blog/index.md',
-]
-```
-
-
----
-
-## 🎨 显示效果
-
-### AI摘要显示  
-**实际效果预览**：
-![image](https://s1.imagehub.cc/images/2025/06/04/152205c10ef1bfd7658b383a3e5e6e9f.png)
-
-
-### 💰 成本说明
-- **单次费用**: 一次全部总结约0.03-0.05元（中大型文档）
-- **月度预估**: 普通博客每月不到1¥
-- **免费额度**: 多数AI服务商提供新用户免费额度
-
----
-
-## ⚙️ 高级配置
-
-### 自定义AI服务
-
-#### 方法1: 使用配置函数（推荐）
-```python
-# 在 mkdocs.yml 同级目录创建 hooks_config.py
-from docs.overrides.hooks.ai_summary import configure_ai_summary, add_ai_service, add_openai_service
-
-# 添加OpenAI兼容的服务
-add_openai_service(
-    'my_deepseek',
-    'https://api.deepseek.com/v1/chat/completions',
-    'deepseek-chat',
-    'your-deepseek-key'
-)
-
-# 添加本地部署的模型
-add_openai_service(
-    'local_llm',
-    'http://localhost:8000/v1/chat/completions',
-    'local-model',
-    'dummy-key',
-    temperature=0.7
-)
-
-# 添加完全自定义的服务
-add_ai_service('custom_service', {
-    'url': 'https://api.custom.com/v1/chat/completions',
-    'model': 'custom-model',
-    'api_key': 'your-custom-key',
-    'format': 'openai',  # 或 'claude', 'gemini', 'custom'
-    'max_tokens': 200,
-    'temperature': 0.3,
-    'headers': {'Custom-Header': 'value'}
-})
-
-# 配置基本设置和服务优先级
-configure_ai_summary(
-    enabled_folders=['blog/', 'docs/'],
-    language='zh',
-    service_priority=['my_deepseek', 'local_llm', 'custom_service', 'openai']
-)
-```
-
-#### 方法2: 从环境变量配置
-```python
-# 在 mkdocs.yml 同级目录创建 hooks_config.py
-from docs.overrides.hooks.ai_summary import add_service_from_env, configure_ai_summary
-
-# 从环境变量自动配置
-add_service_from_env('my_service', 'MYAPI')
-
-configure_ai_summary(
-    enabled_folders=['blog/'],
-    service_priority=['my_service', 'openai']
-)
-```
+### 缓存管理
 
 ```bash
-# .env 文件中添加
-MYAPI_URL=https://api.myservice.com/v1/chat/completions
-MYAPI_MODEL=my-model
-MYAPI_API_KEY=your-api-key
-MYAPI_MAX_TOKENS=150
-MYAPI_TEMPERATURE=0.3
-MYAPI_FORMAT=openai
+# 清除所有缓存
+rm -rf .ai_cache/
+
+# 清除过期缓存（构建时自动进行）
+# 无需手动操作
 ```
 
-#### 方法3: 直接在configure_ai_summary中配置
-```python
-# 在 mkdocs.yml 同级目录创建 hooks_config.py
-from docs.overrides.hooks.ai_summary import configure_ai_summary
+## 故障排除和常见问题
 
-configure_ai_summary(
-    enabled_folders=['blog/', 'docs/'],
-    language='zh',
-    custom_services={
-        'my_openai': {
-            'url': 'https://api.openai.com/v1/chat/completions',
-            'model': 'gpt-4',
-            'api_key': 'your-openai-key',
-            'format': 'openai'
-        },
-        'local_llm': {
-            'url': 'http://localhost:8000/v1/chat/completions',
-            'model': 'local-model',
-            'api_key': 'dummy',
-            'format': 'openai',
-            'temperature': 0.7
-        }
-    },
-    service_priority=['my_openai', 'local_llm', 'deepseek']
-)
+### 本地开发常见问题
+
+#### 1. API密钥未找到
+
+**错误信息：**
+```
+Error: No valid API key found for service 'deepseek'
+警告: 没有可用的AI服务，请检查API密钥配置
 ```
 
-### 支持的API格式
+**解决方案：**
+1. 检查`.env`文件是否存在于项目根目录
+2. 确认API密钥名称拼写正确（区分大小写）
+3. 验证API密钥格式是否正确
+4. 确保`.env`文件没有语法错误
 
-#### OpenAI兼容格式
-```python
-{
-    'url': 'https://api.openai.com/v1/chat/completions',
-    'model': 'gpt-4',
-    'api_key': 'your-key',
-    'format': 'openai'
-}
-```
-
-#### Claude格式
-```python
-{
-    'url': 'https://api.anthropic.com/v1/messages',
-    'model': 'claude-3-haiku-20240307',
-    'api_key': 'your-key',
-    'format': 'claude'
-}
-```
-
-#### Gemini格式
-```python
-{
-    'url': 'https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent',
-    'model': 'gemini-pro',
-    'api_key': 'your-key',
-    'format': 'gemini'
-}
-```
-
-#### 完全自定义格式
-```python
-def custom_payload_builder(content, title, config):
-    return {
-        "prompt": f"请总结以下内容：{content}",
-        "max_length": 120
-    }
-
-def custom_response_parser(response_data):
-    return response_data.get('summary', '')
-
-{
-    'url': 'https://api.custom.com/summarize',
-    'api_key': 'your-key',
-    'format': 'custom',
-    'custom_payload_builder': custom_payload_builder,
-    'custom_response_parser': custom_response_parser
-}
-```
-
-### 常见自定义配置示例
-
-#### 1. 使用Azure OpenAI
-```python
-add_ai_service('azure_openai', {
-    'url': 'https://your-resource.openai.azure.com/openai/deployments/your-deployment/chat/completions?api-version=2023-12-01-preview',
-    'model': 'gpt-4',
-    'api_key': 'your-azure-key',
-    'format': 'openai',
-    'headers': {'api-key': 'your-azure-key'}  # Azure使用api-key头部
-})
-```
-
-#### 2. 使用Ollama本地模型
-```python
-add_openai_service(
-    'ollama',
-    'http://localhost:11434/v1/chat/completions',
-    'llama2',
-    'dummy-key'  # Ollama不需要真实key
-)
-```
-
-#### 3. 使用通义千问
-```python
-add_openai_service(
-    'qwen',
-    'https://dashscope.aliyuncs.com/compatible-mode/v1/chat/completions',
-    'qwen-turbo',
-    'your-dashscope-key'
-)
-```
-
-#### 4. 使用智谱AI
-```python
-add_openai_service(
-    'zhipu',
-    'https://open.bigmodel.cn/api/paas/v4/chat/completions',
-    'glm-4',
-    'your-zhipu-key'
-)
-```
-
-### 服务管理功能
-
-```python
-from docs.overrides.hooks.ai_summary import list_ai_services, set_service_priority
-
-# 列出所有可用服务
-list_ai_services()
-
-# 动态调整服务优先级
-set_service_priority('my_custom_service', 'openai', 'deepseek')
-```
-
-### 配置文件组织
-
-推荐在项目根目录创建 `hooks_config.py` 来管理所有自定义配置：
-
-```python
-# hooks_config.py
-from docs.overrides.hooks.ai_summary import *
-
-# 自定义服务配置
-add_openai_service('my_gpt4', 'https://api.openai.com/v1/chat/completions', 'gpt-4', os.getenv('OPENAI_API_KEY'))
-add_service_from_env('aliyun_qwen', 'QWEN')
-
-# 基础配置
-configure_ai_summary(
-    enabled_folders=['blog/', 'docs/'],
-    language='zh',
-    service_priority=['my_gpt4', 'aliyun_qwen', 'deepseek'],
-    cache_enabled=True
-)
-```
-
-然后在 `mkdocs.yml` 中引入：
-
-```yaml
-hooks:
-  - docs/overrides/hooks/ai_summary.py
-  - hooks_config.py  # 引入自定义配置
-```
-
----
-
-## 🔐 安全配置
-
-### 密钥管理
-- **使用环境变量**: 在 `.env` 文件中配置您的API密钥
-- **GitHub Secrets**: 在GitHub仓库的Secrets中配置密钥，名称为 `DEEPSEEK_API_KEY` 和 `OPENAI_API_KEY`
-
-### 安全注意事项
-- 切勿将密钥直接写入代码中
-- 定期轮换您的API密钥
-- 监控API使用情况，及时发现异常
-
----
-
-## 🌍 多语言支持
-
-### 默认全局语言配置
-```python
-# 在 ai_summary.py 中设置
-self.summary_language = 'zh'    # 中文摘要
-# self.summary_language = 'en'  # 英文摘要
-# self.summary_language = 'both' # 双语摘要
-```
-
-### 在页面中指定摘要语言  
-
-```yaml
----
-title: "我的技术文章"
-ai_summary_lang: zh
----
-```
-```
----
-title: "My Technical Article"
-ai_summary_lang: en
----
-```
-
-```
----
-title: "双语技术文章 / Bilingual Technical Article"
-ai_summary_lang: both
----
-```
-
-
-### 支持的语言
-- **完全支持**: 中文、English
-- **部分支持**: 日本語です、한글、Français、Deutsch
-
----
-
-## 📊 性能优化
-
-### 已实现优化
-- **LRU缓存**: 函数级别缓存提升性能
-- **正则预编译**: 提高文本处理速度
-- **智能过滤**: 减少不必要的API调用
-- **内容哈希**: 基于内容变化的智能缓存
-
-### 性能建议
-- 使用 `ci_only_cache: true` 在CI环境中仅使用缓存
-- 合理设置 `enabled_folders` 避免处理不必要的文件
-- 定期清理过期缓存文件
-
----
-
-## 🤝 贡献指南
-
-### 如何贡献
-1. **Fork** 这个仓库
-2. 创建特性分支
-3. 提交更改
-4. 推送分支
-5. 创建 **Pull Request**
-
-### 开发环境
+**验证步骤：**
 ```bash
-git clone https://github.com/Wcowin/mkdocs-ai-hooks.git
-cd mkdocs-ai-hooks
-pip install -r requirements.txt
+# 检查.env文件内容
+cat .env
+
+# 验证环境变量是否加载
+python -c "import os; print('DEEPSEEK_API_KEY:', os.getenv('DEEPSEEK_API_KEY', 'Not found'))"
 ```
 
----
+#### 2. 插件配置参数未识别
 
-## 📝 更新日志
+**错误信息：**
+```
+Config value: 'ai_service'. Warning: Unrecognised config name: ai_service
+```
 
-### [v1.3.0] (2025-06-04) - 最新版本  
+**解决方案：**
+1. 确保安装了最新版本的插件：
+   ```bash
+   pip install --upgrade mkdocs-ai-summary-wcowin
+   ```
+2. 检查`mkdocs.yml`中的插件配置格式：
+   ```yaml
+   plugins:
+     - ai-summary:  # 注意冒号后的空格
+         ai_service: "deepseek"
+   ```
 
-#### 核心改进
+#### 3. 权限和网络问题
 
-- **统一缓存架构**
-- **缓存路径统一为项目根目录 .ai_cache**
-- **本地和 CI 环境使用相同缓存策略**
-- **增强 CI/CD 支持**，**支持 CI 仅缓存模式，大幅减少部署时间**
-- **智能识别 15+ 部署平台（GitHub Actions、GitLab CI 等）**
-- **可配置备用摘要机制**
+**错误信息：**
+```
+ConnectionError: Failed to connect to API endpoint
+Timeout: Request timed out after 30 seconds
+```
 
-### [v1.2.0] (2025-06-03)
+**解决方案：**
+1. 检查网络连接
+2. 验证API密钥是否有效
+3. 增加超时时间：
+   ```env
+   AI_SUMMARY_TIMEOUT=60
+   ```
+4. 检查防火墙设置
 
-#### ✨ 主要新功能
-- **多AI服务支持**: 集成DeepSeek、OpenAI、Gemini、Claude
-- **环境自适应**: 自动识别CI/本地环境
-- **智能缓存系统**: 内容哈希缓存，7天自动过期
-- **安全配置**: GitHub Secrets集成，API密钥安全管理
+#### 4. 内容过长警告
 
-#### 🔧 技术改进
-- **统一API接口**: 自适配不同AI服务格式
-- **错误处理增强**: 完善的异常处理机制
-- **性能优化**: LRU缓存和正则预编译
+**警告信息：**
+```
+Warning: Content too long for AI processing, truncating...
+```
 
-### [v1.0.0] (2025-06-01) - 初始版本
-- 🤖 **AI智能摘要功能**
-- 📖 **阅读时间统计功能**
-- 💾 **基础缓存系统**
-- 🎯 **基本配置选项**
+**解决方案：**
+1. 在`mkdocs.yml`中增加最大内容长度：
+   ```yaml
+   plugins:
+     - ai-summary:
+         max_content_length: 12000
+   ```
+2. 将长页面拆分为多个较小的页面
+3. 使用`exclude_patterns`排除过长的页面
 
----
+#### 5. 文件选择配置问题
 
-## 🐛 问题反馈
+**问题：缓存文件数量为0，没有生成AI摘要**
 
-遇到问题？请在 [Issues](https://github.com/Wcowin/mkdocs-ai-hooks/issues) 中反馈。
+**常见原因和解决方案：**
 
-**反馈时请包含**：
-- MkDocs版本
-- Python版本
-- 完整错误信息
-- 复现步骤
-- 配置文件（去除敏感信息）
+**原因1：enabled_folders配置不匹配**
+```
+# 错误配置示例
+plugins:
+  - ai-summary:
+      enabled_folders:
+        - "docs"  # 但实际文件在 blog/ 目录下
+```
 
----
+**解决方案：**
+1. 检查实际文档目录结构：
+   ```bash
+   find . -name "*.md" -type f | head -10
+   ```
+2. 根据实际结构调整配置：
+   ```yaml
+   plugins:
+     - ai-summary:
+         enabled_folders:
+           - "blog"      # 匹配实际目录
+           - "docs"
+           - "pages"
+   ```
 
-## 📄 许可证
+**原因2：exclude_patterns过于宽泛**
+```yaml
+# 过于宽泛的排除模式
+plugins:
+  - ai-summary:
+      exclude_patterns:
+        - "**/*.md"  # 这会排除所有Markdown文件！
+```
 
-本项目采用 [MIT License](LICENSE) 开源协议。
+**解决方案：**
+1. 检查排除模式是否过于宽泛
+2. 使用更精确的排除模式：
+   ```yaml
+   plugins:
+     - ai-summary:
+         exclude_patterns:
+           - "**/draft/**"     # 只排除草稿目录
+           - "**/temp/**"      # 只排除临时目录
+           - "**/*-draft.md"   # 只排除草稿文件
+   ```
 
----
+**原因3：路径分隔符问题**
+```yaml
+# Windows系统可能遇到的问题
+plugins:
+  - ai-summary:
+      enabled_folders:
+        - "docs\\tutorials"  # 错误的路径分隔符
+```
 
-## 🙏 致谢
+**解决方案：**
+始终使用正斜杠（/）作为路径分隔符：
+```yaml
+plugins:
+  - ai-summary:
+      enabled_folders:
+        - "docs/tutorials"   # 正确的路径分隔符
+```
 
-感谢以下项目和服务：
-- [MkDocs](https://www.mkdocs.org/) - 优秀的静态站点生成器
-- [Material for MkDocs](https://squidfunk.github.io/mkdocs-material/) - 精美的主题
-- [DeepSeek](https://deepseek.com/) - 高性价比的AI API服务
-- 所有贡献者和使用者
+**原因4：相对路径配置错误**
+```yaml
+# 错误的绝对路径配置
+plugins:
+  - ai-summary:
+      enabled_folders:
+        - "/home/user/project/docs"  # 绝对路径不推荐
+```
 
----
+**解决方案：**
+使用相对于项目根目录的路径：
+```yaml
+plugins:
+  - ai-summary:
+      enabled_folders:
+        - "docs"             # 相对路径
+        - "content/posts"    # 相对路径
+```
 
-## 🔗 联系作者
+**调试配置问题的方法：**
 
-<div align="center">
+1. **启用调试模式**：
+   ```bash
+   export AI_SUMMARY_DEBUG=true
+   mkdocs serve
+   ```
 
-### Telegram
-<a href="https://t.me/wecowin" target="_blank">
-<img src="https://pica.zhimg.com/80/v2-d5876bc0c8c756ecbba8ff410ed29c14_1440w.webp" alt="Telegram" style="border-radius: 10px;" width="300px">
-</a>
+2. **检查调试输出**：
+   ```
+   DEBUG: Processing page: blog/post1.md
+   DEBUG: should_generate_summary: False
+   DEBUG: enabled_folders: ['docs']
+   DEBUG: Skipping page: Path not in enabled folders
+   ```
 
-### 微信交流
-<img src="https://pic3.zhimg.com/80/v2-5ef3dde831c9d0a41fe35fabb0cb8784_1440w.webp" style="border-radius: 10px;" width="300px">
+3. **验证文件路径**：
+   ```bash
+   # 列出所有Markdown文件及其路径
+   find . -name "*.md" -type f | grep -v node_modules
+   ```
 
-</div>
+4. **测试配置**：
+   ```yaml
+   # 临时配置：处理所有文件夹
+   plugins:
+     - ai-summary:
+         enabled_folders:
+           - "."  # 处理所有目录（仅用于测试）
+         exclude_patterns: []  # 暂时不排除任何文件
+   ```
 
----
+### GitHub Actions部署问题
 
-## ⭐ 项目统计
+#### 1. Secrets配置错误
 
-<div align="center">
+**错误信息：**
+```
+Error: No valid API key found for service 'deepseek'
+```
 
-[![Star History Chart](https://api.star-history.com/svg?repos=Wcowin/mkdocs-ai-hooks&type=Date)](https://www.star-history.com/#Wcowin/mkdocs-ai-hooks&Date)
+**解决方案：**
+1. 检查Repository Secrets配置：
+   - 进入GitHub仓库 → Settings → Secrets and variables → Actions
+   - 确认密钥名称与工作流中的环境变量名称一致
+   - 重新添加可能损坏的密钥
 
-<a href="https://github.com/Wcowin/mkdocs-ai-hooks/stargazers">
-<img src="https://img.shields.io/github/stars/Wcowin/mkdocs-ai-hooks?style=social" alt="Stars">
-</a>
-<a href="https://github.com/Wcowin/mkdocs-ai-hooks/network/members">
-<img src="https://img.shields.io/github/forks/Wcowin/mkdocs-ai-hooks?style=social" alt="Forks">
-</a>
+2. 验证工作流配置：
+   ```yaml
+   env:
+     DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}  # 确保名称匹配
+   ```
 
-</div>
+#### 2. 构建失败
 
----
+**错误信息：**
+```
+ERROR - Config value: 'plugins'. Error: The "ai-summary" plugin is not installed
+```
 
-## ☕ 支持项目
+**解决方案：**
+1. 确保工作流中安装了插件：
+   ```yaml
+   - name: Install dependencies
+     run: |
+       pip install mkdocs-material
+       pip install mkdocs-ai-summary-wcowin  # 确保包含此行
+   ```
 
-<div align="center">
+2. 检查Python版本兼容性：
+   ```yaml
+   - name: Setup Python
+     uses: actions/setup-python@v4
+     with:
+       python-version: '3.8'  # 或更高版本
+   ```
 
-<a href="https://s1.imagehub.cc/images/2025/05/11/36eb33bf18f9041667267605b6b99bd0.jpeg" target="_blank">
-<img src="https://s1.imagehub.cc/images/2025/05/11/36eb33bf18f9041667267605b6b99bd0.jpeg" style="width: 300px; border-radius: 15px;">
-</a>
+#### 3. 部署权限问题
 
-**如果这个项目对您有帮助，请给它一个 ⭐ Star！**
+**错误信息：**
+```
+Error: The process '/usr/bin/git' failed with exit code 128
+```
 
-</div>
+**解决方案：**
+1. 确保GitHub Pages已启用
+2. 检查`GITHUB_TOKEN`权限
+3. 验证分支名称是否正确（main/master）
 
----
+### 性能优化问题
 
-<div align="center">
+#### 1. 构建时间过长
 
-📝 *让MkDocs文档更加智能化*
+**解决方案：**
+1. 启用缓存：
+   ```yaml
+   plugins:
+     - ai-summary:
+         cache_enabled: true
+         cache_expire_days: 30
+   ```
 
-**[⬆ 回到顶部](#mkdocs-ai-hooks)**
+2. 在GitHub Actions中使用缓存：
+   ```yaml
+   - name: Cache AI summaries
+     uses: actions/cache@v3
+     with:
+       path: .ai_cache
+       key: ai-cache-${{ hashFiles('docs/**/*.md') }}
+   ```
 
-</div>
+3. 限制处理范围：
+   ```yaml
+   plugins:
+     - ai-summary:
+         enabled_folders:
+           - "docs/important"  # 只处理重要文档
+         exclude_patterns:
+           - "**/archive/**"   # 排除归档内容
+   ```
+
+#### 2. API调用次数过多
+
+**解决方案：**
+1. 优化缓存策略
+2. 使用CI缓存模式：
+   ```yaml
+   plugins:
+     - ai-summary:
+         ci_cache_only: true  # CI中只使用缓存
+   ```
+
+### 调试和诊断
+
+#### 启用详细日志
+
+**本地调试：**
+```bash
+# 启用调试模式
+export AI_SUMMARY_DEBUG=true
+mkdocs build --verbose
+```
+
+**GitHub Actions调试：**
+```yaml
+- name: Build with debug
+  env:
+    AI_SUMMARY_DEBUG: true
+  run: |
+    mkdocs build --verbose
+```
+
+#### 检查插件状态
+
+```bash
+# 检查插件是否正确安装
+pip show mkdocs-ai-summary-wcowin
+
+# 检查MkDocs插件列表
+mkdocs --help
+
+# 验证配置文件
+mkdocs config
+```
+
+#### 测试API连接
+
+创建测试脚本`test_api.py`：
+
+```python
+import os
+from dotenv import load_dotenv
+
+# 加载环境变量
+load_dotenv()
+
+# 测试API密钥
+services = {
+    'DEEPSEEK_API_KEY': os.getenv('DEEPSEEK_API_KEY'),
+    'OPENAI_API_KEY': os.getenv('OPENAI_API_KEY'),
+    'GEMINI_API_KEY': os.getenv('GEMINI_API_KEY'),
+    'GLM_API_KEY': os.getenv('GLM_API_KEY')
+}
+
+for service, key in services.items():
+    if key:
+        print(f"✅ {service}: {key[:10]}...{key[-4:]}")
+    else:
+        print(f"❌ {service}: Not configured")
+```
+
+运行测试：
+```bash
+python test_api.py
+```
+
+### 获取帮助
+
+如果以上解决方案都无法解决您的问题，请：
+
+1. **查看详细日志**：启用调试模式获取更多信息
+2. **检查版本兼容性**：确保使用最新版本的插件和MkDocs
+3. **提交Issue**：在[GitHub仓库](https://github.com/Wcowin/Mkdocs-AI-Summary-Plus/issues)中提交问题
+4. **提供信息**：包含错误日志、配置文件和环境信息
+
+**Issue模板：**
+```
+## 问题描述
+[描述您遇到的问题]
+
+## 环境信息
+- 操作系统：
+- Python版本：
+- MkDocs版本：
+- 插件版本：
+
+## 配置文件
+```yaml
+[粘贴您的mkdocs.yml配置]
+```
+
+## 错误日志
+```
+[粘贴完整的错误信息]
+```
+
+## 重现步骤
+1. 
+2. 
+3. 
+```
+
+## 贡献
+
+我们欢迎贡献！请查看我们的[贡献指南](CONTRIBUTING.md)了解详情。
+
+### 开发设置
+
+```bash
+git clone https://github.com/Wcowin/Mkdocs-AI-Summary-Plus.git
+cd Mkdocs-AI-Summary-Plus
+pip install -e ".[dev]"
+```
+
+### 运行测试
+
+```bash
+pytest
+```
+
+### 代码质量
+
+```bash
+black .
+flake8 .
+mypy .
+```
+
+## 许可证
+
+本项目采用 MIT 许可证 - 详情请参阅 [LICENSE](LICENSE) 文件。
+
+## 更新日志
+
+查看 [CHANGELOG.md](CHANGELOG.md) 了解更改列表和版本历史。
+
+## 支持
+
+- 📖 [文档](https://wcowin.work/mkdocs-ai-hooks/)
+- 🐛 [问题跟踪](https://github.com/Wcowin/Mkdocs-AI-Summary-Plus/issues)
+- 💬 [讨论](https://github.com/Wcowin/Mkdocs-AI-Summary-Plus/discussions)
+- 📧 [邮件支持](mailto:wcowin@qq.com)
+
+## 致谢
+
+- [MkDocs](https://www.mkdocs.org/) - 本插件扩展的静态站点生成器
+- [MkDocs Material](https://squidfunk.github.io/mkdocs-material/) - 启发我们设计的美观主题
+- 所有使这个插件成为可能的 AI 服务提供商
