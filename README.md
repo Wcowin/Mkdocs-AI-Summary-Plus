@@ -6,7 +6,8 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 一个智能的 MkDocs 插件，使用多种 AI 服务（包括 OpenAI、DeepSeek、Google Gemini 和 GLM）为您的文档页面自动生成 AI 驱动的摘要。
-
+![预览图1](https://s1.imagehub.cc/images/2025/06/03/d1563500263b22cfd0ffc3679993aa83.jpg)
+![预览图2](https://s1.imagehub.cc/images/2025/06/03/526b59b6a2e478f2ffa1629320e3e2ce.png)
 ## 功能特性
 
 - 🤖 **多种 AI 服务**：支持 OpenAI、DeepSeek、Google Gemini 和 GLM

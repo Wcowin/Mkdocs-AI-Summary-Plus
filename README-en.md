@@ -5,7 +5,8 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 An intelligent MkDocs plugin that automatically generates AI-powered summaries for your documentation pages using multiple AI services including OpenAI, DeepSeek, Google Gemini, and GLM.
-
+![预览图1](https://s1.imagehub.cc/images/2025/06/03/d1563500263b22cfd0ffc3679993aa83.jpg)
+![预览图2](https://s1.imagehub.cc/images/2025/06/03/526b59b6a2e478f2ffa1629320e3e2ce.png)
 ## Features
 
 - 🤖 **Multiple AI Services**: Support for OpenAI, DeepSeek, Google Gemini, and GLM
