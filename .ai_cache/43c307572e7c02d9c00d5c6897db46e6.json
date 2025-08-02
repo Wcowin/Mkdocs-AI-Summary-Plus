@@ -1,7 +1,7 @@
 {
-  "summary": "该文档介绍了一款名为“MkDocs-AI-Summary”的插件，用于为MkDocs文档添加AI驱动的摘要生成和智能阅读统计功能。支持多种AI服务，具有智能缓存、灵活配置、多语言支持等特点，并易于与CI/CD系统集成。文档详细说明了安装、配置和GitHub部署步骤。",
+  "summary": "该文档介绍了一款名为“MkDocs文档首选智能摘要”的项目，它利用MkDocs hooks为技术文档和博客添加AI摘要生成和智能阅读统计功能。支持多种AI服务，具有智能缓存、灵活配置、多语言支持等特点，并易于与GitHub Actions等CI/CD系统集成。",
   "service": "glm",
   "page_title": "中文教程说明",
-  "timestamp": "2025-08-02T10:39:45.600086",
+  "timestamp": "2025-08-02T11:45:28.152511",
   "cache_version": "1.0.1"
 }

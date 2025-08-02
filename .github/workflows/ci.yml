@@ -94,7 +94,7 @@ jobs:
       - run: pip install pymdown-extensions
       - run: pip install mkdocs-material
       - run: pip install --upgrade --force-reinstall mkdocs-material
-      - run: pip install mkdocs-ai-summary-wcowin==1.0.5  # 添加这一行
+      - run: pip install mkdocs-ai-summary-wcowin==1.1.2  # 添加这一行
       
       # 部署（启用缓存系统）
       - name: Deploy with AI Summary (Cache Enabled)

@@ -1,7 +1,0 @@
-{
-  "summary": "本文档介绍了一款名为“Supercharge Your MkDocs Documentation with AI!”的插件，它通过集成多种AI服务，为MkDocs文档添加智能摘要和阅读统计功能。支持多种AI服务、智能缓存、多语言、响应式设计等特性，易于安装和配置。",
-  "service": "glm",
-  "page_title": "English tutorial instructions",
-  "timestamp": "2025-08-02T10:36:19.429638",
-  "cache_version": "1.0.1"
-}

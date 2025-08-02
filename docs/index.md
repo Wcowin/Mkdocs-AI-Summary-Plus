@@ -6,8 +6,9 @@ hide:
   - footer
   - feedback
 comments: false
-ai_summary_lang: en
+ai_summary_lang: "en"  # 为此页面覆盖全局语言
 ---  
+
 
 
 <head>
