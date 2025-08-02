@@ -42,8 +42,6 @@ ai_summary_lang: zh  # 摘要语言，支持 "zh" 和 "en"
 ![预览图1](https://s1.imagehub.cc/images/2025/06/03/d1563500263b22cfd0ffc3679993aa83.jpg)
 ![预览图2](https://s1.imagehub.cc/images/2025/06/03/526b59b6a2e478f2ffa1629320e3e2ce.png)
 
-🌐 **在线演示**: https://wcowin.work/Mkdocs-AI-Summary/
-
 
 ---
 
@@ -1140,11 +1138,6 @@ black .
 flake8 .
 mypy .
 ```
-
-## 许可证
-
-本项目采用 MIT 许可证 - 详情请参阅 [LICENSE](LICENSE) 文件。
-
 
 ## 支持
 

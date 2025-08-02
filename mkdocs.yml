@@ -72,7 +72,7 @@ plugins:
       # clear_cache: true  # 下次构建时清理所有缓存
       local_enabled: true
       cache_expire_days: 300 # 缓存过期时间（天）
-      debug: true # 是否显示调试信息（默认：false）
+      # debug: true # 是否显示调试信息（默认：false）
       enabled_folders:
         - blog/    # 添加blog文件夹
         - docs/    # 保留docs文件夹
