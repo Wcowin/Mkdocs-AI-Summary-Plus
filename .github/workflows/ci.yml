@@ -92,8 +92,9 @@ jobs:
       - run: pip install python-dotenv>=0.19.0
       - run: pip install Pillow
       - run: pip install pymdown-extensions
-      - run: pip install mkdocs-material 
+      - run: pip install mkdocs-material
       - run: pip install --upgrade --force-reinstall mkdocs-material
+      - run: pip install mkdocs-ai-summary-wcowin==1.0.5  # 添加这一行
       
       # 部署（启用缓存系统）
       - name: Deploy with AI Summary (Cache Enabled)
@@ -103,7 +104,7 @@ jobs:
           AI_SUMMARY_CI_ONLY_CACHE: 'false'       # 允许生成新摘要（如果没有缓存）
           AI_SUMMARY_CI_FALLBACK: 'false'          # 启用备用摘要（API失败时）
           AI_SUMMARY_CACHE_ENABLED: 'true'        # 明确启用缓存功能
-          AI_SUMMARY_CACHE_EXPIRE_DAYS: '7'       # 缓存7天过期
+          AI_SUMMARY_CACHE_EXPIRE_DAYS: '300'       # 缓存300天过期
           AI_SUMMARY_CACHE_AUTO_CLEAN: 'true'     # 自动清理过期缓存
           
           # API密钥配置

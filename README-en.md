@@ -24,17 +24,9 @@ An intelligent MkDocs plugin that automatically generates AI-powered summaries f
 pip install mkdocs-ai-summary-wcowin
 ```
 
-### From Source
-
-```bash
-git clone https://github.com/Wcowin/Mkdocs-AI-Summary-Plus.git
-cd Mkdocs-AI-Summary-Plus
-pip install -e .
-```
-
 ## Quick Start
 
-### 1. Configure your MkDocs
+### 1. Configure your MkDocs·
 
 Add the plugin to your `mkdocs.yml`:
 
@@ -43,13 +35,19 @@ plugins:
   - ai-summary:
       ai_service: "deepseek"  # or "openai", "gemini", "glm"
       summary_language: "en"  # or "zh"
-      cache_enabled: true
-      cache_expire_days: 30
-      enabled_folders:
+      cache_enabled: true # Enable caching
+      cache_expire_days: 30 # Cache expiration in days
+      debug: true # Whether to display debug information (default: false)
+      enabled_folders: # Folders to process
         - "docs"
+        - blog/    # Add blog folder
       exclude_patterns:
         - "**/api/**"
         - "**/reference/**"
+        - "**/about/**" # Exclude about folder
+        - "index.md" # Exclude index.md
+        - "tag.md" # Exclude tag.md
+        - "blog/posts/update.md" # Exclude blog/posts/update.md
 ```
 
 ### 2. Set up Environment Variables
@@ -1108,9 +1106,6 @@ mypy .
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## Changelog
-
-See [CHANGELOG.md](CHANGELOG.md) for a list of changes and version history.
 
 ## Support
 

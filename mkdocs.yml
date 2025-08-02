@@ -65,6 +65,27 @@ nav:
     - blog/index.md
     
 plugins:
+  - ai-summary:
+      ai_service: "glm"  # or "openai", "gemini", "glm"
+      summary_language: "zh"  # or "en"
+      cache_enabled: true
+      # clear_cache: true  # 下次构建时清理所有缓存
+      local_enabled: true
+      cache_expire_days: 300 # 缓存过期时间（天）
+      debug: true # 是否显示调试信息（默认：false）
+      enabled_folders:
+        - blog/    # 添加blog文件夹
+        - docs/    # 保留docs文件夹
+        - MkDocs-AI-Summary.md
+        - index.md
+      exclude_patterns:
+        - "**/api/**"
+        - "**/reference/**"
+        - "tag.md"
+        - "blog/posts/"
+        - "blog/archive/"
+        - "blog/categories/"
+        - "blog/tags/"
   - search:
       # enabled: !ENV [CI, false]   #建议加上这句，不然会影响速度，本地搜索可以不需要，不影响部署时候有
       separator: '[\s\u200b\-_,:!=\[\]()"`/]+|\.(?!\d)|&[lg]t;|(?!\b)(?=[A-Z][a-z])'
@@ -129,5 +150,5 @@ markdown_extensions:
 
 hooks:
   - docs/overrides/hooks/reading_time.py
-  - docs/overrides/hooks/ai_summary.py  # Add AI summary hook
+  # - docs/overrides/hooks/ai_summary.py  # Add AI summary hook
   - docs/overrides/hooks/image_optimizer.py

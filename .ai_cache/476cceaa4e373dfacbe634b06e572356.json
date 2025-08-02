@@ -1,9 +1,0 @@
-{
-  "summary": "This project enhances MkDocs documentation with AI-driven summary generation and reading statistics. It features multi-AI service integration, automatic summary generation, multi-language support, content cleaning, and intelligent caching. Additionally, it offers intelligent reading statistics with character counting, code detection, and reading time estimation. The system is environment-adaptive, supports multiple languages, and provides content type detection. Installation can be done via direct download or Git clone, with configuration steps outlined for quick setup.",
-  "service": "openai",
-  "page_title": "English tutorial instructions",
-  "page_language": "en",
-  "timestamp": "2025-08-01T18:33:47.531578",
-  "language": "en",
-  "cache_version": "1.3.0"
-}

@@ -1,4 +1,5 @@
-# MkDocs AI Summary Plugin
+# MkDocs AI Summary Plugin  
+![alt text](logo-2.png)
 
 [![PyPI version](https://badge.fury.io/py/mkdocs-ai-summary-wcowin.svg)](https://badge.fury.io/py/mkdocs-ai-summary-wcowin)
 [![Python Support](https://img.shields.io/pypi/pyversions/mkdocs-ai-summary-wcowin.svg)](https://pypi.org/project/mkdocs-ai-summary-wcowin/)
@@ -24,14 +25,6 @@
 pip install mkdocs-ai-summary-wcowin
 ```
 
-### 从源码安装
-
-```bash
-git clone https://github.com/Wcowin/Mkdocs-AI-Summary-Plus.git
-cd Mkdocs-AI-Summary-Plus
-pip install -e .
-```
-
 ## 快速开始
 
 ### 1. 配置您的 MkDocs
@@ -43,18 +36,26 @@ plugins:
   - ai-summary:
       ai_service: "deepseek"  # 或 "openai", "gemini", "glm"
       summary_language: "zh"  # 或 "en"
-      cache_enabled: true
-      cache_expire_days: 30
+      cache_enabled: true # 启用缓存
+      # clear_cache: true  # 下次构建时清理所有缓存
+      cache_expire_days: 30  # 缓存过期时间（天）
+      local_enabled: true # 在本地开发中启用
+      debug: true # 是否显示调试信息（默认：false）
       enabled_folders:
-        - "docs"
+        - blog/    # 添加blog文件夹
+        - docs/    # 保留docs文件夹
       exclude_patterns:
         - "**/api/**"
         - "**/reference/**"
+        - "**about/**" # 排除about文件夹
+        - "index.md" # 排除index.md
+        - "tag.md" # 排除tag.md
+        - "blog/posts/update.md" # 排除blog/posts/update.md
 ```
 
 ### 2. 设置环境变量
 
-在项目根目录创建 `.env` 文件：
+在项目**根目录**创建 `.env` 文件：
 
 ```env
 # 选择一个或多个 AI 服务
@@ -67,7 +68,9 @@ GLM_API_KEY=your_glm_api_key
 ### 3. 构建您的文档
 
 ```bash
-mkdocs build
+mkdocs build # 构建文档
+
+mkdocs serve # 在本地预览
 ```
 
 插件将自动为您的页面生成 AI 摘要并将其注入到内容中。
@@ -100,7 +103,7 @@ mkdocs build
 3. 创建新的API密钥
 4. 复制密钥备用
 
-**GLM (智谱AI)**
+**GLM (智谱AI)(最推荐)**
 1. 访问 [智谱AI开放平台](https://open.bigmodel.cn/)
 2. 注册并登录账号
 3. 进入API管理
@@ -361,6 +364,7 @@ jobs:
 ### 基础配置
 
 ```yaml
+# mkdocs.yml
 plugins:
   - ai-summary:
       # AI 服务配置
@@ -1052,8 +1056,10 @@ python test_api.py
 4. **提供信息**：包含错误日志、配置文件和环境信息
 
 **Issue模板：**
+
 ```
 ## 问题描述
+
 [描述您遇到的问题]
 
 ## 环境信息
@@ -1063,22 +1069,15 @@ python test_api.py
 - 插件版本：
 
 ## 配置文件
-```yaml
+
 [粘贴您的mkdocs.yml配置]
-```
+
 
 ## 错误日志
 ```
-[粘贴完整的错误信息]
-```
 
-## 重现步骤
-1. 
-2. 
-3. 
-```
 
-## 贡献
+## 贡献(暂未开放)
 
 我们欢迎贡献！请查看我们的[贡献指南](CONTRIBUTING.md)了解详情。
 
@@ -1108,9 +1107,6 @@ mypy .
 
 本项目采用 MIT 许可证 - 详情请参阅 [LICENSE](LICENSE) 文件。
 
-## 更新日志
-
-查看 [CHANGELOG.md](CHANGELOG.md) 了解更改列表和版本历史。
 
 ## 支持
 

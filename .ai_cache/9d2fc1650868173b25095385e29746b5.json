@@ -1,9 +1,0 @@
-{
-  "summary": "MkDocs AI更新日志展示了版本1.3.0和1.2.0的核心改进和新功能。最新版本统一缓存架构，增强CI/CD支持，智能识别15部署平台。而之前版本引入多AI服务支持、智能缓存系统和安全配置。未来计划包括多AI服务支持、API密钥安全处理等功能。",
-  "service": "openai",
-  "page_title": "MkDocs AI 摘要更新日志",
-  "page_language": "zh",
-  "timestamp": "2025-08-01T18:33:55.793479",
-  "language": "en",
-  "cache_version": "1.3.0"
-}
