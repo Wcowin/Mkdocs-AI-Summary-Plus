@@ -63,7 +63,7 @@ nav:
   # - 小米: blog/xiaomi.md  #测试
   - 更新日志:
     - blog/index.md
-    
+
 plugins:
   - ai-summary:
       ai_service: "glm"  # or "openai", "gemini", "glm"
