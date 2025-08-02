@@ -1,0 +1,7 @@
+{
+  "summary": "The English tutorial instructions provide a plugin for MkDocs that enhances technical documentation and blogs with AI-generated summaries and reading statistics. Key features include support for multiple AI services, smart caching to reduce API calls, flexible configuration options, multi-language support, seamless integration with CI/CD systems, responsive design for all devices, and performance optimization. Installation is recommended from PyPI, and setup involves configuring MkDocs, setting up environment variables, and building documentation. The document also includes a configuration guide for local development setup, which involves obtaining API keys for DeepSeek, OpenAI, Google Gemini, and GLM, and creating a .env file with the keys.",
+  "service": "openai",
+  "page_title": "English tutorial instructions",
+  "timestamp": "2025-08-02T12:40:59.394251",
+  "cache_version": "1.0.1"
+}
