@@ -3,7 +3,7 @@ site_url: https://wcowin.work/mkdocs-ai-hooks/
 site_author: Wcowin
 theme:
   name: material #主题
-  custom_dir: docs/overrides
+  # custom_dir: docs/overrides
   palette:
     - media: "(prefers-color-scheme)"
       toggle:
@@ -59,7 +59,7 @@ copyright: Copyright &copy; 2025 Wcowin # 左下角的版权声明
 
 nav:
   - English tutorial instructions: index.md
-  - 中文教程说明: MkDocs-AI-Summary.md
+  - 中文教程: MkDocs-AI-Summary.md
   # - 小米: blog/xiaomi.md  #测试
   - 更新日志:
     - blog/index.md
@@ -68,24 +68,19 @@ plugins:
   - ai-summary:
       ai_service: "glm"  # or "openai", "gemini", "glm"
       summary_language: "zh"  # or "en"
-      cache_enabled: true
-      # clear_cache: true  # 下次构建时清理所有缓存
-      local_enabled: true
-      cache_expire_days: 300 # 缓存过期时间（天）
+      local_enabled: true # 本地环境是否启用(默认false)
       # debug: true # 是否显示调试信息（默认：false）
       enabled_folders:
         - blog/    # 添加blog文件夹
-        - docs/    # 保留docs文件夹
         - MkDocs-AI-Summary.md
         - index.md
       exclude_patterns:
-        - "**/api/**"
-        - "**/reference/**"
-        - "tag.md"
-        - "blog/posts/"
-        - "blog/archive/"
-        - "blog/categories/"
-        - "blog/tags/"
+        - tag.md
+        - blog/posts/
+        - blog/archive/
+        - blog/categories/
+        - blog/tags/
+        - blog/category/
   - search:
       # enabled: !ENV [CI, false]   #建议加上这句，不然会影响速度，本地搜索可以不需要，不影响部署时候有
       separator: '[\s\u200b\-_,:!=\[\]()"`/]+|\.(?!\d)|&[lg]t;|(?!\b)(?=[A-Z][a-z])'
@@ -148,7 +143,7 @@ markdown_extensions:
   - pymdownx.tasklist:
       custom_checkbox: true
 
-hooks:
-  - docs/overrides/hooks/reading_time.py
-  # - docs/overrides/hooks/ai_summary.py  # Add AI summary hook
-  - docs/overrides/hooks/image_optimizer.py
+# hooks:
+#   - docs/overrides/hooks/reading_time.py
+#   - docs/overrides/hooks/ai_summary.py  # Add AI summary hook
+#   - docs/overrides/hooks/image_optimizer.py

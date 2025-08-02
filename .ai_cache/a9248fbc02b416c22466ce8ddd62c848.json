@@ -1,0 +1,8 @@
+{
+  "summary": "该文档介绍了一款名为“MkDocs文档首选智能摘要”的插件，它为MkDocs文档添加AI摘要生成和智能阅读统计功能。支持多种AI服务，具有智能缓存、多语言、自动降级等特性，易于安装和配置，适用于持续集成环境。",
+  "service": "glm",
+  "page_title": "中文教程",
+  "timestamp": "2025-08-02T20:30:33.244494",
+  "cache_version": "1.1.5",
+  "content_hash": "8cb3d637ba4d7e0a320eb64923b388eb"
+}

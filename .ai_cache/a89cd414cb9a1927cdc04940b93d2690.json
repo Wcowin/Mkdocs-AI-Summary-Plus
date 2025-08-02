@@ -1,0 +1,8 @@
+{
+  "summary": "本教程介绍了如何使用AI增强MkDocs文档，包括多语言支持、智能缓存、灵活配置等特性。用户可通过配置环境变量和API密钥，实现自动生成文档摘要，并集成到GitHub Actions等CI/CD系统中。",
+  "service": "glm",
+  "page_title": "English tutorial instructions",
+  "timestamp": "2025-08-02T17:36:49.367085",
+  "cache_version": "1.1.5",
+  "content_hash": "0a9559134918f4456292af3a363a90e5"
+}

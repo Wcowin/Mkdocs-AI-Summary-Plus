@@ -1,7 +1,0 @@
-{
-  "summary": "该文档介绍了一款名为“MkDocs文档首选智能摘要”的项目，它利用MkDocs hooks为技术文档和博客添加AI摘要生成和智能阅读统计功能。支持多种AI服务，具有智能缓存、灵活配置、多语言支持等特点，并易于与GitHub Actions等CI/CD系统集成。",
-  "service": "glm",
-  "page_title": "中文教程说明",
-  "timestamp": "2025-08-02T11:45:28.152511",
-  "cache_version": "1.0.1"
-}

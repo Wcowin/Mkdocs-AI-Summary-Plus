@@ -8,9 +8,6 @@ hide:
 comments: false
 ai_summary_lang: "en"  # 为此页面覆盖全局语言
 ---  
-
-
-
 <head>
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2327435979273742"
      crossorigin="anonymous"></script>
@@ -40,13 +37,13 @@ ai_summary_lang: "en"  # 为此页面覆盖全局语言
 <!-- # MkDocs AI Hooks -->
 
 <p align="center">
-    <img src="https://img.shields.io/badge/MkDocs-Hooks-526CFE?style=for-the-badge&logo=MaterialForMkDocs&logoColor=white" alt="MkDocs Hooks">
+    <img src="https://img.shields.io/badge/MkDocs-Hooks-526CFE?style=for-the-badge&logo=MaterialForMkDocs&logoColor=white" alt="MkDocs Plugins">
     <img src="https://img.shields.io/badge/AI_Powered-DeepSeek-FF6B35?style=for-the-badge&logo=openai&logoColor=white" alt="AI Powered">
-    <img src="https://img.shields.io/badge/Python-3.7+-3776AB?style=for-the-badge&logo=python&logoColor=white" alt="Python 3.7+">
+    <img src="https://img.shields.io/badge/Python-3.8+-3776AB?style=for-the-badge&logo=python&logoColor=white" alt="Python 3.8+">
 </p>
 
 <p align="center">
-    <a href="https://github.com/Wcowin/mkdocs-ai-hooks/blob/main/README.md">中文</a> | <a href="https://github.com/Wcowin/mkdocs-ai-hooks/blob/main/README-en.md">English</a>
+    <a href="https://github.com/Wcowin/mkdocs-ai-hooks/blob/main/README.md">Chinese</a> | <a href="https://github.com/Wcowin/mkdocs-ai-hooks/blob/main/README-en.md">English</a>
 </p>
 
 🚀 **Supercharge Your MkDocs Documentation with AI!**   
