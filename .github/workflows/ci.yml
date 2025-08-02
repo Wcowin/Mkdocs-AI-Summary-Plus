@@ -108,7 +108,7 @@ jobs:
           AI_SUMMARY_CACHE_AUTO_CLEAN: 'true'     # 自动清理过期缓存
           
           # API密钥配置
-          DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
+          GLM_API_KEY: ${{ secrets.GLM_API_KEY }}
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
         run: mkdocs gh-deploy --force
       
