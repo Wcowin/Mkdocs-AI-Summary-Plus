@@ -69,7 +69,7 @@ plugins:
       ai_service: "glm"  # or "openai", "gemini", "glm"
       summary_language: "zh"  # or "en"
       local_enabled: true # 本地环境是否启用(默认false)
-      # debug: true # 是否显示调试信息（默认：false）
+      debug: true # 是否显示调试信息（默认：false）
       enabled_folders:
         - blog/    # 添加blog文件夹
         - MkDocs-AI-Summary.md
