@@ -1,0 +1,7 @@
+{
+  "summary": "这个MkDocs插件利用AI服务，为技术文档和博客自动生成智能摘要，提供智能阅读统计功能。支持多种AI服务，包括DeepSeek、OpenAI、Google Gemini、GLM等，具有智能缓存系统和自动降级机制。与所有MkDocs主题兼容，适合CI/CD环境。用户只需简单配置即可在文档页面显示AI生成的摘要。",
+  "service": "openai",
+  "page_title": "中文教程",
+  "timestamp": "2025-08-02T12:32:05.063745",
+  "cache_version": "1.0.1"
+}
