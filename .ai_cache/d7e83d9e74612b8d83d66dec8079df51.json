@@ -1,0 +1,7 @@
+{
+  "summary": "This document introduces an AI-powered MkDocs plugin for generating summaries and reading statistics in technical documentation. It supports multiple AI services, caching, and multi-language summaries. The guide covers installation, configuration, and obtaining API keys for various AI platforms. The plugin integrates with CI/CD systems and offers responsive design for summaries.",
+  "service": "glm",
+  "page_title": "English tutorial instructions",
+  "timestamp": "2025-08-03T14:47:52.348898",
+  "cache_version": "1.0.1"
+}
