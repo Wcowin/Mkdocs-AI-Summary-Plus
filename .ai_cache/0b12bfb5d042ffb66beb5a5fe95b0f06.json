@@ -1,0 +1,7 @@
+{
+  "summary": "MkDocs AI Summary 插件为MkDocs文档添加AI摘要和智能阅读统计功能。支持多种AI服务，智能缓存，多语言，自动降级，兼容MkDocs主题。快速安装，配置简单，适用于持续集成环境。",
+  "service": "glm",
+  "page_title": "中文教程",
+  "timestamp": "2025-08-03T14:47:55.285356",
+  "cache_version": "1.0.1"
+}
