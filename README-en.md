@@ -25,7 +25,8 @@ An intelligent MkDocs plugin that automatically generates AI-powered summaries f
 ### 1. Install the Plugin
 
 ```bash
-pip install mkdocs-ai-summary-wcowin
+pip install mkdocs-ai-summary-wcowin -i https://pypi.org/simple
+pip install --upgrade mkdocs-ai-summary-wcowin -i https://pypi.org/simple
 ```
 
 ### 2. Basic Configuration
