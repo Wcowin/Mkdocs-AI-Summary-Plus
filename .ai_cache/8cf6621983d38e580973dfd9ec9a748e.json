@@ -1,8 +1,8 @@
 {
-  "summary": "This document introduces a MkDocs plugin that enhances technical documentation with AI-driven summary generation and intelligent reading statistics. It supports multiple AI services, offers smart caching, and is adaptable to various configurations. The plugin is CI/CD ready, responsive, and optimized for performance. Installation and setup instructions are provided, including obtaining API keys for various AI services and configuring the plugin for local development.",
+  "summary": "This document introduces an AI-driven MkDocs plugin for generating summaries and statistics in technical documentation. It supports multiple AI services, caching, and multi-language summaries. The plugin integrates with CI/CD systems and offers responsive design. Installation and configuration instructions are provided, including obtaining API keys for various AI services and setting up the plugin in MkDocs.",
   "service": "glm",
   "page_title": "English tutorial instructions",
-  "timestamp": "2025-08-02T20:39:55.214728",
-  "cache_version": "1.1.5",
-  "content_hash": "08f4918e2ee67fc4d8c32a68a5843a48"
+  "timestamp": "2025-08-03T21:56:16.703708",
+  "cache_version": "1.2.1",
+  "content_hash": "d7e83d9e74612b8d83d66dec8079df51"
 }

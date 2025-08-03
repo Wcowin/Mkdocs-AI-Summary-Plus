@@ -44,6 +44,11 @@ plugins:
         - tags.md                # unexclude tags.md file
         - blog/posts/**
         - blog/archive/**
+markdown_extensions:
+  - attr_list
+  - md_in_html
+  - pymdownx.superfences
+  - admonition
 ```
 
 ### 3. Get Your API Key

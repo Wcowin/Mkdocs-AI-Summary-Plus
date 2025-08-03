@@ -8,6 +8,8 @@ hide:
 comments: false
 ai_summary_lang: "en"  # 为此页面覆盖全局语言
 ---  
+
+# MkDocs AI Summary
 <head>
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2327435979273742"
      crossorigin="anonymous"></script>
@@ -88,10 +90,14 @@ plugins:
       cache_enabled: true
       cache_expire_days: 30
       enabled_folders:
-        - "docs"
+        - blog/ # Process blog folder
       exclude_patterns:
-        - "**/api/**"
-        - "**/reference/**"
+        - tags.md # Exclude tags file
+markdown_extensions:
+  - attr_list
+  - md_in_html
+  - pymdownx.superfences
+  - admonition
 ```
 
 ### 2. Set up Environment Variables
