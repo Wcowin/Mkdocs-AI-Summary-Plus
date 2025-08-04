@@ -68,6 +68,9 @@ This project provides powerful MkDocs hooks that add AI-driven summary generatio
 - 📱 **Responsive Design**: Beautiful summary cards that work on all devices
 - ⚡ **Performance Optimized**: Minimal impact on build times with smart caching
 
+
+<blockquote class="twitter-tweet"><p lang="en" dir="ltr">building a plugin with TRAE SOLO is just as smooth as webapp. <a href="https://t.co/pJUCiQU0AS">https://t.co/pJUCiQU0AS</a></p>&mdash; Trae (@Trae_ai) <a href="https://twitter.com/Trae_ai/status/1952386292517683478?ref_src=twsrc%5Etfw">August 4, 2025</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
 ## Installation
 
 ### From PyPI (Recommended)

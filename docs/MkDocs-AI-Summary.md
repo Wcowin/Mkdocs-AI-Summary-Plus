@@ -519,14 +519,12 @@ plugins:
 
 
 
-
-
 ## 致谢
 
 - [MkDocs](https://www.mkdocs.org/) - 本插件扩展的静态站点生成器
 - [MkDocs Material](https://squidfunk.github.io/mkdocs-material/) - 启发我们设计的美观主题
 - 所有使这个插件成为可能的 AI 服务提供商
-
+- 特别感谢 [Trae](https://www.trae.ai/) 的支持
 
 ---
 

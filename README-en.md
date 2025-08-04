@@ -335,7 +335,7 @@ Thanks to the following projects and services:
 - [Material for MkDocs](https://squidfunk.github.io/mkdocs-material/) - Beautiful theme
 - [DeepSeek](https://deepseek.com/) - High cost-performance AI API service
 - All contributors and users
-
+- Special thanks to [Trae](https://www.trae.ai/) for its support
 ---
 
 ## 🔗 Contact Author
