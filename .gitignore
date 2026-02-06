@@ -161,9 +161,9 @@ cython_debug/
 #  *.ipr
 
 # AI Summary Plugin specific
-.ai_cache/
-.test_cache/
-test_basic.py
+# .ai_cache/
+# .test_cache/
+# test_basic.py
 
 # IDE and editor files
 .vscode/
