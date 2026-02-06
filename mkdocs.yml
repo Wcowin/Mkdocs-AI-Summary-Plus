@@ -3,7 +3,6 @@ site_url: https://wcowin.work/mkdocs-ai-hooks/
 site_author: Wcowin
 theme:
   name: material #主题
-  # custom_dir: docs/overrides
   palette:
     - media: "(prefers-color-scheme)"
       toggle:
@@ -142,8 +141,3 @@ markdown_extensions:
       alternate_style: true
   - pymdownx.tasklist:
       custom_checkbox: true
-
-# hooks:
-#   - docs/overrides/hooks/reading_time.py
-#   - docs/overrides/hooks/ai_summary.py  # Add AI summary hook
-#   - docs/overrides/hooks/image_optimizer.py

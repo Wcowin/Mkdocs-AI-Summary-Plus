@@ -1,0 +1,133 @@
+# MkDocs AI Summary Plugin 示例配置
+# 将此配置添加到您的 mkdocs.yml 文件中
+
+site_name: My Documentation
+site_description: A great documentation site
+
+# 主题配置
+theme:
+  name: material
+  language: zh
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - navigation.expand
+    - navigation.top
+    - search.highlight
+    - search.share
+    - toc.follow
+    - content.code.copy
+
+# 插件配置
+plugins:
+  - search
+  - ai-summary:
+      # AI服务配置
+      ai_service: glm              # 可选: deepseek, openai, gemini, glm
+      model: glm-4-flash           # 模型名称
+      max_tokens: 300              # 最大token数
+      temperature: 0.3             # 温度参数 (0.0-1.0)
+      
+      # 缓存配置
+      cache_enabled: true          # 启用缓存
+      cache_expire_days: 30        # 缓存过期天数
+      cache_auto_clean: true       # 自动清理过期缓存
+      
+      # 环境配置
+      local_enabled: false         # 本地环境是否启用
+      ci_enabled: true             # CI环境是否启用
+      ci_cache_only: false         # CI环境是否仅使用缓存
+      ci_fallback: true            # 启用备用摘要
+      
+      # 文件夹和排除规则
+      enabled_folders:             # 启用摘要的文件夹
+        - blog/
+        - develop/
+        - docs/
+      exclude_patterns:            # 排除的文件模式
+        - index.md
+        - tag.md
+        - "**/README.md"
+      exclude_files:               # 排除的具体文件
+        - blog/index.md
+        - develop/index.md
+      
+      # 语言配置
+      summary_language: zh         # 摘要语言: zh, en, both
+      
+      # 调试配置
+      debug: false                 # 是否显示调试信息 (默认: false)
+      
+      # 缓存清理配置
+      clear_cache: false           # 是否清理所有缓存 (默认: false)
+
+# 导航结构
+nav:
+  - 首页: index.md
+  - 博客:
+    - blog/index.md
+    - blog/post1.md
+    - blog/post2.md
+  - 开发文档:
+    - develop/index.md
+    - develop/guide.md
+    - develop/api.md
+
+# Markdown 扩展
+markdown_extensions:
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.tabbed:
+      alternate_style: true
+  - attr_list
+  - md_in_html
+  - toc:
+      permalink: true
+
+# 额外配置
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/yourusername/yourrepo
+  analytics:
+    provider: google
+    property: G-XXXXXXXXXX
+
+# 版权信息
+copyright: Copyright &copy; 2024 Your Name
+
+# ========================================
+# 页面级别语言设置使用说明
+# ========================================
+# 
+# 您可以在任何 Markdown 文件的顶部添加 front matter 来控制该页面的 AI 摘要语言：
+#
+# 示例 1: 仅生成英文摘要
+# ---
+# title: My English Document
+# ai_summary_lang: en
+# ---
+#
+# 示例 2: 仅生成中文摘要
+# ---
+# title: 我的中文文档
+# ai_summary_lang: zh
+# ---
+#
+# 示例 3: 生成双语摘要
+# ---
+# title: Bilingual Document / 双语文档
+# ai_summary_lang: both
+# ---
+#
+# 支持的语言选项：
+# - zh: 仅中文摘要
+# - en: 仅英文摘要
+# - both: 中英文双语摘要
+#
+# 如果页面没有设置 ai_summary_lang，将使用全局配置中的 summary_language 设置。

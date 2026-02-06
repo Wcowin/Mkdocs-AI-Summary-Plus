@@ -1,26 +1,4 @@
-# MkDocs相关
+# Core dependencies
 mkdocs>=1.4.0
-mkdocs-material>=9.0.0
-
-# HTTP请求
 requests>=2.25.0
-
-# 日期时间处理
-python-dateutil>=2.8.0
-
-# 可选：性能优化
-cachetools>=4.2.0
-
-# AI 摘要功能依赖
-requests>=2.25.0
-python-dateutil>=2.8.0
-cachetools>=4.2.0
-python-dotenv>=0.19.0
-
-# MkDocs 插件
-mkdocs-git-revision-date-localized-plugin
-mkdocs-git-authors-plugin
-mkdocs-git-committers-plugin-2
-markdown-callouts
-mkdocs-rss-plugin
-mkdocs-ai-summary-wcowin
+python

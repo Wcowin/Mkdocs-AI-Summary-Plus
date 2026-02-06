@@ -1,0 +1,154 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel>=0.37.0", "build>=0.8.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "mkdocs_ai_summary_wcowin"
+version = "1.3.0"
+description = "AI-powered summary generation plugin for MkDocs Material"
+readme = "README.md"
+requires-python = ">=3.8"
+license = {text = "MIT"}
+authors = [
+    {name = "MkDocs AI Summary Team", email = "support@mkdocs-ai-summary.com"},
+]
+keywords = [
+    "mkdocs",
+    "plugin",
+    "ai",
+    "summary",
+    "documentation",
+    "markdown",
+    "material",
+    "openai",
+    "gemini",
+    "deepseek",
+    "glm",
+]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Documentation",
+    "Topic :: Software Development :: Documentation",
+    "Topic :: Text Processing :: Markup :: Markdown",
+]
+dependencies = [
+    "mkdocs>=1.4.0",
+    "requests>=2.25.0",
+    "python-dotenv>=0.19.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=6.0",
+    "pytest-cov>=2.0",
+    "black>=21.0",
+    "flake8>=3.8",
+    "mypy>=0.800",
+]
+test = [
+    "pytest>=6.0",
+    "pytest-cov>=2.0",
+    "responses>=0.18.0",
+]
+
+[project.urls]
+Documentation = "https://github.com/Wcowin/Mkdocs-AI-Summary-Plus"
+Source = "https://github.com/Wcowin/Mkdocs-AI-Summary-Plus"
+Tracker = "https://github.com/Wcowin/Mkdocs-AI-Summary-Plus/issues"
+
+[project.entry-points."mkdocs.plugins"]
+ai-summary = "mkdocs_ai_summary.plugin:AISummaryPlugin"
+
+[tool.setuptools.packages.find]
+where = ["."]  # list of folders that contain the packages (["src"] by default)
+include = ["mkdocs_ai_summary*"]  # package names should match these glob patterns (["*"] by default)
+exclude = ["tests*"]  # exclude packages matching these glob patterns
+
+[tool.setuptools.package-data]
+mkdocs_ai_summary = ["py.typed"]
+
+[tool.black]
+line-length = 88
+target-version = ['py38']
+include = '\.pyi?$'
+extend-exclude = '''
+# A regex preceded by ^/ will apply only to files and directories
+# in the root of the project.
+^/setup.py
+'''
+
+[tool.isort]
+profile = "black"
+line_length = 88
+multi_line_output = 3
+include_trailing_comma = true
+force_grid_wrap = 0
+use_parentheses = true
+ensure_newline_before_comments = true
+
+[tool.mypy]
+python_version = "1.2.2"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = true
+disallow_incomplete_defs = true
+check_untyped_defs = true
+disallow_untyped_decorators = true
+no_implicit_optional = true
+warn_redundant_casts = true
+warn_unused_ignores = true
+warn_no_return = true
+warn_unreachable = true
+strict_equality = true
+
+[tool.pytest.ini_options]
+minversion = "1.2.2"
+addopts = "-ra -q --strict-markers --strict-config"
+testpaths = [
+    "tests",
+]
+python_files = [
+    "test_*.py",
+    "*_test.py",
+]
+python_classes = [
+    "Test*",
+]
+python_functions = [
+    "test_*",
+]
+markers = [
+    "slow: marks tests as slow (deselect with '-m \"not slow\"')",
+    "integration: marks tests as integration tests",
+]
+
+[tool.coverage.run]
+source = ["mkdocs_ai_summary"]
+omit = [
+    "*/tests/*",
+    "*/test_*",
+    "setup.py",
+]
+
+[tool.coverage.report]
+exclude_lines = [
+    "pragma: no cover",
+    "def __repr__",
+    "if self.debug:",
+    "if settings.DEBUG",
+    "raise AssertionError",
+    "raise NotImplementedError",
+    "if 0:",
+    "if __name__ == .__main__.:",
+    "class .*\\bProtocol\\):",
+    "@(abc\\.)?abstractmethod",
+]

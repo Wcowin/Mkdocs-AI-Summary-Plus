@@ -1,18 +1,16 @@
-# MkDocs AI Summary Plugin  
-![alt text](logo-2.png)
+# MkDocs AI 摘要插件
 
 [![PyPI version](https://badge.fury.io/py/mkdocs-ai-summary-wcowin.svg)](https://badge.fury.io/py/mkdocs-ai-summary-wcowin)
 [![Python Support](https://img.shields.io/pypi/pyversions/mkdocs-ai-summary-wcowin.svg)](https://pypi.org/project/mkdocs-ai-summary-wcowin/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Downloads](https://pepy.tech/badge/mkdocs-ai-summary-wcowin)](https://pepy.tech/project/mkdocs-ai-summary-wcowin)
 
-一个智能的 MkDocs 插件，使用多种 AI 服务（包括 OpenAI、DeepSeek、Google Gemini 和 GLM）为您的文档页面自动生成 AI 驱动的摘要。
-![预览图1](https://s1.imagehub.cc/images/2025/06/03/d1563500263b22cfd0ffc3679993aa83.jpg)
-![预览图2](https://s1.imagehub.cc/images/2025/06/03/526b59b6a2e478f2ffa1629320e3e2ce.png)
 一个强大的 MkDocs 插件，使用 AI 自动为您的文档页面生成智能摘要。让您的文档更加生动有趣，帮助读者快速了解内容要点。
 
 ## 🌟 为什么选择这个插件？
 
-- 🤖 **多 AI 服务支持** - 支持 DeepSeek、OpenAI、Google Gemini、GLM 等主流 AI 服务
+- 🤖 **多 AI 服务支持** - 支持 DeepSeek、OpenAI、Google Gemini、GLM、硅基流动等主流 AI 服务
+- 🎨 **自定义服务** - 轻松添加你自己的 AI 服务提供商
 - ⚡ **智能缓存系统** - 避免重复 API 调用，大幅提升构建速度
 - 🌍 **多语言支持** - 支持中英文等多种语言，页面级语言控制
 - 🔄 **自动降级机制** - 主服务不可用时自动切换备用服务，确保稳定性
@@ -24,8 +22,7 @@
 ### 从 PyPI 安装（推荐）
 
 ```bash
-pip install mkdocs-ai-summary-wcowin -i https://pypi.org/simple
-pip install --upgrade mkdocs-ai-summary-wcowin -i https://pypi.org/simple
+pip install mkdocs-ai-summary-wcowin
 ```
 
 ## 快速开始
@@ -34,28 +31,33 @@ pip install --upgrade mkdocs-ai-summary-wcowin -i https://pypi.org/simple
 
 在 `mkdocs.yml` 中添加插件：
 
-```yaml hl_lines="2-9"
+```yaml
 plugins:
   - ai-summary:
       ai_service: "glm"          # 推荐使用GLM
       # local_enabled: true             # 本地环境启用
-      # debug: false                    # 是否显示调试信息（默认：false）
       enabled_folders:
-        - blog/                      # 处理 blog 文件夹
+        - docs                       # 处理 docs 文件夹
       exclude_patterns:
         - index.md                    # 排除 index.md 文件
-markdown_extensions:
-  - attr_list
-  - md_in_html
-  - pymdownx.superfences
-  - admonition
 ```
 
 ### 2. 获取 API 密钥
 
-推荐使用 **GLM**（性价比最高）：  
-1. 访问 [GLM 开放平台](https://open.bigmodel.cn/)  
-2. 注册并创建 API 密钥  
+推荐使用 **硅基流动**（有免费额度）或 **GLM**（性价比最高）：
+
+**硅基流动（推荐 - 有免费额度）**
+1. 访问 [硅基流动官网](https://siliconflow.cn/)
+2. 注册并创建 API 密钥
+3. 在项目根目录创建 `.env` 文件：
+
+```env
+SILICONFLOW_API_KEY=your_api_key_here
+```
+
+**GLM（性价比高）**
+1. 访问 [GLM 开放平台](https://open.bigmodel.cn/)
+2. 注册并创建 API 密钥
 3. 在项目根目录创建 `.env` 文件：
 
 ```env
@@ -80,10 +82,18 @@ mkdocs serve  # 本地预览
 ```yaml
 plugins:
   - ai-summary:
-      ai_service: "glm"          # 主要 AI 服务
+      ai_service: "siliconflow"        # 主要 AI 服务（推荐）
       fallback_services:               # 备用服务
-        - "openai"
-        - "gemini"
+        - "glm"
+        - "deepseek"
+      
+      # 自定义服务（可选）
+      custom_services:
+        my_service:
+          url: "https://api.example.com/v1/chat/completions"
+          model: "my-model"
+          api_key_env: "MY_SERVICE_API_KEY"
+      
       summary_language: "zh"           # 摘要语言 (zh/en/both)
       local_enabled: true              # 本地环境启用
       enabled_folders:
@@ -100,13 +110,33 @@ plugins:
 在 `.env` 文件中配置多个服务作为备用：
 
 ```env
-# 主要服务
-GLM_API_KEY=your_deepseek_key
+# 主要服务（推荐使用硅基流动或GLM）
+SILICONFLOW_API_KEY=your_siliconflow_key
+GLM_API_KEY=your_glm_key
 
 # 备用服务
 OPENAI_API_KEY=your_openai_key
-GEMINI_API_KEY=your_gemini_key
-DEEPSEEK_API_KEY=your_glm_key
+GOOGLE_API_KEY=your_gemini_key
+DEEPSEEK_API_KEY=your_deepseek_key
+```
+
+### 自定义 AI 服务
+
+插件支持添加自定义 AI 服务商，详见 [自定义服务配置指南](CUSTOM_SERVICES_GUIDE.md)。
+
+**快速示例：**
+
+```yaml
+plugins:
+  - ai-summary:
+      ai_service: "my_custom_service"
+      
+      custom_services:
+        my_custom_service:
+          url: "https://api.example.com/v1/chat/completions"
+          model: "my-model"
+          api_key_env: "MY_SERVICE_API_KEY"
+          type: "openai_compatible"
 ```
 
 ## 配置指南
@@ -199,8 +229,8 @@ DEEPSEEK_API_KEY=sk-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 # OpenAI API密钥
 OPENAI_API_KEY=sk-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
-# Google Gemini API密钥
-GEMINI_API_KEY=AIzaSyxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+# Google Gemini API 密钥（插件使用 GOOGLE_API_KEY）
+GOOGLE_API_KEY=AIzaSyxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
 # GLM API密钥
 GLM_API_KEY=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx.xxxxxxxxxxxxxx
@@ -245,8 +275,6 @@ mkdocs serve
 
 #### 2. 配置 GitHub Actions 工作流
 
-推荐在根目录下创建一个requirements.txt
-
 ##### 方案 A：创建新的工作流
 
 创建 `.github/workflows/ci.yml` 文件：
@@ -290,18 +318,17 @@ jobs:
           restore-keys: |
             mkdocs-material-
       
-      # 安装您现有的依赖!!!
+      # 安装您现有的依赖
       - run: pip install mkdocs-material
-      - run: pip install -r requirements.txt # 安装其他依赖
-      - run: pip install mkdocs-ai-summary-wcowin # 安装本AI 摘要插件
+      - run: pip install mkdocs-ai-summary-wcowin
       
       # 使用 AI 摘要部署
       - name: 使用 AI 摘要部署
         env:
-          AI_SUMMARY_CI_ENABLED: 'true' # 在 CI 中启用
-          AI_SUMMARY_CACHE_ENABLED: 'true' # 使用缓存
-          AI_SUMMARY_CACHE_EXPIRE_DAYS: '30' # 缓存 30 天
-          GLM_API_KEY: ${{ secrets.GLM_API_KEY }}  # 添加 GLM API 密钥
+          AI_SUMMARY_CI_ENABLED: 'true'
+          AI_SUMMARY_CACHE_ENABLED: 'true'
+          AI_SUMMARY_CACHE_EXPIRE_DAYS: '300'
+          DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
         run: mkdocs gh-deploy --force
       
       # 自动提交 AI 缓存文件
@@ -322,18 +349,16 @@ jobs:
 
 如果您已经有 `ci.yml` 文件，请在现有工作流中添加以下步骤：
 
-```yaml 
+```yaml
 # 在现有的依赖安装部分添加
-- run: pip install mkdocs-ai-summary-wcowin # 安装 AI 摘要插件
-- run: pip install -r requirements.txt # 安装其他依赖
+- run: pip install mkdocs-ai-summary-wcowin
 
 # 替换您的 mkdocs 构建/部署步骤为：
 - name: 使用 AI 摘要部署
   env:
-    AI_SUMMARY_CI_ENABLED: 'true' # 在 CI 中启用
-    AI_SUMMARY_CACHE_ENABLED: 'true' # 使用缓存
-    AI_SUMMARY_CACHE_EXPIRE_DAYS: '30' # 缓存 30
-    GLM_API_KEY: ${{ secrets.GLM_API_KEY }} # 添加 GLM API 密钥
+    AI_SUMMARY_CI_ENABLED: 'true'
+    AI_SUMMARY_CACHE_ENABLED: 'true'
+    GLM_API_KEY: ${{ secrets.GLM_API_KEY }}
   run: mkdocs gh-deploy --force
 
 # 在部署后添加（可选 - 用于缓存管理）
@@ -365,7 +390,7 @@ jobs:
 ```yaml
 - name: 部署文档
   env:
-    GLM_API_KEY: ${{ secrets.GLM_API_KEY }}  # 添加这一行
+    DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}  # 添加这一行
   run: mkdocs gh-deploy --force
 ```
 
@@ -375,8 +400,8 @@ jobs:
 env:
   AI_SUMMARY_CI_ENABLED: 'true'        # 在 CI 中启用
   AI_SUMMARY_CACHE_ENABLED: 'true'     # 使用缓存
-  AI_SUMMARY_CACHE_EXPIRE_DAYS: '30'  # 缓存 30 天
-  GLM_API_KEY: ${{ secrets.GLM_API_KEY }}
+  AI_SUMMARY_CACHE_EXPIRE_DAYS: '300'  # 缓存 300 天
+  DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
 ```
 
 ##### 步骤 4：添加缓存管理（推荐/可选）
@@ -420,7 +445,7 @@ plugins:
 ```yaml
 plugins:
   - ai-summary:
-      ai_service: "glm"          # 主服务
+      ai_service: "deepseek"          # 主服务
       fallback_services:               # 备用服务
         - "openai"
         - "gemini"
@@ -444,13 +469,12 @@ plugins:
 
 ## 支持与贡献
 
+### 获取帮助
 
-### 支持
-
-- 📖 [文档](https://wcowin.work/mkdocs-ai-hooks/)
-- 🐛 [问题跟踪](https://github.com/Wcowin/Mkdocs-AI-Summary-Plus/issues)
-- 💬 [讨论](https://github.com/Wcowin/Mkdocs-AI-Summary-Plus/discussions)
-- 📧 [邮件支持](mailto:wcowin@qq.com)
+- 📖 [项目文档](https://wcowin.work/mkdocs-ai-hooks/)
+- 🐛 [问题反馈](https://github.com/Wcowin/mkdocs-ai-hooks/issues)
+- 💬 [讨论交流](https://github.com/Wcowin/mkdocs-ai-hooks/discussions)
+- 📄 [English](README-en.md)
 
 ### 贡献代码
 
@@ -460,81 +484,10 @@ plugins:
 - 📝 改进文档
 - 🔧 提交代码
 
-## 常见问题
-
-**Q: 插件不生成摘要？**
-- 检查 API 密钥配置
-- 确保 `local_enabled: true`（本地开发）
-- 验证文件在 `enabled_folders` 中
-
-**Q: CI 构建失败？**
-- 确认 GitHub Secrets 中已添加 API 密钥
-- 检查工作流文件中的环境变量名称
-- 确保插件已在工作流中安装
-
-**Q: 如何清除缓存？**
-- 配置中设置 `clear_cache: true`
-- 或手动删除 `.ai_cache/` 目录
-
-
 ## 许可证
 
 本项目采用 MIT 许可证 - 详见 [LICENSE](LICENSE) 文件。
 
 ---
 
-## 致谢
-
-- [MkDocs](https://www.mkdocs.org/) - 本插件扩展的静态站点生成器
-- [MkDocs Material](https://squidfunk.github.io/mkdocs-material/) - 启发我们设计的美观主题
-- 所有使这个插件成为可能的 AI 服务提供商
-- 特别感谢 [Trae](https://www.trae.ai/) 的支持
-
----
-
-## 🔗 联系作者
-
-<div align="center">
-
-### Telegram
-<a href="https://t.me/wecowin" target="_blank">
-<img src="https://pica.zhimg.com/80/v2-d5876bc0c8c756ecbba8ff410ed29c14_1440w.webp" alt="Telegram" style="border-radius: 10px;" width="300px">
-</a>
-
-### 微信交流
-<img src="https://pic3.zhimg.com/80/v2-5ef3dde831c9d0a41fe35fabb0cb8784_1440w.webp" style="border-radius: 10px;" width="300px">
-
-</div>
-
----
-
-## ⭐ 项目统计
-
-<div align="center">
-
-[![Star History Chart](https://api.star-history.com/svg?repos=Wcowin/mkdocs-ai-hooks&type=Date)](https://www.star-history.com/#Wcowin/mkdocs-ai-hooks&Date)
-
-<a href="https://github.com/Wcowin/mkdocs-ai-hooks/stargazers">
-<img src="https://img.shields.io/github/stars/Wcowin/mkdocs-ai-hooks?style=social" alt="Stars">
-</a>
-<a href="https://github.com/Wcowin/mkdocs-ai-hooks/network/members">
-<img src="https://img.shields.io/github/forks/Wcowin/mkdocs-ai-hooks?style=social" alt="Forks">
-</a>
-
-</div>
-
----
-
-## ☕ 支持项目
-
-<div align="center">
-
-<a href="https://s1.imagehub.cc/images/2025/05/11/36eb33bf18f9041667267605b6b99bd0.jpeg" target="_blank">
-<img src="https://s1.imagehub.cc/images/2025/05/11/36eb33bf18f9041667267605b6b99bd0.jpeg" style="width: 300px; border-radius: 15px;">
-</a>
-
-**如果这个项目对您有帮助，请给它一个 ⭐ Star！**
-
 **用 ❤️ 为 MkDocs 社区制作**
-</div>
-
